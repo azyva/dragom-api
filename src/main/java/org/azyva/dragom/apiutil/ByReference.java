@@ -17,7 +17,7 @@
  * along with Dragom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.azyva.dragom.util;
+package org.azyva.dragom.apiutil;
 
 /**
  * There are cases where a method needs to return an object instance but not

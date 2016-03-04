@@ -46,12 +46,6 @@ public class ModuleVersion {
 	private Version version;
 
 	/**
-	 * Private constructor used only by the method {@link #parse}.
-	 */
-	private ModuleVersion() {
-	}
-
-	/**
 	 * Constructor using the individual fields.
 	 *
 	 * @param nodePath NodePath. Cannot be partial.
@@ -72,6 +66,33 @@ public class ModuleVersion {
 	}
 
 	/**
+	 * Constructor using a ModuleVersion in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringModuleVersion ModuleVersion in literal form.
+	 */
+	public ModuleVersion(String stringModuleVersion) {
+		String[] arrayComponentsModuleVersion;
+
+		try {
+			arrayComponentsModuleVersion = stringModuleVersion.split(":");
+
+			if ((arrayComponentsModuleVersion.length < 1) || (arrayComponentsModuleVersion.length > 2)) {
+				throw new ParseException("Error parsing module version " + stringModuleVersion + ". Module version must be formatted as \"<node-path>[:<version>]\".", 0);
+			}
+
+			this.nodePath = NodePath.parse(arrayComponentsModuleVersion[0]);
+
+			if (arrayComponentsModuleVersion.length == 2) {
+				this.version = Version.parse(arrayComponentsModuleVersion[1]);
+			}
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
 	 * Parses a ModuleVersion in literal form.
 	 *
 	 * @param stringModuleVersion Version in literal form.
@@ -79,25 +100,16 @@ public class ModuleVersion {
 	 * @throws ParseException If parsing fails.
 	 */
 	public static ModuleVersion parse(String stringModuleVersion)
-		throws ParseException {
-		String[] arrayComponentsModuleVersion;
-		ModuleVersion moduleVersion;
-
-		arrayComponentsModuleVersion = stringModuleVersion.split(":");
-
-		if ((arrayComponentsModuleVersion.length < 1) || (arrayComponentsModuleVersion.length > 2)) {
-			throw new ParseException("Error parsing module version " + stringModuleVersion + ". Module version must be formatted as \"<node-path>[:<version>]\".", 0);
+	throws ParseException {
+		try {
+			return new ModuleVersion(stringModuleVersion);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
+			} else {
+				throw re;
+			}
 		}
-
-		moduleVersion = new ModuleVersion();
-
-		moduleVersion.nodePath = NodePath.parse(arrayComponentsModuleVersion[0]);
-
-		if (arrayComponentsModuleVersion.length == 2) {
-			moduleVersion.version = Version.parse(arrayComponentsModuleVersion[1]);
-		}
-
-		return moduleVersion;
 	}
 
 	public NodePath getNodePath() {

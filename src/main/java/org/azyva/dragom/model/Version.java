@@ -72,6 +72,33 @@ public final class Version {
 	}
 
 	/**
+	 * Constructor using a Version in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringVersion Version in literal form.
+	 */
+	public Version(String stringVersion) {
+		try {
+			if (stringVersion.startsWith("D/")) {
+				this.versionType = VersionType.DYNAMIC;
+			} else if (stringVersion.startsWith("S/")) {
+				this.versionType = VersionType.STATIC;
+			} else {
+				throw new ParseException("Version " + stringVersion + " must start with D/ or S/.", 0);
+			}
+
+			this.version = stringVersion.substring(2);
+
+			if (this.version.length() == 0) {
+				throw new ParseException("Version cannot be the empty string.", 2);
+			}
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
 	 * Parses a Version in literal form.
 	 *
 	 * @param stringVersion Version in literal form.
@@ -80,24 +107,15 @@ public final class Version {
 	 */
 	public static Version parse(String stringVersion)
 	throws ParseException {
-		VersionType versionType;
-		String version;
-
-		if (stringVersion.startsWith("D/")) {
-			versionType = VersionType.DYNAMIC;
-		} else if (stringVersion.startsWith("S/")) {
-			versionType = VersionType.STATIC;
-		} else {
-			throw new ParseException("Version " + stringVersion + " must start with D/ or S/.", 0);
+		try {
+			return new Version(stringVersion);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
+			} else {
+				throw re;
+			}
 		}
-
-		version = stringVersion.substring(2);
-
-		if (version.length() == 0) {
-			throw new ParseException("Version cannot be the empty string.", 2);
-		}
-
-		return new Version(versionType, version);
 	}
 
 	public VersionType getVersionType() {

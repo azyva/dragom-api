@@ -56,6 +56,30 @@ public final class ArtifactGroupId {
 	}
 
 	/**
+	 * Constructor using an ArtifactGroupId in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringArtifactGroupId in literal form.
+	 */
+	public ArtifactGroupId(String stringArtifactGroupId) {
+		int colonPos;
+
+		try {
+			colonPos = stringArtifactGroupId.indexOf(':');
+
+			if (colonPos == -1) {
+				throw new ParseException("The string representation of an ArtifactGroupId " + stringArtifactGroupId + " is not valid as it does not contain \":\".", 0);
+			}
+
+			this.groupId = stringArtifactGroupId.substring(0, colonPos);
+			this.artifactId = stringArtifactGroupId.substring(colonPos + 1);
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
 	 * Parses an ArtifactGroupId in literal form.
 	 *
 	 * @param stringArtifactGroupId ArtifactVersion in literal form.
@@ -63,16 +87,16 @@ public final class ArtifactGroupId {
 	 * @throws ParseException If parsing fails.
 	 */
 	public static ArtifactGroupId parse(String stringArtifactGroupId)
-		throws ParseException {
-		int colonPos;
-
-		colonPos = stringArtifactGroupId.indexOf(':');
-
-		if (colonPos == -1) {
-			throw new ParseException("The string representation of an ArtifactGroupId " + stringArtifactGroupId + " is not valid as it does not contain \":\".", 0);
+	throws ParseException {
+		try {
+			return new ArtifactGroupId(stringArtifactGroupId);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
+			} else {
+				throw re;
+			}
 		}
-
-		return new ArtifactGroupId(stringArtifactGroupId.substring(0, colonPos), stringArtifactGroupId.substring(colonPos + 1));
 	}
 
 	public String getGroupId() {

@@ -19,8 +19,8 @@
 
 package org.azyva.dragom.model.plugin;
 
+import org.azyva.dragom.apiutil.ByReference;
 import org.azyva.dragom.model.Version;
-import org.azyva.dragom.util.ByReference;
 
 /**
  * This plugin is used by tools when a new dynamic Version needs to be created. It

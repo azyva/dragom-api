@@ -878,16 +878,67 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	private List<ModuleMatcher> listModuleMatcher;
 
 	/**
-	 * Default constructor.
-	 *
-	 * Callers cannot directly instantiate a ReferencePathMatcherByElement. They
-	 * must use the parse method.
+	 * Private default constructor used only internally.
 	 */
 	private ReferencePathMatcherByElement() {
 	}
 
 	/**
-	 * Parses a String into a ReferencePathMatcherByElement.
+	 * Constructor using a ReferencePathMatcherByElement in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement in
+	 *   literal form.
+	 * @param model Model. The {@link Model} is required since a
+	 *   ReferencePathMatcherByElement can refer to {@link ArtifactGroupId}'s which
+	 *   must be translated to {@link NodePath}'s.
+	 */
+	public ReferencePathMatcherByElement(String stringReferencePathMatcherByElement, Model model) {
+		int indexStartElementMatcher;
+		int indexEndElementMatcher;
+
+		try {
+			this.model = model;
+			this.listElementMatcher = new ArrayList<ElementMatcher>();
+			this.indFixedLength = true;
+
+			// First perform the actual parsing.
+
+			indexStartElementMatcher = 0;
+
+			do {
+				ElementMatcher elementMatcher;
+
+				indexEndElementMatcher = stringReferencePathMatcherByElement.indexOf("->", indexStartElementMatcher);
+
+				if (indexEndElementMatcher == -1) {
+					indexEndElementMatcher = stringReferencePathMatcherByElement.length();
+				}
+
+				elementMatcher = ElementMatcher.parse(stringReferencePathMatcherByElement, indexStartElementMatcher, indexEndElementMatcher);
+
+				if (elementMatcher.indDoubleAsterisk) {
+					this.indFixedLength = false;
+				} else {
+					this.fixedLength++;
+				}
+
+				this.listElementMatcher.add(elementMatcher);
+
+				indexStartElementMatcher = indexEndElementMatcher + 2; // + 2 to skip "->", if any.
+			} while (indexEndElementMatcher != stringReferencePathMatcherByElement.length());
+
+			// Then initialize the transient fields.
+
+			this.init();
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
+	 * Parses a ReferencePathMatcherByElement in literal form.
 	 *
 	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement in
 	 *   literal form.
@@ -899,46 +950,15 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	 */
 	public static ReferencePathMatcherByElement parse(String stringReferencePathMatcherByElement, Model model)
 	throws ParseException {
-		ReferencePathMatcherByElement referencePathMatcherByElement;
-		int indexStartElementMatcher;
-		int indexEndElementMatcher;
-
-		referencePathMatcherByElement = new ReferencePathMatcherByElement();
-		referencePathMatcherByElement.model = model;
-		referencePathMatcherByElement.listElementMatcher = new ArrayList<ElementMatcher>();
-		referencePathMatcherByElement.indFixedLength = true;
-
-		// First perform the actual parsing.
-
-		indexStartElementMatcher = 0;
-
-		do {
-			ElementMatcher elementMatcher;
-
-			indexEndElementMatcher = stringReferencePathMatcherByElement.indexOf("->", indexStartElementMatcher);
-
-			if (indexEndElementMatcher == -1) {
-				indexEndElementMatcher = stringReferencePathMatcherByElement.length();
-			}
-
-			elementMatcher = ElementMatcher.parse(stringReferencePathMatcherByElement, indexStartElementMatcher, indexEndElementMatcher);
-
-			if (elementMatcher.indDoubleAsterisk) {
-				referencePathMatcherByElement.indFixedLength = false;
+		try {
+			return new ReferencePathMatcherByElement(stringReferencePathMatcherByElement, model);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
 			} else {
-				referencePathMatcherByElement.fixedLength++;
+				throw re;
 			}
-
-			referencePathMatcherByElement.listElementMatcher.add(elementMatcher);
-
-			indexStartElementMatcher = indexEndElementMatcher + 2; // + 2 to skip "->", if any.
-		} while (indexEndElementMatcher != stringReferencePathMatcherByElement.length());
-
-		// Then initialize the transient fields.
-
-		referencePathMatcherByElement.init();
-
-		return referencePathMatcherByElement;
+		}
 	}
 
 	/**

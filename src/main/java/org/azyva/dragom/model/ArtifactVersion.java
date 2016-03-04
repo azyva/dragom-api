@@ -90,6 +90,31 @@ public class ArtifactVersion {
 	}
 
 	/**
+	 * Constructor using an ArtifactVersion in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringArtifactVersion ArtifactVersion in literal form.
+	 */
+	public ArtifactVersion(String stringArtifactVersion) {
+		try {
+			if (stringArtifactVersion.endsWith(ArtifactVersion.DYNAMIC_VERSION_SUFFIX)) {
+				this.versionType = VersionType.DYNAMIC;
+				this.version = stringArtifactVersion.substring(0, stringArtifactVersion.length() - ArtifactVersion.DYNAMIC_VERSION_SUFFIX.length());
+			} else {
+				this.versionType = VersionType.STATIC;
+				this.version = stringArtifactVersion;
+			}
+
+			if (this.version.length() == 0) {
+				throw new ParseException("Version cannot be the empty string.", 0);
+			}
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
 	 * Parses a Version in literal form.
 	 *
 	 * @param stringArtifactVersion ArtifactVersion in literal form.
@@ -97,23 +122,16 @@ public class ArtifactVersion {
 	 * @throws ParseException If parsing fails.
 	 */
 	public static ArtifactVersion parse(String stringArtifactVersion)
-		throws ParseException {
-		VersionType versionType;
-		String version;
-
-		if (stringArtifactVersion.endsWith(ArtifactVersion.DYNAMIC_VERSION_SUFFIX)) {
-			versionType = VersionType.DYNAMIC;
-			version = stringArtifactVersion.substring(0, stringArtifactVersion.length() - ArtifactVersion.DYNAMIC_VERSION_SUFFIX.length());
-		} else {
-			versionType = VersionType.STATIC;
-			version = stringArtifactVersion;
+	throws ParseException {
+		try {
+			return new ArtifactVersion(stringArtifactVersion);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
+			} else {
+				throw re;
+			}
 		}
-
-		if (version.length() == 0) {
-			throw new ParseException("Version cannot be the empty string.", 0);
-		}
-
-		return new ArtifactVersion(versionType, version);
 	}
 
 	public VersionType getVersionType() {

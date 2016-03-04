@@ -143,6 +143,36 @@ public final class NodePath {
 	}
 
 	/**
+	 * Constructor using a NodePath in literal form.
+	 * <p>
+	 * Throws RuntimeException if parsing fails.
+	 *
+	 * @param stringNodePath NodePath in literal form.
+	 */
+	public NodePath(String stringNodePath) {
+		try {
+			if (stringNodePath.charAt(stringNodePath.length() - 1) == '/') {
+				this.isPartial = true;
+				stringNodePath = stringNodePath.substring(0, stringNodePath.length() - 1);
+			} else {
+				this.isPartial = false;
+			}
+
+			this.arrayNodeName = stringNodePath.split("/");
+
+			// arrayNodeName cannot be empty here, even if stringNodePath is
+			// the empty String. This will be caught by validateName below.
+
+			for (String nodeName: this.arrayNodeName) {
+				if (NodePath.validateNodeName(nodeName)) {
+					throw new ParseException("The node name " + nodeName + " is invalid. It does not match the regex " + NodePath.patternValidateNodeName, 0);			}
+			}
+		} catch (ParseException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
+
+	/**
 	 * Parses a NodePath in literal form.
 	 *
 	 * @param stringNodePath
@@ -150,28 +180,16 @@ public final class NodePath {
 	 * @throws ParseException If parsing fails.
 	 */
 	public static NodePath parse(String stringNodePath)
-		throws ParseException {
-		boolean isPartial;
-		String[] arrayNodeName;
-
-		if (stringNodePath.charAt(stringNodePath.length() - 1) == '/') {
-			isPartial = true;
-			stringNodePath = stringNodePath.substring(0, stringNodePath.length() - 1);
-		} else {
-			isPartial = false;
+	throws ParseException {
+		try {
+			return new NodePath(stringNodePath);
+		} catch (RuntimeException re) {
+			if (re.getCause() instanceof ParseException) {
+				throw (ParseException)re.getCause();
+			} else {
+				throw re;
+			}
 		}
-
-		arrayNodeName = stringNodePath.split("/");
-
-		// arrayNodeName cannot be empty here, even if stringNodePath is
-		// the empty String. This will be caught by validateName below.
-
-		for (String nodeName: arrayNodeName) {
-			if (NodePath.validateNodeName(nodeName)) {
-				throw new ParseException("The node name " + nodeName + " is invalid. It does not match the regex " + NodePath.patternValidateNodeName, 0);			}
-		}
-
-		return new NodePath(arrayNodeName, isPartial);
 	}
 
 	/**
