@@ -1,0 +1,867 @@
+Work
+----
+
+Before:     10
+2015-01-07: 3
+2015-01-25: 4
+2015-01-28: 9
+2015-02-08: 3 
+2015-02-09: 2
+2015-02-12: 2
+2015-02-16: 4
+2015-03-11: 7
+2015-03-20: 5
+2015-03-26: 8
+2015-04-01: 1
+2015-04-02: 2.5
+2015-04-09: 9
+2015-04-20: 2
+2015-04-23: 4.5
+2015-05-01: 6.5
+2015-05-06: 2.5
+2015-05-07: 6
+2015-05-14: 7
+2015-05-21: 5
+2015-05-28: 8
+subtotal:   111
+
+2015-06-04: 6.5
+2015-06-10: 13.5
+2015-06-18: 7.5
+2015-06-19: 5
+2015-06-25: 6.5
+2015-06-29: 3
+2015-07-01: 3
+2015-07-02: 7
+2015-07-06: 2.5
+2015-07-09: 3
+2015-07-13: 5.5
+2015-07-16: 5
+2015-07-21: 12.5
+2015-07-23: 6.5
+2015-07-27: 3.5
+2015-07-29: 3.5
+2015-07-30: 8
+2015-08-06: 7
+2015-08-13: 6
+2015-08-17: 6
+2015-08-20: 8
+2015-08-24: 1.5
+2015-08-27: 4.5
+2015-09-01: 4.5
+2015-09-02: 3
+2015-09-03: 6.5
+2015-09-05: 1.5
+subtotal:   261.5
+
+2015-09-10: 6
+2015-09-11: 7
+2015-09-12: 5.5
+2015-09-13: 5.5
+2015-09-14: 3
+2015-09-17: 13
+2015-09-21: 1.5
+2015-10-09: 4
+2015-10-12: 2.5
+2015-10-13: 3
+2015-10-14: 3
+2015-10-15: 10
+2015-10-18: 1.5
+2015-10-19: 2.5
+2015-10-21: 3.0  (approx)
+2015-11-18: 6.5
+2015-11-19: 7.5
+2015-11-26: 9
+2015-12-04: 7.5
+2015-12-09: 2.5
+2015-12-10: 9.5
+2015-12-13: 5.5
+2015-12-16: 8
+2015-12-20: 4
+2015-12-21: 0.5
+2015-12-22: 3
+2015-12-24: 3
+2015-12-26: 5
+2015-12-27: 5
+2015-12-28: 3
+2016-01-14: 9.5
+2016-01-19: 2
+2016-01-21: 7.5
+2016-01-25: 3.5
+2016-01-26: 1.5
+2016-01-27: 7.5
+2016-01-28: 1.5
+2016-02-03: 6
+2016-02-14: 2.5
+2016-02-15: 2
+2016-02-17: 5
+2016-02-22: 3
+2016-02-24: 3
+2016-02-27: 3
+2016-03-03: 5
+2016-03-06: 2.5
+
+
+
+To test
+=======
+
+Empty elements in XML -> null? or empty string?
+
+
+- Batch mode.
+- Test workspace within workspace
+- Workspace manager
+  - When empty.
+  - Commit, update, list.
+  - Commit, update when not synced, etc.
+  - Commit with PushBehavior = FORCE to force push of tags.
+- IsSync (check with Workspace status)
+- Creating new branch with setting up remote tracking separately.
+- Events (register dummy events just be see when they are triggered).
+- NodeInitPlugin/NodeEventListenerDemo
+
+In the first set of tests, the following will not have been tested:
+- NewVersionPhase
+- NewVersionSemantic
+- Complex version mapping (other than adding or removing v-)
+  - To be tested with Phase I believe
+- Simple version mapping (with the simple class)
+- TaskChangeReference
+
+
+If checkoutSystem in a workspace directory that is already checked out and not release, error.
+
+Hotfix new dynamic version.
+
+
+
+To implement soon
+=================
+
+Implement brackets and information levels.
+Review storing reuse information in runtime properties, etc (AlwaysNeverAsk, YesAlwaysNo)
+Have ExecContext plugin IDs in order to implement global tool start and end callbacks (to clean Jenkins folder for instance).
+Localization for the parse methods. 
+
+
+
+
+Maybe have the notion of importance in userInteractionCallback:
+- Info
+- Important
+and have verbose modes --whisper and --silent (or --quiet?) to select which information is actually displayed
+Some tools may produce reports. This information is the actual payload and cant be quieted.
+Maybe the list of important actions (those that modify stuff) should be handled with userInteractionCallback?
+
+
+
+Make internationnalizable (UserInteractionCallBack idInfo...)
+
+
+
+
+
+Not clear in GitScmPlugin the fact that access to the workspace with getPathModuleWorkspace does not reserve the workspace.
+We are really reading from it, so why wouldn't it reserve it for reading? Maybe the caller should always provide a path
+and it would be its responsibility to reserve it?
+
+In GitScmPlugin, maybe should validate that workspace directory is reserved when accepting a path.
+
+
+
+
+
+TO DOCUMENT:
+- ExecContextPlugin stuff (including implementations).
+- SimpleModel stuff
+- ModelNodeBuilderFactory stuff
+- Important for ExecContextPlugin to not keep the ExecContext passed at creation time.
+
+
+Should probably allow managing the properties (maybe only runtime) in the ExecContext using a tool (WorkspaceManagerTool?)
+  - Have an option to transfert an external properties file to execcontext. 
+
+Peut-être que le Mapper plugin devrait utiliser des runtime property au lieu de model
+  (le RT props pourraient être backées par le modèle)
+  De cette manière il serait possible de dire au plugin lors des différentes exécution comment se comporter
+  Il serait peut-être aussi pratique d'être en mesure de définir des groupes de règles.
+    Seulement la référence au groupes pourrait être déclarée at runtime.
+
+  
+When creating new dynamic version, maybe take into consideration base version of an exisisting dynamic version as the base for the next version.
+  Or the base of the static version.
+
+
+
+
+
+Reference re-creation in switchtodynamic. The new reference is not the same and contains less info.
+
+
+When referencing and checking out a version, Validate that the artifact version is OK since it was referenced
+But do not always validate. Do not validate when checkout in order to create a new version, in particular
+Have to think this trough.
+
+
+
+Review all comments and code documentation (including execcontext and plugin (old note))
+
+
+
+Maybe have a tool to switch the version within the workspace (similar to checkout, but change version of existing module, if no unsynced changes).
+  This is already implemented I believe. Unless there is more to it, like actually doing a switch?
+Version report: Get the list of modules matching a given version regex.
+After that, ask to change the version of every references to these modules to that version.
+Use switch to dynamic version for that, but do not push changes.
+Build. This will validate if changes to currently modified modules are retrocompatible.
+
+
+
+The fact that when creating a static version all references must be static maybe should be a decision of the NewStaticVersionPlugin since for phases,
+they may not want to impose that references to modules outside of the PIC are static (references to Infra modules for instance).
+
+
+
+Multiple versions of a module in workspace. Implications in ScmGitPlugin, mainly in switchVersion.
+
+
+
+To think
+========
+
+
+Should I implement automatic property references: the value of a property contains ${PROPERTY}, a reference to another property, as in QuickBuild.
+This would be transparent to callers.
+Would there be an actual language such as OGML, MVEL or Groovy or some other Java expression engine?
+Pretty powerful, but maybe not required initially. The syntax should allow cleanly integrating it after (must use ${} for expressions...
+  But a simple property name is probably not an expression...
+
+Spring has an EL (Spel) that seems very nice.
+But maybe could support property access using ${} syntax, which is typical for property accesses.
+And for general expression, when that would be provided, another syntax such as @{}.
+
+
+  
+What if multiple submodules refer to the same external module?
+- Multiple references?
+- Multiple updates required?
+- Should the caller see only one? And all are updated simultaneously?
+- Probably not since the versions may be different.
+- Maybe in the reference graph path include a description of where the reference is? Maybe only for display purposes.
+- Special case: Multiple references to same module within exactly same POM: Maybe not supported since class Pom may have problems locating
+  - Then again, maybe not since the same module may not appear maybe within same reference category.
+- Also there could be multiple references to different submodules of the same aggregator module.
+
+
+Credential manager to integrate with outside world
+  In ExecContext
+  Maybe for Git no need since Git client handles it, but for Jenkins, etc.
+  Similar to what was done with SIPL.
+
+
+It sounds we need to distinguish between different types of dynamic or static versions.
+  - Not all static versions are appropriate for release (maybe only a test...)
+Likewise will we need to distinguish between different types of dynamic versions
+- Project (develop)
+- Integration (develop)
+- Features
+- Bugfix
+- Master?
+Maybe no need to introduce version types beyond static/dynamic. It is the version creation process that is different.
+ 
+
+
+
+Eclipse tricks
+==============
+
+It is easy enough to create a Maven submodule within a module in Eclipse (RC -> Maven -> New maven module), but by default, the resource within the WS will be named after the directory.
+- It is better named after the artifactId.
+- Easy: Just rename de ressource in project explorer.
+- Also, need to rename artifactId after creating submodule since by default, artifactId is the module name (need to add the prefix artifactId of parent)
+
+Installed releng tools plugin, but limited since cannot control the format of the comment (I do not want a javadoc style comment).
+
+
+
+Archived notes (probably not pertinent anymore, but not 100% sure)
+==================================================================
+
+search:
+- depth-first traversal among modules
+- ask the module (plugin?) if it produces this artifact
+  - Possible responses: yes, maybe, no
+  - If 2 modules say yes, error
+  - If one module says yes, return that one
+  - With only maybes, cannot conclude here. Must go through the classification nodes since they will impose an order of precedence.
+
+- If no module says yes, it means that maybe the module has not been (dynamically) created, so need to go through the classifications nodes
+- depth-first traversal among classification nodes
+- ask the classification node if it knows about the artefact
+  - Possible responses:
+    - yes would not be a possible answer as only modules can say for sure.
+    - maybe and here is a list of module paths to try
+      - The tries will be similar to the module search above.
+      - If one of the modules says yes, it is the one (the first one that says yes)
+      - If no module says yes, the first one that says maybe is the one
+      - The order is thus important (from most specific to least)
+    - no, unless a module already exists that said yes (and it will have been visited above)
+
+When new modules are added dynamically, maybe they would violate the unicity of the mapping from ArtifactGroupId to module?
+But this would not be detected.
+So they could be a difference in behavior depending on the ordre in which modules are requested.
+Unless when a new modules is created, the rootnode (and maybe other node in the patch) must be warned so that they can do some validation?
+
+
+
+
+
+Not to implement
+================
+
+To avoid property name space pollution, maybe a plugin uses the property name,
+but before tries a property with as a prefix the plugin class name. This would allow the human configuring the whole thing to
+avoid property name clash by scoping properties to specific plugins. But in that case, property reuse among plugin will be harder.
+Don't know if that would be useful.
+
+similar to:  
+And what if for 2 different processes, the same plugin is used but different parameters are required?
+Maybe the parameters (properties) could be keyed with the plugin id. The keyed parameter would have precedence over non-keyed.
+In Node, have a getPropertyForPlugin(PluginDef, name)
+- Would consider inheritance like getPropertyDefWithInheritance
+- Would use the plugin ID in PluginDef to key properties
+- Maybe could also allow properties to be visible to certain plugin based on the plugin name? Not sure.
+ 
+*** This does not seem useful. I cannot think of a really pertinent use case for having plugin-specific properties.
+
+Maybe before supporting an expression language engine, support fixed syntax for property references:
+- ${PROPERTY}: The value of another property, evaluated in the context of the current object, not the one who has the definition that refers to the property (as in QuickBuild).
+- ${parent:PROPERTY}: The value of another property, evaluated in the context of the parent of the current object. Useful for path building.But it would completely work for path building as in the workspace path in QC (${parent:PATH}.${name} defined at top level only)
+- ${parent-defined:PROPERTY}: The value of another property, evaluated in the context of the parent of where the definition was taken. Yes, this works for options building with gaps.
+
+*** Already implemented. But the parent-defined stuff is not. Not sure useful.
+
+  Eventually, may be pertinent to have a plugin that can return the last modification time of a module (only the sources files)
+This could be compared to the last time the module was built so that rebuild is not required.
+That last time a module is built would be stored in the workspace.
+
+*** Don't see a real use for this for now.
+
+Should we handle module fork in development projets? (switch to dynamic version)
+
+*** Defitively not for now.
+
+Model serialisation
+  Recognize transient object created on the fly (do not store them?)
+  But should the dump be more like QuickBuild?
+    - List of this
+    - List of that
+    - With references in between?
+    Maybe JAXB can do this with references?
+
+*** Not for now.
+
+For a reference, what happens if a property is used?
+- This IS a problem that could make adoption difficult
+- We could say that if a property is used, then this is not a true reference.
+  - But in the pom that defines the proprety, how can we recognize this is a version reference??? We can't.
+- Dependency management is an alternative that is supported, but I think properties are often used.
+- Maybe support it only within a given POM (the property must be defined locally)
+- We could argue this is a nice practice anyways since referring to properties defined elsewhere makes management harder
+- But then again, global properties can be useful.
+- Maybe simply say that Dragom does not support externally defined properties for version reference. Only locally defined.
+- But for now, no support for properties in version references.
+
+*** We do not support property references for now (exception ${project.version within an aggregation).
+
+
+Reflexions about plugin instantiation
+=====================================
+
+Spring should be supported, but through a plugin in a separate JAR.
+Maybe support only constructor and getInstance
+With constructor, Dragom takes care of having only one instance per class, per ExecContext or per Node
+With getInstance, the class can do what it wants
+Good for ExecContext and Node plugins.
+Maybe (for Spring) have plugin instanciation parameters, separate from model or other properties (reintroduce params).
+
+
+DefaultExecContextImpl
+DefaultModelImpl
+ExecContext.getPlugin(Class<ExecContextPlugin> classExecContextPlugin)
+
+
+
+
+Merge
+=====
+
+When the user adds by himself a new reference, it is a commit that may not be excluded because not recognized to be from Dragom
+In dest, the reference may be to the same dynamic version as in org
+Maybe the reference analysis will spot this (same dynamic version)
+  - In such as case it should probably offer to switch to another dynamic version. 
+
+Pull vs push: It seems to me like pull is always the way to go since conflicts can always happen and we must have a local workspace to resolve them.
+That is the way all SCM work (merge into local).
+Even pull request is merge into local conceptually.
+You never push-merge something.
+So forget about push.
+
+It is always pull, and we always iterate over remote. But for each ModuleVersion in remote (only known modules), two modes:
+- Navigate path in source, but without regard to versions of modules (but considering types of references), in order to find version of module to merge into
+  - ModuleVersion in source may not exist. In that case, simply display a message.
+    - There is nothing we can do. If there was supposed to be something, it would have been handled by a previous merge.
+  - For top-level module, it is as if we had an external reference (root module) to the ModuleVersion, so it always exists. 
+  - ModuleVersion must be in user workspace directory. If not, offer to checkout, possibly changing existing version. 
+  - When got to the module, apply these rules:
+  - Source tag, dest tag
+    - Any changes in src not in dest?
+      - Yes: Any changes in dest not in source?
+        - Yes: Offer to switch dest version to dynamic, and then perform merge with new (dynamic version), and then descend in graph
+        - No: Offer to replace source version with that of dest (normally, parent should already be dynamic because of parent first treatment). Should we fail if not the case? **** Need to think about this. If we open the path, we may introduce dynamic versions in parent that could simply have been changed to static
+      - No: No merge required.
+  - Source branch, dest tag
+    - Any changes in src not in dest?
+      - Yes: Offer to switch dest version to dynamic, and then perform merge with new (dynamic version), and then descend in graph.
+      - No: No merge required.
+  - Dest branch
+    - Any changes in src not in dest?
+      - Yes: Merge with changes, and descend in graph
+      - No: No merge required.
+- Ask user which version to merge into (or use a default base specified globally, or other strategy)
+  - User must select dynamic version
+  - Not possible to create a new dynamic version
+  - If ever a new version would have needed to be created, it would have been in a reference graph, and the first mode would have been used.
+  - ModuleVersion must be in user workspace directory. If not, offer to checkout, possibly switching existing version. 
+  - Any changes in src not in dest?
+    - Yes: Merge with changes.
+    - No: No merge required.
+
+So we start with version management (tag vs branch, and then merge)
+Merge excludes commits made by Dragom that relate to version adjustments (of the module itself, of references)
+
+Again:
+
+It is always pull.
+Therefore source is remote.
+We iterate over source. For each ModuleVersion in source (only known modules).
+Two modes: Navigate in dest, Select dynamic version
+- Navigate path in dest, but without regard to versions of modules (but considering types of references), in order to find version of module to merge into
+  - ModuleVersion in dest may not exist. In that case, simply display a message.
+    - There is nothing we can do. If there was supposed to be something, it would have been handled by a previous merge.
+  - For top-level module, it is as if we had an external reference (root module) to the ModuleVersion, so it always exists. 
+  - ModuleVersion must be in user workspace directory. If not, offer to checkout, possibly changing existing version. 
+  - When got to the module, apply these rules:
+  - Source tag, dest tag
+    - If both Version's equal, no merge required.
+    - Verify how source and dest diverge:
+      - Starting at this ModuleVersion in source, tranverse the graph
+      - For each corresponding ModuleVersion in source that exists (ignore those that do not since if they were important, they would have been considered in the parent verification):
+        - Verify how source and dest diverge
+        - If source has changes not in dest, record that fact globally
+        - If dest has changes not in source, record that fact globally
+    - If source and dest equal (not likely since different Version's, but still possible), no merge required. 
+    - If only source diverges, replace Version in dest parent with Version in source. Dest parent is necessarily dynamic.
+    - If only dest diverges, no merge required and stop descending since we checked deep
+    - If both source and dest diverge (fork), cannot merge. Conflict. Stop processing this ModuleVersion.
+  - Source branch, dest tag
+    - Verify how source and dest diverge (same as above)
+    - If source and dest equal (not likely since different Version's, but still possible if the source branch has just been created), no merge required. 
+    - If source diverges, offer to switch dest version to dynamic, and goto below (branch, branch)
+      - If dest also diverges, issue a warning. This is probably not a problem as the switch-to dynamic version will probably include these changes.
+    - If only dest diverges, no merge required and stop descending since we checked deep
+  - Dest branch (source tag or branch)
+    - Any changes in src not in dest (only this ModuleVersion)
+          ????? humm, not sure if only this ModuleVersion. What if changes in children only. No, ok. Would be handled when descending.
+      - Yes: Merge with changes, and descend in graph
+      - No: No merge required, but continue descending in graph
+- Select dynamic version
+  - Seems to apply only if source is tag, but in fact, it also makes sense in the general case (source branch), if the user wants to update master for all modules.
+    - Humm, no. If source is not tag, it implies that if reference to such dynamic version in source, the branch that would be used in dest should be referenced also and wired to parent. 
+  - This mode cannot be inferred since, for instance, when ModuleVersion not found in dest.
+  - It is really two modes, two different intents of the user.
+  - Ask user which version to merge into (or use a default base specified globally, or other strategy)
+    - User must select dynamic version
+    - Not possible to create a new dynamic version
+    - If ever a new version would have needed to be created, it would have been in a reference graph, and the first mode would have been used.
+    - ModuleVersion must be in user workspace directory. If not, offer to checkout, possibly switching existing version.
+    - Source must be tag. See above.
+    - Do as above for each individual module referenced, only one level deep, including analysing how source and dest graphs diverge 
+    - If source and dest equal (not likely since different Version's, but still possible), no merge required. 
+    - If only source diverges, replace Version in dest parent with Version in source. Dest parent is necessarily dynamic.
+    - If only dest diverges, no merge required and stop descending since we checked deep
+    - If both source and dest diverge (fork), cannot merge. Conflict. Stop processing this ModuleVersion.
+
+So we start with version management (tag vs branch, and then merge)
+Merge excludes commits made by Dragom that relate to version adjustments (of the module itself, of references)
+
+
+
+Command line syntax:
+
+merge
+Traverse workspace in the usual way, root module versions and reference graph paths
+When a match is found, this is a root destination for a merge
+Destination must be dynamic
+If a destination is selected and merged in, do not traverse into
+Select a source version to merge into destination (may be specified by runtime properties)
+ 
+merge-base <source-module-version>
+This tool does not work in the same way as most others
+Generally done on an empty workspace
+Source version must be static
+Traverses the source ModuleVersion reference graph (all static)
+For each ModuleVersion merge into user-defined version, without considering children. 
+
+
+It is ok to consider root and root reference graph path matchers for a system like Portail Caisse since it defines on what applications to work, regardless of the other applications that may be modified at the global level by others.
+
+Next tool: Report
+=================
+
+report [--graph] [--module-versions [--reference-graph-paths] [--most-recent-version] [--most-recent-available-version]]
+Text format
+XML format
+JSON format
+
+I have been asked for the tool to analyse version coherence within graph and change version.
+  Make sure this is possible.
+
+Also, need to be able to search where a module version is referenced.
+This is probably already possible using reference graph paths matchers.
+Yes it seems to be. Not totally global search since not performance enough. For given root ModuleVersion, a search can be performed.
+
+For the version coherence report, maybe have it configurable so that only certain modules are considered.
+Dragom cannot really know if a module dependency is compile-type or runtime type. But it can be told.
+Work with coherence rules.
+One rule:
+Given an artifact reference (service implementation), all references to that other artifact (service interface) must have same major and equal-to or inferior minor.
+Can this work if interface is a separate module?
+
+
+Other tool: Module info
+=======================
+
+Display module information given
+- NodePath
+- URL
+- GAV
+Information:
+- All plugins
+- All properties
+  - Including from parent?
+
+
+
+Other tool: Switch
+
+Marketing and Dragom web site (info from FL)
+============================================
+
+Use what François has setup.
+  
+URL : https://fidooda02.sbin.ca:8080/
+login: draymond
+pass: meSu#MB83
+
+IP hosting :  199.19.212.118  (pour le "A Record")
+
+
+
+Lorsque le A Record sera updaté :
+
+site:
+
+https://dragom.com
+https://dragom.com/wp-admin
+
+login : draymond
+pass : CN9yCNuw?c
+
+Il resterait juste le setup du SSL à faire.  Je suggère y aller direct en https only.
+
+
+Pour le "look" je recommande d'acheter un child theme sur le framekwork "genesis".
+
+J'ai fait un tri pour toi de thème que je crois approprié pour un blog technique.
+
+http://my.studiopress.com/themes/sixteen-nine/
+
+http://my.studiopress.com/themes/eleven40/
+
+Tu peux p-e penser que c'est cher 100$ mais çá vaut la peine.
+
+Sinon, ya toujours themforest mais humm... le framework de développement ne sera pas "DR approved"
+
+http://themeforest.net/category/wordpress/technology/software
+
+
+
+Use Mail Poet in WordPress for mailings
+Pass through Amazon SES for SMTP
+
+
+Dragom articles:
+
+- Who I am
+- What in the name
+- Origin of the Dragom project
+- Application modularization
+- Versioning at the repository level
+- Versioning at the module level
+- Submodules are implementation details
+- Source-level reuse vs artifact reuse
+- Autonomous modules
+  - Not in the sense that they run by themselves
+  - In the sense that they describe their build
+- What is a module reference graph
+  - Vs module dependency graphs
+- Shallow and narrow module reference graphs
+  - Many large projects are rather monolithic
+- Deep and/or wide module reference graphs
+  - Software developped in house by large organizations
+- The problems introduced by deep and/or wide module reference graphs
+- Dragom is here to help
+- By raising the basic module-level version management features to module reference graphs
+- Creating a branch in a module reference graph
+- Creating CI jobs for a module reference graph
+- Merging a branch of a module reference graph into another branch
+- Releasing a module reference graph
+- Analysing the modules versions in a module reference graph
+
+Documentation:
+
+Conventions for properties
+- Model properties: UPPER_CASE_WITH_UNDERSCORES
+
+- Runtime Properties in ExecContext: runtime-property.Domain1.app-a.UPPER_CASE_WITH_UNDERSCORES 
+- Runtime Properties: prefix: lower-case-with-dashes
+- Runtime Properties in system properties: com.azyva.dragom.runtime-properties.Domain1.app-a.UPPER_CASE_WITH_UNDERSCORES
+
+- TaskParams: ClassName.propertyName.
+- The 2 types of plugin implementations (factory and constructor)
+- Config vs Model.
+
+
+
+Blog articles that would become documents articles
+1. Need a teaser
+
+
+
+Demo
+====
+  
+- Checkout tag (production), recurse
+dragom-checkout --workspace-path=workspace --artifact-refs= Domain1/app-a:S/1.2
+
+- Prepare projet to work on this and this module
+dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#Framework/parent-model Domain1/app-a:S/1.2
+
+- Other developer checkout all branches at once
+dragom-checkout --workspace-path=workspace2 --artifact-refs=::.*-SNAPSHOT Domain1/app-a:D/develop-123d56
+
+- Make modification to a module
+In parent-model/pom.xml, add a property, commit and push
+
+- Add a module
+dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#AppFramework/app-framework Domain1/app-a:D/develop-123d56
+
+- Make modification to new module
+In app-framework/pom.xml, add a property, commit and push
+
+- Release
+dragom-create-static-version --workspace-path=workspace Domain1/app-a:D/develop-123d56
+
+- Checkout release
+dragom-checkout --workspace-path=workspace3 --artifact-refs= Domain1/app-a:S/2015-08-01
+
+- Reprepare for modification to a module
+dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#AppFramework/app-framework Domain1/app-a:D/develop-123d56
+
+- Make modification to one module
+In app-framework/pom.xml, add another property, commit and push
+
+- Re-release
+dragom-create-static-version --workspace-path=workspace Domain1/app-a:D/develop-123d56
+
+- Checkout release
+dragom-checkout --workspace-path=workspace3 --artifact-refs= Domain1/app-a:S/2015-08-01
+
+
+for i in `ls` ; do echo $i ; git -C $i status ; echo === ; done
+
+
+
+ 
+- Other developper works on a feature branch for a specific module, but that requires opening the path
+- Other developer requests another module in project work space 
+
+Talk about whats to come:
+- Notion of roots
+- Merge feature branche into project branch
+- Produce a report of what modules have been modified (are on branches)
+- Use that report output to create release branches
+- Merge project into release branch
+- Do this as soon as date is known to promote continuous integration between projects
+- Or keep projects separate and regularly merge each project changes in release branch, in case a projet removes itself
+- Each project can symetrically merge into release
+- Perform the release by walking the graph
+- Rebuild all?
+- Version coherence
+
+Older notes (Démonstration)
+- Mapping de version
+- Mapping de artifactGroupId à ModuleClassificationPath et vers SCM URL.
+- Subversion vs Git (checkout hybride).
+- Exceptions au niveau des groupId et artifactId.
+- Source vs artifact references
+In the demo, should probably illustrate dependency management.
+
+
+
+
+
+
+Formation
+- 25 ans expérience en industrie
+- 10 ans gestion des configurations logicielles (SCM) et ingénierie des publications des logiciels (release engineering)
+  - Gestion des source
+  - Stratégie de versionnement, branches et étiquettes
+  - Intégration continue
+  - Automatisation des tests
+  - Automatisation des déploiements
+  - Publications
+  - Systèmes d'envergures modulaires
+  - Plusieurs équipes de développement distinctes
+  - Plusieurs efforts de développement en parallèl
+- Expérience en formation
+
+- Mise en place d'une plateforme d'intégration continue avec Jenkins, Artifactory, Git
+- Utilisation de Git
+
+Geneviève Brouillette
+396-8800 7265
+
+
+David Raymond
+Appelé au 514 396-8830 référé à vous
+Confusion lors appel précédent
+  - Boîte vocale
+
+Sujets:
+- Pour (grandes) entreprises
+- Gestion du code source des application
+- Stratégie de versionnement
+- Intégration continue
+- Livraison continue
+- Automatisation des déploiements
+- DevOps
+- Mise en place d'une plateforme d'intégration/livraison continue
+  - Jenkins (Enterprise)
+  - Git
+  - Gestionnaire d'artefacts
+- Maven  
+- Réutilisation binaire
+
+
+
+
+     ___________
+    |  /|\  |  /|\
+    |/__|__\|/  |__\
+   / \  |    \  |  /|
+ /_____\|______\|/__|
+|\  |  /
+|__\|/
+
+       _________________
+      |    /|\    |    /|\
+      |  /  |  \  |  /  |  \
+      |/____|____\|/    |____\
+     / \    |      \    |    /|
+   /     \  |        \  |  /  |
+ /_________\|__________\|/____|
+|\    |    /
+|  \  |  /
+|____\|/
+
+
+         _______________________
+        |      /|\      |      /|\
+        |    /  |  \    |    /  |  \
+        |  /    |    \  |  /    |    \
+        |/______|______\|/      |______\
+       / \      |        \      |      /|
+     /     \    |          \    |    /  |
+   /         \  |            \  |  /    |
+ /_____________\|______________\|/______|
+|\      |      /     ___    ___
+|  \    |    /      /   \  /   \ |\    /|
+|    \  |  /   _   |      |     || \  / |
+|______\|/    / \  |   __ |     ||  \/  |
+ ___   ___   |   | |  |  ||     ||      |
+|   \ |   \ |_____| \___/  \___/ |      |
+|    \|    ||     |
+|    ||___/ |     |
+|    /|   \
+|___/ |    |
+
+
+
+         _______________________
+        |      /|\      |      /|\
+        |    /  |  \    |    /  |  \
+        |  /    |    \  |  /    |    \
+        |/______|______\|/      |______\
+       / \      |        \      |      /|
+     /     \    |          \    |    /  |
+   /         \  |            \  |  /    |
+ /_____________\|______________\|/______|
+|\      |      /
+|  \    |    / 
+|    \  |  /
+|______\|/
+ ___   ___     _     ___    ___
+|   \ |   \   / \   /   \  /   \ |\    /|
+|    \|    | |   | |      |     || \  / |
+|    ||___/ |_____||   __ |     ||  \/  |
+|    /|   \ |     ||  |  ||     ||      |
+|___/ |    ||     | \___/  \___/ |      |
+
+
+     ___________
+    |  /|\  |  /|\
+    |/__|__\|/  |__\
+   / \  |    \  |  /|
+ /_____\|______\|/__|
+|\  |  /
+|__\|/
+
+
+
+ __
+|  /|\
+|/__|  \____   ____               ___       ___             
+ \  |  /|\  | |    \     /\      /   \     /   \   |\      /|
+   \|/__|__\| |     |   /  \    /     \   /     \  | \    / |
+    |   |  /| |     |  /    \  |         |       | |  \  /  |
+    |   |/__| |____/  |______| |     __  |       | |   \/   |
+    |  / \  | |    \  |      | |    |  | |       | |        |
+    |/_____\| |     | |      | |       | |       | |        |
+    |\  |  /  |     | |      |  \     /   \     /  |        |
+    |__\|/    |     | |      |   \___/     \___/   |        |
+
+
+
+
+
+
+
+
+Get node-specific param using RuntimeProperties
+If null need to ask the user
+Get default value from runtime properties (root node)
+if null, set AlwaysNeverAsk behavior 
+Check for AlwaysNeverAsk behavior

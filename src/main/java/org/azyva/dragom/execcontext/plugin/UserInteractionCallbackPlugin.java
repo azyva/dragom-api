@@ -51,32 +51,31 @@ public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
 	public static interface BracketHandle extends Closeable {
 	}
 
-	BracketHandle startBracket(String idInfo, Object... arrayParam);
+	BracketHandle startBracket(String info);
 
-	void provideInfo(String idInfo, Object... arrayParam);
+	void provideInfo(String info);
 
 	/**
 	 * Provides information to the user in a way similar to {@link #provideInfo}, but
 	 * returns a Writer so that the caller can append additional information.
 	 * <p>
 	 * The caller is responsible for closing the Writer when done so that the plugin
-	 * is able to associate all of the additional information with with the initial
-	 * call to this method. Calling close in this case should not close some
-	 * underlying stream in such a way that would render the system unstable. In
-	 * particular if the Writer delegates to System.out, it must not delegate the
-	 * close call. This use of close if specific to the contract with this class and
-	 * does not necessarily respect the general contract of Writer.close.
+	 * is able to associate all of the additional information with the initial call to
+	 * this method. Calling close in this case should not close some underlying stream
+	 * in such a way that would render the system unstable. In particular if the
+	 * Writer delegates to System.out, it must not delegate the close call. This use
+	 * of close is specific to the contract with this class and does not necessarily
+	 * respect the general contract of Writer.close.
 	 * <p>
 	 * No call to other methods of this plugin are allowed as long as the Writer is
 	 * not closed.
 	 *
-	 * @param idInfo See similar parameter for provideInfo.
-	 * @param arrayParam See similar parameter for provideInfo.
+	 * @param info See similar parameter for provideInfo.
 	 * @return Writer.
 	 */
-	Writer provideInfoWithWriter(String idInfo, Object... arrayParam);
+	Writer provideInfoWithWriter(String info);
 
-	String getInfo(String idInfo, Object... arrayParam);
+	String getInfo(String prompt);
 
-	String getInfoWithDefault(String idInfo, String defaultValue, Object... arrayParam);
+	String getInfoWithDefault(String prompt, String defaultValue);
 }
