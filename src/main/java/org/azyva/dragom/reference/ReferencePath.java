@@ -21,6 +21,8 @@ package org.azyva.dragom.reference;
 
 import java.util.ArrayList;
 
+import org.azyva.dragom.model.ModuleVersion;
+
 /**
  * Represents a reference path.
  *
@@ -48,5 +50,19 @@ public class ReferencePath extends ArrayList<Reference> {
 	 */
 	public ReferencePath(ReferencePath referencePath) {
 		super(referencePath);
+	}
+
+	/**
+	 * @return Leaf {@link ModuleVersion}.
+	 */
+	public ModuleVersion getLeafModuleVersion() {
+		return this.get(this.size() - 1).getModuleVersion();
+	}
+
+	/**
+	 * Removes the leaf reference.
+	 */
+	public void removeLeafReference() {
+		this.remove(this.size() - 1);
 	}
 }
