@@ -19,9 +19,11 @@
 
 package org.azyva.dragom.reference;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -170,6 +172,36 @@ import org.azyva.dragom.model.Version;
  */
 public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ELEMENT_EMPTY = "ELEMENT_EMPTY";
+
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ELEMENT_NOT_PROPERTY_TERMINATED = "ELEMENT_NOT_PROPERTY_TERMINATED";
+
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ELEMENT_REGEX_NOT_PROPERLY_TERMINATED = "ELEMENT_REGEX_NOT_PROPERLY_TERMINATED";
+
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ELEMENT_REGEX_INVALID = "ELEMENT_REGEX_INVALID";
+
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ELEMENT_ARTIFACT_NO_MODULE = "ELEMENT_ARTIFACT_NO_MODULE";
+
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ReferencePathMatcherByElement.class.getName());
+
+	/**
 	 * Represents the matcher for an element of a ReferencePath.
 	 *
 	 * Helps match a single element of a ReferencePath.
@@ -219,7 +251,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		private NodePath nodePath;
 
 		/**
-		 * Pattern for the literal form of the NodePath. Mutually exclusive with nodePath,
+		 * Pattern for the NodePath literal. Mutually exclusive with nodePath,
 		 * isAsterisk and isDoubleAsterisk.
 		 */
 		private Pattern patternLiteralNodePath;
@@ -231,8 +263,8 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		private Version version;
 
 		/**
-		 * Pattern for the literal form of the Version. Mutually exclusive with version,
-		 * isAsterisk and isDoubleAsterisk.
+		 * Pattern for Version literal. Mutually exclusive with version, isAsterisk
+		 * and isDoubleAsterisk.
 		 */
 		private Pattern patternLiteralVersion;
 
@@ -267,20 +299,19 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		private ArtifactVersion artifactVersion;
 
 		/**
-		 * Pattern for the literal form of the ArtifactVersion. Mutually exclusive with
+		 * Pattern for the ArtifactVersion literal. Mutually exclusive with
 		 * artifactVersion, isAsterisk and isDoubleAsterisk.
 		 */
 		private Pattern patternLiteralArtifactVersion;
 
 		/**
-		 * Parses a ElementMatcher within a ReferencePathMatcherByElement in
-		 * literal form.
+		 * Parses a ElementMatcher within a ReferencePathMatcherByElement literal.
 		 *
 		 * The complete ReferencePathMatcherByElement is passed along with indexes to
 		 * delimit the ElementMatcher so that error messages can be more contextual.
 		 *
 		 * @param stringReferencePathMatcherByElement Complete
-		 *   ReferencePathMatcherByElement in literal form.
+		 *   ReferencePathMatcherByElement literal.
 		 * @param indexStart Index of the first character within
 		 *   stringReferencePathMatcherByElement that corresponds to the ElementMatcher
 		 *   to parse.
@@ -301,7 +332,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 			indexStartParse = indexStart;
 
 			if (indexStart == indexEnd) {
-				throw new ParseException("Within reference path matcher " + stringReferencePathMatcherByElement + ", reference path element at index " + indexStart + " is empty. If it is meant to match any reference, \"*\" must be used.", indexStart);
+				throw new ParseException(MessageFormat.format(ReferencePathMatcherByElement.resourceBundle.getString(ReferencePathMatcherByElement.MSG_PATTERN_KEY_ELEMENT_EMPTY), stringReferencePathMatcherByElement, indexStart), indexStart);
 			}
 
 			if (stringReferencePathMatcherByElement.substring(indexStart, indexEnd).equals("*")) {
@@ -388,7 +419,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 				// indexStartParse > indexEnd, but we consider that case in order to fail fast
 				// just in case.
 				if (indexStartParse != indexEnd) {
-					throw new ParseException("Within reference path matcher " + stringReferencePathMatcherByElement + ", reference path element between indexes " + indexStart + " and " + indexEnd + " is not properly terminated at index " + indexStartParse + '.', indexStartParse);
+					throw new ParseException(MessageFormat.format(ReferencePathMatcherByElement.resourceBundle.getString(ReferencePathMatcherByElement.MSG_PATTERN_KEY_ELEMENT_NOT_PROPERTY_TERMINATED), stringReferencePathMatcherByElement, indexStart, indexEnd, indexStartParse), indexStartParse);
 				}
 			}
 
@@ -396,7 +427,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		}
 
 		/**
-		 * @return ElementMatcher in literal form.
+		 * @return ElementMatcher literal.
 		 */
 		@Override
 		public String toString() {
@@ -456,14 +487,14 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		}
 
 		/**
-		 * Parses the next part of a ElementMatcher in literal form.
+		 * Parses the next part of a ElementMatcher literal.
 		 *
 		 * Parts in a ElementMatcher are separated with ":". But if a part starts with "("
 		 * (indicating a regex part), then it must end with ")" followed by ":" or the end
 		 * of the ElementMatcher, so that ":" may be present within "(" and ")".
 		 *
 		 * @param stringReferencePathMatcherByElement Complete
-		 *   ReferencePathMatcherByElement in literal form.
+		 *   ReferencePathMatcherByElement literal.
 		 * @param indexStart Index of the first character within
 		 *   stringReferencePathMatcherByElement that corresponds to the ElementMatcher
 		 *   part to parse.
@@ -485,7 +516,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 
 				if (indexPartEnd == -1) {
 					if (stringReferencePathMatcherByElement.charAt(indexEnd - 1) != ')') {
-						throw new ParseException("Within reference path matcher " + stringReferencePathMatcherByElement + ", reference path element regex part starting with \"(\" at index " + indexStart + " is not properly terminated with \")\" at index " + indexEnd + '.', indexEnd);
+						throw new ParseException(MessageFormat.format(ReferencePathMatcherByElement.resourceBundle.getString(ReferencePathMatcherByElement.MSG_PATTERN_KEY_ELEMENT_REGEX_NOT_PROPERLY_TERMINATED), stringReferencePathMatcherByElement, indexStart, indexEnd), indexEnd);
 					}
 
 					regex = stringReferencePathMatcherByElement.substring(indexStart + 1, indexEnd - 1); // + 1 to skip "(" and - 1 to exclude ")", which are only delimiters and not part of the regex itself.
@@ -503,7 +534,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 					try  {
 						partMatcher.pattern = Pattern.compile(regex);
 					} catch (PatternSyntaxException pse) {
-						throw new ParseException("Within reference path matcher " + stringReferencePathMatcherByElement + ", reference path element regex part between indexes " + (indexStart + 1) + " and " + indexPartEnd + " is invalid. Message: " + pse.getDescription() + " at index " + indexStart + 1 + pse.getIndex() + '.', indexStart + 1 + pse.getIndex());
+						throw new ParseException(MessageFormat.format(ReferencePathMatcherByElement.resourceBundle.getString(ReferencePathMatcherByElement.MSG_PATTERN_KEY_ELEMENT_REGEX_INVALID), stringReferencePathMatcherByElement, indexStart + 1, indexEnd, pse.getDescription(), indexStart + 1 + pse.getIndex()), indexStart + 1 + pse.getIndex());
 					}
 				}
 
@@ -884,12 +915,12 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	}
 
 	/**
-	 * Constructor using a ReferencePathMatcherByElement in literal form.
+	 * Constructor using a ReferencePathMatcherByElement literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement in
-	 *   literal form.
+	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement
+	 *   literal.
 	 * @param model Model. The {@link Model} is required since a
 	 *   ReferencePathMatcherByElement can refer to {@link ArtifactGroupId}'s which
 	 *   must be translated to {@link NodePath}'s.
@@ -938,10 +969,10 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	}
 
 	/**
-	 * Parses a ReferencePathMatcherByElement in literal form.
+	 * Parses a ReferencePathMatcherByElement literal.
 	 *
-	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement in
-	 *   literal form.
+	 * @param stringReferencePathMatcherByElement ReferencePathMatcherByElement
+	 *   literal.
 	 * @param model Model. The {@link Model} is required since a
 	 *   ReferencePathMatcherByElement can refer to {@link ArtifactGroupId}'s which
 	 *   must be translated to {@link NodePath}'s.
@@ -1063,7 +1094,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 					module = this.model.findModuleByArtifactGroupId(artifactGroupId);
 
 					if (module == null) {
-						throw new ParseException("Within reference path matcher " + this + ", reference path element " + elementMatcher + " refers to a specific artifact " + artifactGroupId + " which does not correspond to a module.", 0);
+						throw new ParseException(MessageFormat.format(ReferencePathMatcherByElement.resourceBundle.getString(ReferencePathMatcherByElement.MSG_PATTERN_KEY_ELEMENT_ARTIFACT_NO_MODULE), this, elementMatcher, artifactGroupId), 0);
 					}
 
 					moduleMatcher.nodePath = module.getNodePath();
@@ -1088,7 +1119,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	}
 
 	/**
-	 * @return ReferencePathMatcherByElement in literal form.
+	 * @return ReferencePathMatcherByElement literal.
 	 */
 	@Override
 	public String toString() {

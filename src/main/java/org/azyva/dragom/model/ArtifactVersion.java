@@ -19,7 +19,11 @@
 
 package org.azyva.dragom.model;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
 
@@ -67,7 +71,29 @@ public class ArtifactVersion {
 	 */
 	public static final String DYNAMIC_VERSION_SUFFIX = "-SNAPSHOT";
 
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR = "ARTIFACT_VERSION_PARSING_ERROR";
+
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactVersion.class.getName());
+
+	/**
+	 * Pattern for parsing an ArtifactVersion literal.
+	 */
+	private static Pattern patternArtifactVersionLiteral = Pattern.compile("([a-zA-Z0-9\\.\\-_]+)(-SNAPSHOT)?+");
+
+	/**
+	 * VersionType.
+	 */
 	private VersionType versionType;
+
+	/**
+	 * Version string, without the -SNAPSHOT suffix, if any.
+	 */
 	private String version;
 
 	/**
@@ -90,24 +116,28 @@ public class ArtifactVersion {
 	}
 
 	/**
-	 * Constructor using an ArtifactVersion in literal form.
+	 * Constructor using an ArtifactVersion literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringArtifactVersion ArtifactVersion in literal form.
+	 * @param stringArtifactVersion ArtifactVersion literal.
 	 */
 	public ArtifactVersion(String stringArtifactVersion) {
+		Matcher matcher;
+
+		matcher = ArtifactVersion.patternArtifactVersionLiteral.matcher(stringArtifactVersion);
+
 		try {
-			if (stringArtifactVersion.endsWith(ArtifactVersion.DYNAMIC_VERSION_SUFFIX)) {
-				this.versionType = VersionType.DYNAMIC;
-				this.version = stringArtifactVersion.substring(0, stringArtifactVersion.length() - ArtifactVersion.DYNAMIC_VERSION_SUFFIX.length());
-			} else {
-				this.versionType = VersionType.STATIC;
-				this.version = stringArtifactVersion;
+			if (!matcher.matches()) {
+				throw new ParseException(MessageFormat.format(ArtifactVersion.resourceBundle.getString(ArtifactVersion.MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR), stringArtifactVersion, ArtifactVersion.patternArtifactVersionLiteral), 0);
 			}
 
-			if (this.version.length() == 0) {
-				throw new ParseException("Version cannot be the empty string.", 0);
+			this.version = matcher.group(1);
+
+			if (matcher.group(2) != null) {
+				this.versionType = VersionType.DYNAMIC;
+			} else {
+				this.versionType = VersionType.STATIC;
 			}
 		} catch (ParseException pe) {
 			throw new RuntimeException(pe);
@@ -115,10 +145,10 @@ public class ArtifactVersion {
 	}
 
 	/**
-	 * Parses a Version in literal form.
+	 * Parses an ArtifactVersion literal.
 	 *
-	 * @param stringArtifactVersion ArtifactVersion in literal form.
-	 * @return Version.
+	 * @param stringArtifactVersion ArtifactVersion literal.
+	 * @return ArtifactVersion.
 	 * @throws ParseException If parsing fails.
 	 */
 	public static ArtifactVersion parse(String stringArtifactVersion)
@@ -163,7 +193,7 @@ public class ArtifactVersion {
 	}
 
 	/**
-	 * @return ArtifactVersion in literal form.
+	 * @return ArtifactVersion literal.
 	 */
 	@Override
 	public String toString() {

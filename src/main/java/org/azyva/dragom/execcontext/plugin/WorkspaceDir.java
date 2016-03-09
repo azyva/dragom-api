@@ -19,6 +19,8 @@
 
 package org.azyva.dragom.execcontext.plugin;
 
+import org.azyva.dragom.model.ModuleVersion;
+
 /**
  * This is a marker interface for classes representing workspace directories.
  *
@@ -28,8 +30,8 @@ package org.azyva.dragom.execcontext.plugin;
  *   user. It belongs to the user. Tools and plugins can interact with a user
  *   workspace directory on behalf of the user. The lifecycle of such directories
  *   is generally controlled by the user as these directories belong to the user.
- *   A typical example is a directory that contains a module version checked out
- *   by a tool.
+ *   A typical example is a directory that contains a {@link ModuleVersion}
+ *   checked out by a tool.
  *
  * - System workspace directory: Directory that is created by the system,
  *   generally a plugin, for its own use. Such a directory is generally hidden to

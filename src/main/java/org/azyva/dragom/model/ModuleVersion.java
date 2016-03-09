@@ -19,7 +19,11 @@
 
 package org.azyva.dragom.model;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.azyva.dragom.model.plugin.ScmPlugin;
 
@@ -42,7 +46,29 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public class ModuleVersion {
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
+
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ModuleVersion.class.getName());
+
+	/**
+	 * Pattern for parsing an ModuleVersion literal.
+	 */
+	private static Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
+
+	/**
+	 * NodePath.
+	 */
 	private NodePath nodePath;
+
+	/**
+	 * Verseion.
+	 */
 	private Version version;
 
 	/**
@@ -54,11 +80,11 @@ public class ModuleVersion {
 	 */
 	public ModuleVersion(NodePath nodePath, Version version) {
 		if (nodePath == null) {
-			throw new RuntimeException("Node path cannot be null.");
+			throw new RuntimeException("NodePath cannot be null.");
 		}
 
 		if (nodePath.isPartial()) {
-			throw new RuntimeException("The node path " + nodePath + " must not be partial.");
+			throw new RuntimeException("The NodsePath " + nodePath + " must not be partial.");
 		}
 
 		this.nodePath = nodePath;
@@ -66,26 +92,30 @@ public class ModuleVersion {
 	}
 
 	/**
-	 * Constructor using a ModuleVersion in literal form.
+	 * Constructor using a ModuleVersion literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringModuleVersion ModuleVersion in literal form.
+	 * @param stringModuleVersion ModuleVersion literal.
 	 */
 	public ModuleVersion(String stringModuleVersion) {
-		String[] arrayComponentsModuleVersion;
+		Matcher matcher;
+
+		matcher = ModuleVersion.patternModuleVersionLiteral.matcher(stringModuleVersion);
 
 		try {
-			arrayComponentsModuleVersion = stringModuleVersion.split(":");
-
-			if ((arrayComponentsModuleVersion.length < 1) || (arrayComponentsModuleVersion.length > 2)) {
-				throw new ParseException("Error parsing module version " + stringModuleVersion + ". Module version must be formatted as \"<node-path>[:<version>]\".", 0);
+			if (!matcher.matches()) {
+				throw new ParseException(MessageFormat.format(ModuleVersion.resourceBundle.getString(ModuleVersion.MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR), stringModuleVersion, ModuleVersion.patternModuleVersionLiteral), 0);
 			}
 
-			this.nodePath = NodePath.parse(arrayComponentsModuleVersion[0]);
+			this.nodePath = NodePath.parse(matcher.group(1));
 
-			if (arrayComponentsModuleVersion.length == 2) {
-				this.version = Version.parse(arrayComponentsModuleVersion[1]);
+			if (matcher.group(2) != null) {
+				try {
+					this.version = Version.parse(matcher.group(2));
+				} catch (ParseException pe) {
+					throw new ParseException(pe.getMessage(), pe.getErrorOffset() + matcher.start(2));
+				}
 			}
 		} catch (ParseException pe) {
 			throw new RuntimeException(pe);
@@ -93,9 +123,9 @@ public class ModuleVersion {
 	}
 
 	/**
-	 * Parses a ModuleVersion in literal form.
+	 * Parses a ModuleVersion literal.
 	 *
-	 * @param stringModuleVersion Version in literal form.
+	 * @param stringModuleVersion Version literal.
 	 * @return Version.
 	 * @throws ParseException If parsing fails.
 	 */
@@ -129,7 +159,7 @@ public class ModuleVersion {
 	}
 
 	/**
-	 * @return ModuleVersion in literal form.
+	 * @return ModuleVersion literal.
 	 */
 	@Override
 	public String toString() {

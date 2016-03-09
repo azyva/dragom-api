@@ -19,7 +19,11 @@
 
 package org.azyva.dragom.model;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
 import org.azyva.dragom.model.plugin.ScmPlugin;
@@ -49,7 +53,29 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public final class Version {
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
+
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(Version.class.getName());
+
+	/**
+	 * Pattern for parsing a Version literal.
+	 */
+	private static Pattern patternVersionLiteral = Pattern.compile("(D|S)/([a-zA-Z0-9\\.\\-_]+)");
+
+	/**
+	 * VersionType.
+	 */
 	private VersionType versionType;
+
+	/**
+	 * Version string.
+	 */
 	private String version;
 
 	/**
@@ -72,36 +98,38 @@ public final class Version {
 	}
 
 	/**
-	 * Constructor using a Version in literal form.
+	 * Constructor using a Version literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringVersion Version in literal form.
+	 * @param stringVersion Version literal.
 	 */
 	public Version(String stringVersion) {
+		Matcher matcher;
+
+		matcher = Version.patternVersionLiteral.matcher(stringVersion);
+
 		try {
-			if (stringVersion.startsWith("D/")) {
+			if (!matcher.matches()) {
+				throw new ParseException(MessageFormat.format(Version.resourceBundle.getString(Version.MSG_PATTERN_KEY_VERSION_PARSING_ERROR), stringVersion, Version.patternVersionLiteral), 0);
+			}
+
+			if (matcher.group(1).charAt(0) == 'D') {
 				this.versionType = VersionType.DYNAMIC;
-			} else if (stringVersion.startsWith("S/")) {
-				this.versionType = VersionType.STATIC;
 			} else {
-				throw new ParseException("Version " + stringVersion + " must start with D/ or S/.", 0);
+				this.versionType = VersionType.STATIC;
 			}
 
-			this.version = stringVersion.substring(2);
-
-			if (this.version.length() == 0) {
-				throw new ParseException("Version cannot be the empty string.", 2);
-			}
+			this.version = matcher.group(2);
 		} catch (ParseException pe) {
 			throw new RuntimeException(pe);
 		}
 	}
 
 	/**
-	 * Parses a Version in literal form.
+	 * Parses a Version literal.
 	 *
-	 * @param stringVersion Version in literal form.
+	 * @param stringVersion Version literal.
 	 * @return Version.
 	 * @throws ParseException If parsing fails.
 	 */
@@ -147,7 +175,7 @@ public final class Version {
 	}
 
 	/**
-	 * @return Version in literal form.
+	 * @return Version literal.
 	 */
 	@Override
 	public String toString() {

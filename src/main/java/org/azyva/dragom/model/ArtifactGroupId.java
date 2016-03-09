@@ -19,7 +19,11 @@
 
 package org.azyva.dragom.model;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -37,7 +41,29 @@ import java.text.ParseException;
  * @author David Raymond
  */
 public final class ArtifactGroupId {
+	/**
+	 * See description in ResourceBundle.
+	 */
+	public static final String MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR = "ARTIFACT_GROUP_ID_PARSING_ERROR";
+
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactGroupId.class.getName());
+
+	/**
+	 * Pattern for parsing an ArtifactGroupId literal.
+	 */
+	private static Pattern patternArtifactGroupIdLiteral = Pattern.compile("([a-zA-Z][a-zA-Z0-9\\.\\-_]*):([a-zA-Z][a-zA-Z0-9\\.\\-_]*)");
+
+	/**
+	 * GroupId.
+	 */
 	private String groupId;
+
+	/**
+	 * ArtifactId.
+	 */
 	private String artifactId;
 
 	/**
@@ -56,33 +82,33 @@ public final class ArtifactGroupId {
 	}
 
 	/**
-	 * Constructor using an ArtifactGroupId in literal form.
+	 * Constructor using an ArtifactGroupId literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringArtifactGroupId in literal form.
+	 * @param stringArtifactGroupId ArtifactGroupId literal.
 	 */
 	public ArtifactGroupId(String stringArtifactGroupId) {
-		int colonPos;
+		Matcher matcher;
+
+		matcher = ArtifactGroupId.patternArtifactGroupIdLiteral.matcher(stringArtifactGroupId);
 
 		try {
-			colonPos = stringArtifactGroupId.indexOf(':');
-
-			if (colonPos == -1) {
-				throw new ParseException("The string representation of an ArtifactGroupId " + stringArtifactGroupId + " is not valid as it does not contain \":\".", 0);
+			if (!matcher.matches()) {
+				throw new ParseException(MessageFormat.format(ArtifactGroupId.resourceBundle.getString(ArtifactGroupId.MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR), stringArtifactGroupId, ArtifactGroupId.patternArtifactGroupIdLiteral), 0);
 			}
 
-			this.groupId = stringArtifactGroupId.substring(0, colonPos);
-			this.artifactId = stringArtifactGroupId.substring(colonPos + 1);
+			this.groupId = matcher.group(1);
+			this.artifactId = matcher.group(2);
 		} catch (ParseException pe) {
 			throw new RuntimeException(pe);
 		}
 	}
 
 	/**
-	 * Parses an ArtifactGroupId in literal form.
+	 * Parses an ArtifactGroupId literal.
 	 *
-	 * @param stringArtifactGroupId ArtifactVersion in literal form.
+	 * @param stringArtifactGroupId ArtifactVersion literal.
 	 * @return Version.
 	 * @throws ParseException If parsing fails.
 	 */
@@ -108,7 +134,7 @@ public final class ArtifactGroupId {
 	}
 
 	/**
-	 * @return ArtifactGroupId in literal form.
+	 * @return ArtifactGroupId literal.
 	 */
 	@Override
 	public String toString() {

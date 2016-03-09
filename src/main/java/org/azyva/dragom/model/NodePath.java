@@ -19,8 +19,10 @@
 
 package org.azyva.dragom.model;
 
+import java.text.MessageFormat;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,11 +67,35 @@ import java.util.regex.Pattern;
  */
 public final class NodePath {
 	/**
-	 * The Pattern to validate {@link Node} names.
+	 * See description in ResourceBundle.
 	 */
-	static private Pattern patternValidateNodeName = Pattern.compile("^[A-Za-z0-9_][A-Za-z0-9\\-_]*$");
+	public static final String MSG_PATTERN_KEY_NODE_PATH_PARSING_ERROR = "NODE_PATH_PARSING_ERROR";
 
+	/**
+	 * ResourceBundle specific to this class.
+	 */
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ModuleVersion.class.getName());
+
+	/**
+	 * Pattern for validating a NodePath literal.
+	 * <p>
+	 * Not used for actually parsing.
+	 */
+	private static Pattern patternValidateNodePathLiteral = Pattern.compile("(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*/)*(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*)?");
+
+	/**
+	 * Pattern for validating a {@link Node} names.
+	 */
+	static private Pattern patternValidateNodeName = Pattern.compile("[A-Za-z0-9_][A-Za-z0-9\\-_]*");
+
+	/**
+	 * Array of node names.
+	 */
 	private String[] arrayNodeName;
+
+	/**
+	 * Indicates if the NodePath is partial.
+	 */
 	private boolean isPartial;
 
 	/**
@@ -89,7 +115,7 @@ public final class NodePath {
 	 */
 	public NodePath(String[] arrayNodeName, boolean isPartial) {
 		if ((arrayNodeName.length == 0) && !isPartial) {
-			throw new RuntimeException("A node path cannot be empty.");
+			throw new RuntimeException("A NodsePath cannot be empty.");
 		}
 
 		for (String nodeName : arrayNodeName) {
@@ -128,7 +154,7 @@ public final class NodePath {
 
 		if (nodePathParent != null) {
 			if (!nodePathParent.isPartial()) {
-				throw new RuntimeException("A node cannot be appended to a complete node path " + nodePathParent + '.');
+				throw new RuntimeException("A node cannot be appended to a complete NodsePath " + nodePathParent + '.');
 			}
 
 			this.arrayNodeName = new String[nodePathParent.arrayNodeName.length + 1];
@@ -143,14 +169,22 @@ public final class NodePath {
 	}
 
 	/**
-	 * Constructor using a NodePath in literal form.
+	 * Constructor using a NodePath literal.
 	 * <p>
 	 * Throws RuntimeException if parsing fails.
 	 *
-	 * @param stringNodePath NodePath in literal form.
+	 * @param stringNodePath NodePath literal.
 	 */
 	public NodePath(String stringNodePath) {
+		Matcher matcher;
+
 		try {
+			matcher = NodePath.patternValidateNodePathLiteral.matcher(stringNodePath);
+
+			if (!matcher.matches()) {
+				throw new ParseException(MessageFormat.format(NodePath.resourceBundle.getString(NodePath.MSG_PATTERN_KEY_NODE_PATH_PARSING_ERROR), stringNodePath, NodePath.patternValidateNodePathLiteral), 0);
+			}
+
 			if (stringNodePath.charAt(stringNodePath.length() - 1) == '/') {
 				this.isPartial = true;
 				stringNodePath = stringNodePath.substring(0, stringNodePath.length() - 1);
@@ -161,19 +195,14 @@ public final class NodePath {
 			this.arrayNodeName = stringNodePath.split("/");
 
 			// arrayNodeName cannot be empty here, even if stringNodePath is
-			// the empty String. This will be caught by validateName below.
-
-			for (String nodeName: this.arrayNodeName) {
-				if (NodePath.validateNodeName(nodeName)) {
-					throw new ParseException("The node name " + nodeName + " is invalid. It does not match the regex " + NodePath.patternValidateNodeName, 0);			}
-			}
+			// the empty String. This would have been caught above.
 		} catch (ParseException pe) {
 			throw new RuntimeException(pe);
 		}
 	}
 
 	/**
-	 * Parses a NodePath in literal form.
+	 * Parses a NodePath literal.
 	 *
 	 * @param stringNodePath
 	 * @return NodePath
@@ -219,7 +248,7 @@ public final class NodePath {
 	 */
 	public String getNodeName(int index) {
 		if (index >= this.arrayNodeName.length) {
-			throw new RuntimeException("The index " + index + " is larger than the index of the last node of the node path " + this + '.');
+			throw new RuntimeException("The index " + index + " is larger than the index of the last node of the NodsePath " + this + '.');
 		}
 
 		return this.arrayNodeName[index];
@@ -248,14 +277,14 @@ public final class NodePath {
 	 */
 	public String getModuleName() {
 		if (this.isPartial) {
-			throw new RuntimeException("The node path " + this + " is partial and has no module.");
+			throw new RuntimeException("The NodsePath " + this + " is partial and has no module.");
 		}
 
 		return this.arrayNodeName[this.arrayNodeName.length - 1];
 	}
 
 	/**
-	 * @return NodePath in literal form.
+	 * @return NodePath literal.
 	 */
 	@Override
 	public String toString() {

@@ -22,7 +22,7 @@ package org.azyva.dragom.execcontext.plugin;
 import org.azyva.dragom.model.ModuleVersion;
 
 /**
- * Represents a user workspace directory that contains a module version.
+ * Represents a user workspace directory that contains a {@link ModuleVersion}.
  *
  * During a checkout operation, for example, such directories are created for
  * the user.
