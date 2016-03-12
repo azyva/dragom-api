@@ -79,7 +79,7 @@ public class ArtifactVersion {
 	/**
 	 * ResourceBundle specific to this class.
 	 */
-	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactVersion.class.getName());
+	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactVersion.class.getName() + "ResourceBundle");
 
 	/**
 	 * Pattern for parsing an ArtifactVersion literal.

@@ -49,6 +49,12 @@ import java.io.Writer;
 
 public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
 	public static interface BracketHandle extends Closeable {
+		/**
+		 * Closeable.close throws checked IOException which is useless and bothersome
+		 * in this context. We therefore redefine it without any exceptions.
+		 */
+		@Override
+		void close();
 	}
 
 	BracketHandle startBracket(String info);

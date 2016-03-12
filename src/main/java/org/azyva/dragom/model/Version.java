@@ -61,7 +61,7 @@ public final class Version {
 	/**
 	 * ResourceBundle specific to this class.
 	 */
-	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(Version.class.getName());
+	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(Version.class.getName() + "ResourceBundle");
 
 	/**
 	 * Pattern for parsing a Version literal.

@@ -199,7 +199,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	/**
 	 * ResourceBundle specific to this class.
 	 */
-	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ReferencePathMatcherByElement.class.getName());
+	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ReferencePathMatcherByElement.class.getName() + "ResourceBundle");
 
 	/**
 	 * Represents the matcher for an element of a ReferencePath.

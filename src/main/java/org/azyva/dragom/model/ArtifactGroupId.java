@@ -49,7 +49,7 @@ public final class ArtifactGroupId {
 	/**
 	 * ResourceBundle specific to this class.
 	 */
-	private static ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactGroupId.class.getName());
+	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactGroupId.class.getName() + "ResourceBundle");
 
 	/**
 	 * Pattern for parsing an ArtifactGroupId literal.

@@ -102,6 +102,8 @@ subtotal:   261.5
 2016-03-06: 2.5
 2016-03-07: 3
 2016-03-08: 7
+2016-03-09: 2
+2016-03-11: 3
 
 
 
@@ -141,13 +143,11 @@ Hotfix new dynamic version.
 To implement soon
 =================
 
-Implement brackets and information levels.
+Implement information levels maybe (not sure).
 Review storing reuse information in runtime properties, etc (AlwaysNeverAsk, YesAlwaysNo)
 Have ExecContext plugin IDs in order to implement global tool start and end callbacks (to clean Jenkins folder for instance).
-Localization for the parse methods. 
-
-
-
+- No, I don't think so. ExecContextPlugins are for communication with outside world, not to implement global actions.
+- If global actions are needed, maybe a dedicated Job class is required that would have pre and post actions.
 
 Maybe have the notion of importance in userInteractionCallback:
 - Info
@@ -377,21 +377,6 @@ For a reference, what happens if a property is used?
 
 *** We do not support property references for now (exception ${project.version within an aggregation).
 
-
-Reflexions about plugin instantiation
-=====================================
-
-Spring should be supported, but through a plugin in a separate JAR.
-Maybe support only constructor and getInstance
-With constructor, Dragom takes care of having only one instance per class, per ExecContext or per Node
-With getInstance, the class can do what it wants
-Good for ExecContext and Node plugins.
-Maybe (for Spring) have plugin instanciation parameters, separate from model or other properties (reintroduce params).
-
-
-DefaultExecContextImpl
-DefaultModelImpl
-ExecContext.getPlugin(Class<ExecContextPlugin> classExecContextPlugin)
 
 
 
