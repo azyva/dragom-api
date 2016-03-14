@@ -1019,7 +1019,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 			for (index = this.listElementMatcher.size() - 1; (index >= 0) && !this.listElementMatcher.get(index).indDoubleAsterisk; index--);
 
 			if (index < this.indexFirstDoubleAsterisk) {
-				throw new RuntimeException("Should never get here.");
+				throw new RuntimeException("Must not get here.");
 			}
 
 			this.indexLastDoubleAsterisk = index;
