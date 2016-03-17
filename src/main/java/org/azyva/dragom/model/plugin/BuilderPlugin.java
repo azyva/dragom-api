@@ -90,7 +90,7 @@ public interface BuilderPlugin extends ModulePlugin {
 	 * <p>
 	 * <li>new-static-version: When the Module is built before creating a new static
 	 *     version using {@link CreateStaticVersionTool};</li>
-	 * <li>build: When the Module is build by {@link BuildTaskPluginImpl}.</li>
+	 * <li>build: When the Module is built by {@link BuildTaskPluginImpl}.</li>
 	 * <p>
 	 * It is up to the plugin implementation whether and how to take the context
 	 * into consideration. See {@link MavenBuilderPluginImpl} for an example.

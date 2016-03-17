@@ -206,4 +206,11 @@ public interface ExecContext {
 	 *   effectively removed.
 	 */
 	void setTransientData(String name, Object value);
+
+	/**
+	 * @return Name given to the ExecContext so that it can be identified by users.
+	 *   Typically if the ExecContext is based on a workspace directory the name
+	 *   could include a reference to that directory.
+	 */
+	String getName();
 }

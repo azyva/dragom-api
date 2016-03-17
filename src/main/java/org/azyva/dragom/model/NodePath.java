@@ -74,7 +74,7 @@ public final class NodePath {
 	/**
 	 * ResourceBundle specific to this class.
 	 */
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ModuleVersion.class.getName() + "ResourceBundle");
+	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(NodePath.class.getName() + "ResourceBundle");
 
 	/**
 	 * Pattern for validating a NodePath literal.

@@ -105,6 +105,7 @@ subtotal:   261.5
 2016-03-09: 2
 2016-03-11: 3
 2016-03-13: 2.5
+2016-03-16: 10
 
 
 
@@ -143,6 +144,13 @@ Hotfix new dynamic version.
 
 To implement soon
 =================
+
+Search everywhere for non-internationalized messages with regex provideInfo, getInfo, RuntimeExceptionUserError
+
+
+Under some condition, ask the user so that with default values, a versatile interactive session is possible.
+- Plugin switcher.
+
 
 Implement information levels maybe (not sure).
 Review storing reuse information in runtime properties, etc (AlwaysNeverAsk, YesAlwaysNo)
@@ -218,6 +226,12 @@ Version report: Get the list of modules matching a given version regex.
 After that, ask to change the version of every references to these modules to that version.
 Use switch to dynamic version for that, but do not push changes.
 Build. This will validate if changes to currently modified modules are retrocompatible.
+Again:
+- No this seems like a different tool than checkout
+- Switch should remember which directory were switched, and not switch twice if ever two module with different versions exist in the same workspace
+- At the end should provide a report of what was not touched as these may be module which the user want to clean from workspace.
+- Because of end processing should probably be another job class derived from Root...
+- Maybe the checkout task can be reused and should be adapted to work in switch mode.
 
 
 
