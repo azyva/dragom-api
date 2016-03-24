@@ -107,6 +107,7 @@ subtotal:   261.5
 2016-03-13: 2.5
 2016-03-16: 10
 2016-03-21: 5
+2016-03-23: 4
 
 
 
@@ -145,6 +146,12 @@ Hotfix new dynamic version.
 
 To implement soon
 =================
+
+Allow the man pages to configure the tool name.
+Have a generic script launcher with an initial argument that is the command to invoke
+The command would be used to delegate to the right Java class with the remaining arguments.
+COuld implement an independent execcontext property management tool that could be integrated into a unified suite from the user's point of view.
+
 
 Search everywhere for non-internationalized messages with regex provideInfo, getInfo, RuntimeExceptionUserError
 
