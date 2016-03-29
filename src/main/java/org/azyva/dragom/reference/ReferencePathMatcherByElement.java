@@ -1311,7 +1311,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 					// ReferencePathMatcherByElement.
 					// This is the idiom for removing range of elements in a List, and ReferencePath
 					// simply extends ArrayList.
-					referencePathCopy.subList(0, indexElement + 1).clear();
+					referencePathCopy.removeRootReferences(indexElement + 1);
 
 					indexTrailingElementMatcher = moduleMatcher.indexElementMatcher + 1;
 

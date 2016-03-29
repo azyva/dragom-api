@@ -20,27 +20,34 @@
 package org.azyva.dragom.reference;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
 
 /**
  * Represents a reference path.
- *
- * For now this class simply extends ArrayList as a ReferencePath is essentially
- * an ordered sequence of Reference's. Eventually a more specific implementation
- * may be developed. But since the concept of ReferencePath is important in Dragom
- * and deserves being represented with a class.
+ * <p>
+ * This class behaves in a way that is very similar to a List as a ReferencePath
+ * is essentially an ordered sequence of Reference's. For that reason methods in
+ * common with List are named the same.
+ * <p>
+ * Note that a ReferencePath is NOT a List. If it extended a List class it would
+ * carry over methods that are not appropriate for a ReferencePath.
  *
  * @author David Raymond
  */
-public class ReferencePath extends ArrayList<Reference> {
-	private static final long serialVersionUID = 0; // To keep the compiler from complaining.
+public class ReferencePath {
+	/*
+	 * List of {@link Reference}'s.
+	 */
+	private List<Reference> listReference;
 
 	/**
 	 * Default constructor;
 	 */
 	public ReferencePath() {
-		super();
+		this.listReference = new ArrayList<Reference>();
 	}
 
 	/**
@@ -49,20 +56,92 @@ public class ReferencePath extends ArrayList<Reference> {
 	 * @param referencePath ReferencePath.
 	 */
 	public ReferencePath(ReferencePath referencePath) {
-		super(referencePath);
+		this.listReference = new ArrayList<Reference>(referencePath.listReference);
 	}
 
 	/**
-	 * @return Leaf {@link ModuleVersion}.
+	 * Adds a {@link Reference} to the end of the ReferencePath.
+	 * <p>
+	 * The new Reference must not create a cycle among the {@link Module}'s.
+	 *
+	 * @param reference Reference.
+	 */
+	public void add(Reference reference) {
+		for (Reference reference2: this.listReference) {
+			if (reference2.getModuleVersion().getNodePath().equals(reference.getModuleVersion().getNodePath())) {
+				throw new RuntimeException("Cycle detected in ReferencePath " + this + " when adding Reference " + reference + '.');
+			}
+		}
+
+		this.listReference.add(reference);
+	}
+
+	/**
+	 * Adds a ReferencePath to the end of this ReferencePath.
+	 * <p>
+	 * The new Reference must not create a cycle among the {@link Module}'s.
+	 *
+	 * @param referencePath ReferencePath.
+	 */
+	public void add(ReferencePath referencePath) {
+		// Adding the Reference's one at a time using the {@link #add} method ensure that
+		// we properly check for cycles.
+		for (int i = 0; i < referencePath.size() ; i++ ) {
+			this.add(referencePath.get(i));
+		}
+	}
+
+	/**
+	 * @return Number of {@link Reference}'s in the ReferencePath.
+	 */
+	public int size() {
+		return this.listReference.size();
+	}
+
+	/**
+	 * Returns a {@link Reference} in the ReferencePath given an index.
+	 *
+	 * @param index Index.
+	 * @return Reference.
+	 */
+	public Reference get(int index) {
+		return this.listReference.get(index);
+	}
+
+	/**
+	 * Removes the root {@link Reference} (from the head of the List).
+	 */
+	public void removeRootReferences() {
+		this.listReference.remove(0);
+
+	}
+
+	/**
+	 * Removes a given number of root {@link Reference}'s (from the head of the List).
+	 * @param nbReferences
+	 */
+	public void removeRootReferences(int nbReferences) {
+		this.listReference.subList(0, nbReferences).clear();
+	}
+
+	/**
+	 * @return Leaf {@link ModuleVersion} (from the tail of the List).
 	 */
 	public ModuleVersion getLeafModuleVersion() {
-		return this.get(this.size() - 1).getModuleVersion();
+		return this.listReference.get(this.listReference.size() - 1).getModuleVersion();
 	}
 
 	/**
-	 * Removes the leaf reference.
+	 * Removes the leaf {@Link Reference) (from the tail of the List).
 	 */
 	public void removeLeafReference() {
-		this.remove(this.size() - 1);
+		this.listReference.remove(this.listReference.size() - 1);
+	}
+
+	/**
+	 * Removes a given number of leaf {@Link Reference) (from the tail of the List).
+	 */
+	public void removeLeafReferences(int nbReferences) {
+		this.listReference.subList(this.listReference.size() - nbReferences, nbReferences).clear();
 	}
 }
