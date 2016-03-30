@@ -74,7 +74,7 @@ public class ArtifactVersion {
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR = "ARTIFACT_VERSION_PARSING_ERROR";
+	private static final String MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR = "ARTIFACT_VERSION_PARSING_ERROR";
 
 	/**
 	 * ResourceBundle specific to this class.

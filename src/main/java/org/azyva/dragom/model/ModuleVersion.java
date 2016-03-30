@@ -49,7 +49,7 @@ public class ModuleVersion {
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
+	private static final String MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
 
 	/**
 	 * ResourceBundle specific to this class.

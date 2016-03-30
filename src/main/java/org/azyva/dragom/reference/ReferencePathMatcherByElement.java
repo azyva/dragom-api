@@ -174,27 +174,27 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ELEMENT_EMPTY = "ELEMENT_EMPTY";
+	private static final String MSG_PATTERN_KEY_ELEMENT_EMPTY = "ELEMENT_EMPTY";
 
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ELEMENT_NOT_PROPERTY_TERMINATED = "ELEMENT_NOT_PROPERTY_TERMINATED";
+	private static final String MSG_PATTERN_KEY_ELEMENT_NOT_PROPERTY_TERMINATED = "ELEMENT_NOT_PROPERTY_TERMINATED";
 
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ELEMENT_REGEX_NOT_PROPERLY_TERMINATED = "ELEMENT_REGEX_NOT_PROPERLY_TERMINATED";
+	private static final String MSG_PATTERN_KEY_ELEMENT_REGEX_NOT_PROPERLY_TERMINATED = "ELEMENT_REGEX_NOT_PROPERLY_TERMINATED";
 
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ELEMENT_REGEX_INVALID = "ELEMENT_REGEX_INVALID";
+	private static final String MSG_PATTERN_KEY_ELEMENT_REGEX_INVALID = "ELEMENT_REGEX_INVALID";
 
 	/**
 	 * See description in ResourceBundle.
 	 */
-	public static final String MSG_PATTERN_KEY_ELEMENT_ARTIFACT_NO_MODULE = "ELEMENT_ARTIFACT_NO_MODULE";
+	private static final String MSG_PATTERN_KEY_ELEMENT_ARTIFACT_NO_MODULE = "ELEMENT_ARTIFACT_NO_MODULE";
 
 	/**
 	 * ResourceBundle specific to this class.
