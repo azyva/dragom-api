@@ -25,7 +25,6 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * Bundles the groupId and artifactId of an artifact.
  * <p>

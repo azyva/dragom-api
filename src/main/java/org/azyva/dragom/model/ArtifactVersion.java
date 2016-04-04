@@ -65,7 +65,7 @@ import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
  *
  * @author David Raymond
  */
-public class ArtifactVersion {
+public final class ArtifactVersion {
 	/**
 	 * Suffix for dynamic ArtifactVersion.
 	 */

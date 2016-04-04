@@ -47,7 +47,7 @@ import org.azyva.dragom.model.ModuleVersion;
 public interface ReferenceGraph {
 	/**
 	 * Represents a {@link ModuleVersion} that references another ModuleVersion. It is
-	 * a tupple of a ModuleVersion and a {@link Reference} to a another ModuleVersion
+	 * a tuple of a ModuleVersion and a {@link Reference} to a another ModuleVersion
 	 * that occurs within it.
 	 * <p>
 	 * This class is required when obtaining the List of referrers to a ModuleVersion

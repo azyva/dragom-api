@@ -22,13 +22,32 @@ package org.azyva.dragom.reference;
 import org.azyva.dragom.model.ArtifactGroupId;
 import org.azyva.dragom.model.ArtifactVersion;
 import org.azyva.dragom.model.ModuleVersion;
+import org.azyva.dragom.model.plugin.NodePlugin;
+import org.azyva.dragom.model.plugin.ReferenceManagerPlugin;
 
 /**
  * Class representing a reference.
+ * <p>
+ * Although this class is final so that it cannot be derived, extra implementation
+ * data can be attached using the implData property. This is useful since
+ * References are generally specific to some build tool and build-tool-specific
+ * {@link NodePlugin}'s such as {@link ReferenceManagerPlugin} may need to include
+ * extra implementation data.
+ * <p>
+ * When implData is specified, it is used in the following way by this class:
+ * <p>
+ * <li>It is included in equality tests (equals and equalsNoVersion method). The
+ *     equals method should not consider any version information so that it can be
+ *     used by equals and equalsNoVersion. If ever extra implementation data
+ *     contains version information, it should be the same as that maintained by
+ *     this class, which considers it for equals;</li>
+ * <li>Its hashCode is used to compute this class' hashCode;</li>
+ * <li>Its string representation (toString method) is included in the string
+ * representation of this class, unless it is null or the empty string.</li>
  *
  * This class implements value semantics and is immutable.
  */
-public class Reference {
+public final class Reference {
 	/**
 	 * ModuleVersion. null if artifact-level reference and module unknown to Dragom.
 	 */
@@ -45,7 +64,22 @@ public class Reference {
 	private ArtifactVersion artifactVersion;
 
 	/**
+	 * Extra implementation data attached to the Reference.
+	 */
+	private Object implData;
+
+	/**
 	 * Constructor.
+	 */
+	public Reference(ModuleVersion moduleVersion, ArtifactGroupId artifactGroupId, ArtifactVersion artifactVersion, Object implData) {
+		this.moduleVersion = moduleVersion;
+		this.artifactGroupId = artifactGroupId;
+		this.artifactVersion = artifactVersion;
+		this.implData = implData;
+	}
+
+	/**
+	 * Constructor with no extra implementation data.
 	 */
 	public Reference(ModuleVersion moduleVersion, ArtifactGroupId artifactGroupId, ArtifactVersion artifactVersion) {
 		this.moduleVersion = moduleVersion;
@@ -54,7 +88,8 @@ public class Reference {
 	}
 
 	/**
-	 * Constructor for a source-level reference.
+	 * Constructor for a source-level reference, or when artifact-level
+	 * reference is not important.
 	 *
 	 * @param moduleVersion ModuleVersion.
 	 */
@@ -84,6 +119,13 @@ public class Reference {
 	}
 
 	/**
+	 * @return Extra implementation data.
+	 */
+	public Object getImplData() {
+		return this.implData;
+	}
+
+	/**
 	 * References are often displayed to the user and need to be shown in a human-
 	 * friendly and not too cryptic way.
 	 */
@@ -103,6 +145,16 @@ public class Reference {
 			stringBuilder.append(this.artifactGroupId).append(":").append(this.artifactVersion);
 		}
 
+		if (this.implData != null) {
+			String stringImplData;
+
+			stringImplData = this.implData.toString();
+
+			if ((stringImplData != null) && (stringImplData.length() != 0)) {
+				stringBuilder.append(" (").append(stringImplData).append(")");
+			}
+		}
+
 		return stringBuilder.toString();
 	}
 
@@ -115,6 +167,8 @@ public class Reference {
 		result = (prime * result) + ((this.moduleVersion == null) ? 0 : this.moduleVersion.hashCode());
 		result = (prime * result) + ((this.artifactGroupId == null) ? 0 : this.artifactGroupId.hashCode());
 		result = (prime * result) + ((this.artifactVersion == null) ? 0 : this.artifactVersion.hashCode());
+		result = (prime * result) + ((this.implData == null) ? 0 : this.implData.hashCode());
+
 		return result;
 	}
 
@@ -157,6 +211,14 @@ public class Reference {
 			return false;
 		}
 
+		if (this.implData == null) {
+			if (referenceOther.implData != null) {
+				return false;
+			}
+		} else if (!this.implData.equals(referenceOther.implData)) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -189,6 +251,16 @@ public class Reference {
 				return false;
 			}
 		} else if (!this.moduleVersion.getNodePath().equals(referenceOther.moduleVersion.getNodePath())) {
+			return false;
+		}
+
+		if (this.implData == null) {
+			if (referenceOther.implData != null) {
+				return false;
+			}
+		} else if (!this.implData.equals(referenceOther.implData)) {
+			// The equals method of the extra implementation data should never consider the
+			// version.
 			return false;
 		}
 

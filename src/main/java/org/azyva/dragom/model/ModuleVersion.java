@@ -45,7 +45,7 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
 
  * @author David Raymond
  */
-public class ModuleVersion {
+public final class ModuleVersion {
 	/**
 	 * See description in ResourceBundle.
 	 */
