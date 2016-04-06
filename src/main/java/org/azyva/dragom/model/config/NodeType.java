@@ -25,7 +25,7 @@ package org.azyva.dragom.model.config;
  * @author David Raymond
  * @see Config
  */
-public enum NodeTypeEnum {
+public enum NodeType {
 	/**
 	 * {@link ClassificationNodeConfig}.
 	 */

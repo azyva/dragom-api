@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.azyva.dragom.execcontext.ExecContext;
 import org.azyva.dragom.execcontext.plugin.EventPlugin;
-import org.azyva.dragom.model.config.NodeTypeEnum;
+import org.azyva.dragom.model.config.NodeType;
 import org.azyva.dragom.model.event.NodeEvent;
 import org.azyva.dragom.model.event.NodeEventListener;
 import org.azyva.dragom.model.plugin.NodePlugin;
@@ -58,9 +58,9 @@ public interface Node {
 	Model getModel();
 
 	/**
-	 * @return NodeTypeEnum.
+	 * @return NodeType.
 	 */
-	NodeTypeEnum getNodeType();
+	NodeType getNodeType();
 
 	/**
 	 * @return NodePath. null for the root {@link ClassificationNode}.

@@ -33,7 +33,7 @@ import java.util.Set;
  */
 
 public interface WorkspacePlugin extends ExecContextPlugin {
-	public enum GetWorkspaceDirModeEnum {
+	public enum GetWorkspaceDirMode {
 		/**
 		 * The workspace directory must not exist. Mutually exclusive with MUST_NOT_EXIST,
 		 * but none can be specified if existence is not important.
@@ -84,11 +84,11 @@ public interface WorkspacePlugin extends ExecContextPlugin {
 		 */
 		RESET_IF_EXIST;
 
-		public static final EnumSet<GetWorkspaceDirModeEnum> GET_EXISTING = EnumSet.noneOf(GetWorkspaceDirModeEnum.class);
-		public static final EnumSet<GetWorkspaceDirModeEnum> GET_EXISTING_OR_CREATE = EnumSet.of(CREATE_IF_NOT_EXIST);
-		public static final EnumSet<GetWorkspaceDirModeEnum> GET_EXISTING_OR_CREATE_NO_PATH = EnumSet.of(CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
-		public static final EnumSet<GetWorkspaceDirModeEnum> CREATE_NEW = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST);
-		public static final EnumSet<GetWorkspaceDirModeEnum> CREATE_NEW_NO_PATH = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
+		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING = EnumSet.noneOf(GetWorkspaceDirMode.class);
+		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING_OR_CREATE = EnumSet.of(CREATE_IF_NOT_EXIST);
+		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING_OR_CREATE_NO_PATH = EnumSet.of(CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
+		public static final EnumSet<GetWorkspaceDirMode> CREATE_NEW = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST);
+		public static final EnumSet<GetWorkspaceDirMode> CREATE_NEW_NO_PATH = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
 	};
 
 	/**
@@ -132,7 +132,7 @@ public interface WorkspacePlugin extends ExecContextPlugin {
 	//TODO: Document access mode, and the fact that in theory should never get access conflit because of the lack of
 	//circular dependencies. But this is a failfast mechanism just in case.
 	// Still, multiple readers are allowed.
-	Path getWorkspaceDir(WorkspaceDir workspaceDir, EnumSet<GetWorkspaceDirModeEnum> enumSetGetWorkspaceDirModeEnum, WorkspaceDirAccessMode workspaceDirAccessMode);
+	Path getWorkspaceDir(WorkspaceDir workspaceDir, EnumSet<GetWorkspaceDirMode> enumSetGetWorkspaceDirMode, WorkspaceDirAccessMode workspaceDirAccessMode);
 
 	void releaseWorkspaceDir(Path pathWorkspaceDir);
 

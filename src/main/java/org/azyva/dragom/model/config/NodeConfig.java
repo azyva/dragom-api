@@ -43,9 +43,9 @@ public interface NodeConfig {
 	String getName();
 
 	/**
-	 * @return NodeTypeEnum.
+	 * @return NodeType.
 	 */
-	NodeTypeEnum getNodeType();
+	NodeType getNodeType();
 
 	/**
 	 * Returns a {@link PropertyDefConfig}.

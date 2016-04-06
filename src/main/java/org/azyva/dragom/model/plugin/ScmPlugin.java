@@ -108,7 +108,7 @@ public interface ScmPlugin extends ModulePlugin {
 		}
 	}
 
-	public enum GetListCommitFlagEnum {
+	public enum GetListCommitFlag {
 		IND_INCLUDE_MESSAGE,
 		IND_INCLUDE_VERSION_STATIC,
 		IND_INCLUDE_MAP_ATTR,
@@ -128,7 +128,7 @@ public interface ScmPlugin extends ModulePlugin {
 	/**
 	 * Flags that can be passed to isSync.
 	 */
-	public enum IsSyncFlagEnum {
+	public enum IsSyncFlag {
 		/**
 		 * Refers to changes that may be present locally in the workspace but not in the
 		 * remote repository.
@@ -141,9 +141,9 @@ public interface ScmPlugin extends ModulePlugin {
 		 */
 		REMOTE_CHANGES;
 
-		public static final EnumSet<IsSyncFlagEnum> LOCAL_CHANGES_ONLY = EnumSet.of(LOCAL_CHANGES);
-		public static final EnumSet<IsSyncFlagEnum> REMOTE_CHANGES_ONLY = EnumSet.of(REMOTE_CHANGES);
-		public static final EnumSet<IsSyncFlagEnum> ALL_CHANGES = EnumSet.of(LOCAL_CHANGES, REMOTE_CHANGES);
+		public static final EnumSet<IsSyncFlag> LOCAL_CHANGES_ONLY = EnumSet.of(LOCAL_CHANGES);
+		public static final EnumSet<IsSyncFlag> REMOTE_CHANGES_ONLY = EnumSet.of(REMOTE_CHANGES);
+		public static final EnumSet<IsSyncFlag> ALL_CHANGES = EnumSet.of(LOCAL_CHANGES, REMOTE_CHANGES);
 	}
 
 	// TODO: Can be used on a temporary module definition, in the process of verifying if a dynamically created modules exists. Its parent does not need to include it as a child.
@@ -171,7 +171,7 @@ public interface ScmPlugin extends ModulePlugin {
 	// Probably have to distinguish between update required and commit/push required.
 	// maybe 2 methods.
 	// *** Only for dynamic version.
-	boolean isSync(Path pathModuleWorkspace, EnumSet<IsSyncFlagEnum> enumSetIsSyncFlagEnum);
+	boolean isSync(Path pathModuleWorkspace, EnumSet<IsSyncFlag> enumSetIsSyncFlag);
 
 	// TODO Absolutely requires a pathModuleWorkspace
 	// fetch then merge (pull)
@@ -195,7 +195,7 @@ public interface ScmPlugin extends ModulePlugin {
 	 * @param enumSetGetListCommitFlag EnumSet of GetListCommitFlag. Can be null.
 	 * @return
 	 */
-	List<Commit> getListCommit(Version version, CommitPaging commitPaging, EnumSet<GetListCommitFlagEnum> enumSetGetListCommitFlagEnum);
+	List<Commit> getListCommit(Version version, CommitPaging commitPaging, EnumSet<GetListCommitFlag> enumSetGetListCommitFlag);
 
 	/**
 	 * Gets the list of {@link Commit}'s reachable from some {@link Version} but not
@@ -208,7 +208,7 @@ public interface ScmPlugin extends ModulePlugin {
 	 * @param enumSetGetListCommitFlag EnumSet of GetListCommitFlag. Can be null.
 	 * @return
 	 */
-	List<Commit> getListCommitDiverge(Version versionSrc, Version versionDest, CommitPaging commitPaging, EnumSet<GetListCommitFlagEnum> enumSetGetListCommitFlagEnum);
+	List<Commit> getListCommitDiverge(Version versionSrc, Version versionDest, CommitPaging commitPaging, EnumSet<GetListCommitFlag> enumSetGetListCommitFlag);
 
 	// Version from which a version was created. Can be null (for default version).
 	BaseVersion getBaseVersion(Version version);

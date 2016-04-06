@@ -31,7 +31,7 @@ import org.azyva.dragom.model.ArtifactGroupId;
  * be deployed to an artifact repository.
  *
  * The build of any module produces artifacts, but such artifacts are not
- * necessarily meant to be deplyed to an artifact repository and are not identified
+ * necessarily meant to be deployed to an artifact repository and are not identified
  * by a groupId and artifactId. Such modules will not provide this plugin.
  *
  * A module providing this plugin does not necessarily imply that the version of

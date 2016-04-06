@@ -21,7 +21,7 @@ package org.azyva.dragom.model;
 
 import java.util.List;
 
-import org.azyva.dragom.model.config.NodeTypeEnum;
+import org.azyva.dragom.model.config.NodeType;
 
 /**
  * Represents a classification node at runtime.
@@ -46,12 +46,11 @@ public interface ClassificationNode extends Node {
 	/**
 	 * Traverses the Node hierarchy rooted at this ClassificationNode depth first.
 	 *
-	 * @param nodeTypeEnumFilter NodeTypeEnum to visit. If null, all NodeTypeEnum are
-	 *   visited.
+	 * @param nodeTypeFilter NodeType to visit. If null, all NodeType are visited.
 	 * @param nodeVisitor {@link NodeVisitor#visitNode} is called for each Node
 	 *   visited.
 	 * @return Indicates if the traversal has been aborted by NodeVisitor.visitNode
 	 *   returning true.
 	 */
-	boolean traverseNodeHierarchyDepthFirst(NodeTypeEnum nodeTypeEnumFilter, NodeVisitor nodeVisitor);
+	boolean traverseNodeHierarchyDepthFirst(NodeType nodeTypeFilter, NodeVisitor nodeVisitor);
 }
