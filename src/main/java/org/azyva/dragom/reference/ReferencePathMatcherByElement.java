@@ -78,11 +78,10 @@ import org.azyva.dragom.model.Version;
  * ElementMatcher literals separated with "->". Each ElementMatcher literal has
  * either of the following forms:
  *
- * - "/<module-classification-path-matcher>[:<version-matcher>]" for source-level
- *   part matchers. The leading "/" differentiates from artifact-level
- *   ElementMatcher and is not part of the NodePath. But since nodes in a NodePath
- *   are separated with this same character
- *   this makes it intuitive.
+ * - "/<module-node-path-matcher>[:<version-matcher>]" for source-level part
+ *   matchers. The leading "/" differentiates from artifact-level ElementMatcher
+ *   and is not part of the NodePath. But since nodes in a NodePath are separated
+ *   with this same character this makes it intuitive.
  *
  * - "<group-id-matcher>[:<artifact-id-matcher>[:<artifact-version-matcher>]]" for
  *   artifact-level part matchers.

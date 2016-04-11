@@ -35,10 +35,10 @@ import org.azyva.dragom.model.NodePath;
  * However in order to support dynamically created modules, classification nodes
  * must be able to determine which child Module, that may not already be
  * created, may produce the given ArtifactGroupId in their builds presumably based
- * on the classification path of the classification node. But since
- * classification nodes should not generally know about exceptions, a module whose
- * build exceptionally produces an ArtifactGroupId should be defined explicitly in
- * the hierarchy and not be created dynamically.
+ * on the NodePath of the classification node. But since classification nodes
+ * should not generally know about exceptions, a module whose build exceptionally
+ * produces an ArtifactGroupId should be defined explicitly in the hierarchy and
+ * not be created dynamically.
  *
  * Also, limiting the tree traversal to classification nodes is a useful
  * optimization.
@@ -47,13 +47,12 @@ import org.azyva.dragom.model.NodePath;
  */
 public interface FindModuleByArtifactGroupIdPlugin extends ClassificationNodePlugin {
 	/**
-	 * Returns the (module classification paths of the) modules whose build
-	 * possibly produce an ArtifactGroupId.
+	 * Returns the (NodePath of the) modules whose build possibly produce an
+	 * ArtifactGroupId.
 	 *
-	 * The reason for returning module classification paths is that the modules
-	 * may not be created and it is the responsibility of the caller to attempt
-	 * to create the modules, which may not even exist (because they do not exist
-	 * in the SCM).
+	 * The reason for returning module NodePath's is that the modules may not be
+	 * created and it is the responsibility of the caller to attempt to create the
+	 * modules, which may not even exist (because they do not exist in the SCM).
 	 *
 	 * The build of the Module returned do not necessarily produce the given
 	 * ArtifactGroupId. This must be verified the ArtifactInfoPlugin of the Module.
