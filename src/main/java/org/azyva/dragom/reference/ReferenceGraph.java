@@ -44,6 +44,7 @@ import org.azyva.dragom.model.ModuleVersion;
  *
  * @author David Raymond
  */
+//TODO: Not sure if this interface shoould export only read operations, and if TG building should be left to implementation.
 public interface ReferenceGraph {
 	/**
 	 * Represents a {@link ModuleVersion} that references another ModuleVersion. It is
@@ -94,6 +95,100 @@ public interface ReferenceGraph {
 		public Reference getReference() {
 			return this.reference;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result;
+
+			result = 1;
+			result = prime * result + this.moduleVersion.hashCode();
+			result = prime * result + this.reference.hashCode();
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object other) {
+			ReferenceGraph.Referrer referrerOther;
+
+			if (this == other) {
+				return true;
+			}
+
+			if (other == null) {
+				return false;
+			}
+
+			if (!(other instanceof Referrer)) {
+				return false;
+			}
+
+			referrerOther = (ReferenceGraph.Referrer)other;
+
+			if (!this.moduleVersion.equals(referrerOther.moduleVersion)) {
+				return false;
+			}
+
+			if (!this.reference.equals(referrerOther.reference)) {
+				return false;
+			}
+
+			return true;
+		}
+	}
+
+	/**
+	 * Action during the traversal of a {@link ReferenceGraph}.
+	 */
+	public enum VisitAction {
+		/**
+		 * Indicates we are stepping into a {@link ModuleVersion} during the traversal. A
+		 * matching {@link STEP_OUT} will occur when the traversal of the ModuleVersion is
+		 * complete.
+		 * <p>
+		 * Not used by {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
+		 */
+		STEP_IN,
+
+		/**
+		 * Indicates we are stepping out of a {@link ModuleVersion} during the traversal.
+		 * A matching {@link STEP_IN} will have occurred previously.
+		 * <p>
+		 * Not used by {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
+		 */
+		STEP_OUT,
+
+		/**
+		 * Represents the actual visit of the leaf {@link ModuleVersion}. A
+		 * {@link STEP_IN} will have occurred previously for the parent ModuleVersion. But
+		 * if traversal is depth-first STEP_IN for all the ModuleVersion in the
+		 * {@link ReferencePath} will have also occurred with no intervening visit for the
+		 * intermediate ModuleVersion.
+		 * <p>
+		 * {@link STEP_OUT} will occur thereafter for the parent ModuleVersion, after
+		 * having visited all of its child ModuleVersion.
+		 * <p>
+		 * If indAvoidReentry is true when calling
+		 * {@link ReferenceGraph#traverseReferenceGraph} this is used only for the first
+		 * visit of a given leaf ModuleVersion. For subsequent visits, the similar
+		 * {@link REPEATED_VISIT} is used instead.
+		 * <p>
+		 * This is the only VisitAction used by visitLeafModuleVersionReferencePaths.
+		 */
+		VISIT,
+
+		/**
+		 * Similar to {@link FIRST_VISIT}, except that it is used when indAvoidReentry is
+		 * true when calling {@link ReferenceGraph#traverseReferenceGraph} and the
+		 * {@link ModuleVersion} has already been visited.
+		 * <p>
+		 * This will occur for a ModuleVersion that was already visited, but not for its
+		 * children as it is in the references that reentry is avoided, and caller is
+		 * expected to be interested in the ModuleVersion itself.
+		 * <p>
+		 * Not used by visitLeafModuleVersionReferencePaths.
+		 */
+		REPEATED_VISIT
 	}
 
 	/**
@@ -104,8 +199,9 @@ public interface ReferenceGraph {
 		 * Called when visiting a {@link ModuleVersion} in the ReferenceGraph.
 		 *
 		 * @param referencePath ReferencePath of the ModuleVersion being visited.
+		 * @param visitAction VisitAction.
 		 */
-		void visit(ReferencePath referencePath);
+		void visit(ReferencePath referencePath, ReferenceGraph.VisitAction visitAction);
 	}
 
 	/**
@@ -158,12 +254,14 @@ public interface ReferenceGraph {
 	 *
 	 * @param moduleVersion ModuleVersion at which to start the traversal. Can be null
 	 *   to indicate to perform the traversal for each root ModuleVersion.
-	 * @param isDepthFirst Indicates that the traversal is depth-first, as opposed to
+	 * @param indDepthFirst Indicates that the traversal is depth-first, as opposed to
 	 *   parent-first.
-	 * @param isAvoidReentry Indicates to avoid revisiting same ModuleVersion's.
+	 * @param indAvoidReentry Indicates to avoid revisiting the references of
+	 *   ModuleVersion that was already visited. The ModuleVesion itself is visited
+	 *   for each occurrence.
 	 * @param visitor Visitor.
 	 */
-	void traverseReferenceGraph(ModuleVersion moduleVersion, boolean isDepthFirst, boolean isAvoidReentry, Visitor visitor);
+	void traverseReferenceGraph(ModuleVersion moduleVersion, boolean indDepthFirst, boolean indAvoidReentry, Visitor visitor);
 
 	/**
 	 * Visits all {@link ReferencePath}'s ending with a leaf ModuleVersion.
@@ -191,10 +289,23 @@ public interface ReferenceGraph {
 	 * The referred-to ModuleVersion within the Reference is created if it does not
 	 * exist.
 	 * <p>
+	 * The Reference may already exist in which case it is not added.
+	 * <p>
 	 * The newly added Reference must not create a cycle in the ReferenceGraph.
 	 *
 	 * @param moduleVersionReferrer Referrer ModuleVersion.
 	 * @param reference Reference.
 	 */
 	void addReference(ModuleVersion moduleVersionReferrer, Reference reference);
+
+	/**
+	 * Adds a complete {@link ReferencePath} to the ReferenceGraph.
+	 * <p>
+	 * {@link Reference}'s that already exist are not added.
+	 * <p>
+	 * The newly added Reference's must nost create cycles in the ReferenceGraph.
+	 *
+	 * @param referencePath ReferencePath.
+	 */
+	void addReferencePath(ReferencePath referencePath);
 }

@@ -24,6 +24,8 @@ import java.util.List;
 
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
+import org.azyva.dragom.model.NodePath;
+import org.azyva.dragom.model.Version;
 
 /**
  * Represents a reference path.
@@ -111,7 +113,7 @@ public class ReferencePath {
 	/**
 	 * Removes the root {@link Reference} (from the head of the List).
 	 */
-	public void removeRootReferences() {
+	public void removeRootReference() {
 		this.listReference.remove(0);
 
 	}
@@ -122,6 +124,13 @@ public class ReferencePath {
 	 */
 	public void removeRootReferences(int nbReferences) {
 		this.listReference.subList(0, nbReferences).clear();
+	}
+
+	/**
+	 * @return Leaf {@link Reference} (from the tail of the List).
+	 */
+	public Reference getLeafReference() {
+		return this.listReference.get(this.listReference.size() - 1);
 	}
 
 	/**
@@ -143,5 +152,30 @@ public class ReferencePath {
 	 */
 	public void removeLeafReferences(int nbReferences) {
 		this.listReference.subList(this.listReference.size() - nbReferences, nbReferences).clear();
+	}
+
+	/**
+	 * Finds a {@link ModuleVersion}.
+	 *
+	 * @param moduleVersion ModuleVersion. The {@link Version} can be null in which
+	 *   case only the {@link NodePath}'s of the {@link Module}'s are considered.
+	 * @return Index of the ModuleVersion if found. -1 if the ModuleVersion is not
+	 *   found.
+	 */
+	public int findModuleVersion(ModuleVersion moduleVersion) {
+		for (int i = 0; i < this.listReference.size(); i++) {
+			ModuleVersion moduleVersion2;
+
+			moduleVersion2 = this.listReference.get(i).getModuleVersion();
+
+			if (   (moduleVersion2 != null)
+			    && (moduleVersion2.getNodePath().equals(moduleVersion.getNodePath()))
+			    && ((moduleVersion.getVersion() == null) || (moduleVersion2.getVersion().equals(moduleVersion.getVersion())))) {
+
+				return i;
+			}
+		}
+
+		return -1;
 	}
 }

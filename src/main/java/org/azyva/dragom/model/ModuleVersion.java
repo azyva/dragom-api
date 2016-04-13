@@ -76,7 +76,7 @@ public final class ModuleVersion {
 	 *
 	 * @param nodePath NodePath. Cannot be partial.
 	 * @param version Version. Can be null to represent the default Version of a
-	 *   Module.
+	 *   {@link Module}, or simply not include a Version.
 	 */
 	public ModuleVersion(NodePath nodePath, Version version) {
 		if (nodePath == null) {
@@ -89,6 +89,25 @@ public final class ModuleVersion {
 
 		this.nodePath = nodePath;
 		this.version = version;
+	}
+
+	/**
+	 * Constructor using only a {@link NodePath}, with a null {@link Version} to
+	 * represent the default Version of a {@link Module}, or simply not include a
+	 * Version.
+	 *
+	 * @param nodePath NodePath. Cannot be partial.
+	 */
+	public ModuleVersion(NodePath nodePath) {
+		if (nodePath == null) {
+			throw new RuntimeException("NodePath cannot be null.");
+		}
+
+		if (nodePath.isPartial()) {
+			throw new RuntimeException("The NodsePath " + nodePath + " must not be partial.");
+		}
+
+		this.nodePath = nodePath;
 	}
 
 	/**

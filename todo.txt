@@ -112,6 +112,7 @@ subtotal:   261.5
 2016-03-30: 2.5
 2016-04-03: 3.5
 2016-04-10: 3
+2016-04-13: 10.5
 
 
 
@@ -150,6 +151,9 @@ Hotfix new dynamic version.
 
 To implement soon
 =================
+
+Detect cycles as fast as possible. Do not infinite loop.
+
 
 Allow the man pages to configure the tool name.
 Have a generic script launcher with an initial argument that is the command to invoke
