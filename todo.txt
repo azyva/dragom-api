@@ -112,7 +112,7 @@ subtotal:   261.5
 2016-03-30: 2.5
 2016-04-03: 3.5
 2016-04-10: 3
-2016-04-13: 10.5
+2016-04-13: 14.5
 
 
 
@@ -152,7 +152,8 @@ Hotfix new dynamic version.
 To implement soon
 =================
 
-Detect cycles as fast as possible. Do not infinite loop.
+Should probably allow managing the properties (maybe only runtime) in the ExecContext using a tool (WorkspaceManagerTool?)
+  - Have an option to transfert an external properties file to execcontext. 
 
 
 Allow the man pages to configure the tool name.
@@ -161,19 +162,7 @@ The command would be used to delegate to the right Java class with the remaining
 COuld implement an independent execcontext property management tool that could be integrated into a unified suite from the user's point of view.
 
 
-Search everywhere for non-internationalized messages with regex provideInfo, getInfo, RuntimeExceptionUserError
-
-
-Under some condition, ask the user so that with default values, a versatile interactive session is possible.
-- Plugin switcher.
-
-
 Implement information levels maybe (not sure).
-Review storing reuse information in runtime properties, etc (AlwaysNeverAsk, YesAlwaysNo)
-Have ExecContext plugin IDs in order to implement global tool start and end callbacks (to clean Jenkins folder for instance).
-- No, I don't think so. ExecContextPlugins are for communication with outside world, not to implement global actions.
-- If global actions are needed, maybe a dedicated Job class is required that would have pre and post actions.
-
 Maybe have the notion of importance in userInteractionCallback:
 - Info
 - Important
@@ -205,9 +194,8 @@ TO DOCUMENT:
 - ModelNodeBuilderFactory stuff
 - Important for ExecContextPlugin to not keep the ExecContext passed at creation time.
 
+Review all comments and code documentation (including execcontext and plugin (old note))
 
-Should probably allow managing the properties (maybe only runtime) in the ExecContext using a tool (WorkspaceManagerTool?)
-  - Have an option to transfert an external properties file to execcontext. 
 
 Peut-être que le Mapper plugin devrait utiliser des runtime property au lieu de model
   (le RT props pourraient être backées par le modèle)
@@ -230,9 +218,6 @@ When referencing and checking out a version, Validate that the artifact version 
 But do not always validate. Do not validate when checkout in order to create a new version, in particular
 Have to think this trough.
 
-
-
-Review all comments and code documentation (including execcontext and plugin (old note))
 
 
 
