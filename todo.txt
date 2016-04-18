@@ -113,6 +113,7 @@ subtotal:   261.5
 2016-04-03: 3.5
 2016-04-10: 3
 2016-04-13: 14.5
+2016-04-17: 3.5
 
 
 
@@ -157,8 +158,6 @@ Should probably allow managing the properties (maybe only runtime) in the ExecCo
 
 
 Allow the man pages to configure the tool name.
-Have a generic script launcher with an initial argument that is the command to invoke
-The command would be used to delegate to the right Java class with the remaining arguments.
 COuld implement an independent execcontext property management tool that could be integrated into a unified suite from the user's point of view.
 
 
@@ -169,11 +168,6 @@ Maybe have the notion of importance in userInteractionCallback:
 and have verbose modes --whisper and --silent (or --quiet?) to select which information is actually displayed
 Some tools may produce reports. This information is the actual payload and cant be quieted.
 Maybe the list of important actions (those that modify stuff) should be handled with userInteractionCallback?
-
-
-
-Make internationnalizable (UserInteractionCallBack idInfo...)
-
 
 
 
