@@ -19,14 +19,26 @@
 
 package org.azyva.dragom.reference;
 
+import java.util.EnumSet;
 import java.util.List;
 
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
+import org.azyva.dragom.model.NodePath;
 
 /**
  * Represents a reference graph of {@link ModuleVersion}'s and operations that can
  * can be performed on it.
+ * <p>
+ * The concept of matched ModuleVersion is supported. A ReferenceGraph is generally
+ * built by traversing the ModuleVersion's and their references using a
+ * {@link ReferencePathMatcher} in which case it is possible to mark those
+ * ModuleVersion's that are specifically matched by the ReferencePathMatcher. Note
+ * that a ReferencePathMatcher matches a complete {@link ReferencePath}. But in a
+ * ReferenceGraph the ModuleVersion's themselves are marked as matched. This means
+ * that in a ReferenceGraph it is not possible to know which ReferencePath leading
+ * to a given ModuleVersion was actually matched. For now it is assumed that once
+ * the ReferenceGraph is built, that information is not really useful anymore.
  * <p>
  * Currently this is not very widely used within Dragom. It is used to gather and
  * expose ReferenceGraph data in order to make it easier to implement reporting
@@ -44,7 +56,7 @@ import org.azyva.dragom.model.ModuleVersion;
  *
  * @author David Raymond
  */
-//TODO: Not sure if this interface shoould export only read operations, and if TG building should be left to implementation.
+//TODO: Not sure if this interface should export only read operations, and if RG building should be left to implementation.
 public interface ReferenceGraph {
 	/**
 	 * Represents a {@link ModuleVersion} that references another ModuleVersion. It is
@@ -139,12 +151,17 @@ public interface ReferenceGraph {
 
 	/**
 	 * Action during the traversal of a {@link ReferenceGraph}.
+	 * <p>
+	 * These are used as flags and provided as part of an EnumSet since many of them
+	 * can be pertinent for a single visit.
 	 */
 	public enum VisitAction {
 		/**
 		 * Indicates we are stepping into a {@link ModuleVersion} during the traversal. A
 		 * matching {@link STEP_OUT} will occur when the traversal of the ModuleVersion is
 		 * complete.
+		 * <p>
+		 * This VisitAction is mutually exclusive with all others.
 		 * <p>
 		 * Not used by {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
 		 */
@@ -153,6 +170,8 @@ public interface ReferenceGraph {
 		/**
 		 * Indicates we are stepping out of a {@link ModuleVersion} during the traversal.
 		 * A matching {@link STEP_IN} will have occurred previously.
+		 * <p>
+		 * This VisitAction is mutually exclusive with all others.
 		 * <p>
 		 * Not used by {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
 		 */
@@ -169,17 +188,17 @@ public interface ReferenceGraph {
 		 * having visited all of its child ModuleVersion.
 		 * <p>
 		 * If indAvoidReentry is true when calling
-		 * {@link ReferenceGraph#traverseReferenceGraph} this is used only for the first
-		 * visit of a given leaf ModuleVersion. For subsequent visits, the similar
-		 * {@link REPEATED_VISIT} is used instead.
+		 * {@link ReferenceGraph#traverseReferenceGraph} this is used only for all
+		 * visits of a given leaf ModuleVersion, but for subsequent visits,
+		 * {@link REPEATED} is also included.
 		 * <p>
 		 * This is the only VisitAction used by visitLeafModuleVersionReferencePaths.
 		 */
 		VISIT,
 
 		/**
-		 * Similar to {@link FIRST_VISIT}, except that it is used when indAvoidReentry is
-		 * true when calling {@link ReferenceGraph#traverseReferenceGraph} and the
+		 * Used in conjunction with {@link #VISIT} when indAvoidReentry is true when
+		 * calling {@link ReferenceGraph#traverseReferenceGraph} and the
 		 * {@link ModuleVersion} has already been visited.
 		 * <p>
 		 * This will occur for a ModuleVersion that was already visited, but not for its
@@ -188,7 +207,20 @@ public interface ReferenceGraph {
 		 * <p>
 		 * Not used by visitLeafModuleVersionReferencePaths.
 		 */
-		REPEATED_VISIT
+		REPEATED,
+
+		/**
+		 * Can be included with {@link #VISIT} to indicate that the
+		 * {@link ModuleVersion} is matched.
+		 */
+		MATCHED;
+
+		public static final EnumSet<VisitAction> ENUM_SET_STEP_IN = EnumSet.of(STEP_IN);
+		public static final EnumSet<VisitAction> ENUM_SET_STEP_OUT = EnumSet.of(STEP_OUT);
+		public static final EnumSet<VisitAction> ENUM_SET_VISIT = EnumSet.of(VISIT);
+		public static final EnumSet<VisitAction> ENUM_SET_REPEATED_VISIT = EnumSet.of(VISIT, REPEATED);
+		public static final EnumSet<VisitAction> ENUM_SET_VISIT_MATCHED = EnumSet.of(VISIT, MATCHED);
+		public static final EnumSet<VisitAction> ENUM_SET_REPEATED_VISIT_MATCHED = EnumSet.of(VISIT, REPEATED, MATCHED);
 	}
 
 	/**
@@ -201,7 +233,7 @@ public interface ReferenceGraph {
 		 * @param referencePath ReferencePath of the ModuleVersion being visited.
 		 * @param visitAction VisitAction.
 		 */
-		void visit(ReferencePath referencePath, ReferenceGraph.VisitAction visitAction);
+		void visit(ReferencePath referencePath, EnumSet<ReferenceGraph.VisitAction> enumSetVisitAction);
 	}
 
 	/**
@@ -223,14 +255,19 @@ public interface ReferenceGraph {
 	boolean isRootModuleVersion(ModuleVersion moduleVersion);
 
 	/**
-	 * Returns the List of {@link ModuleVersion}'s that are matched by a specified
-	 * ModuleVersion that can potentially have a null Version.
-	 *
-	 * @param moduleVersion ModuleVersion. Can be null in which case all
-	 *   ModuleVersions's in the ReferenceGraph are returned.
-	 * @return List of matched ModuleVersion's.
+	 * @return Indicates if a {@link ModuleVersion} is matched.
 	 */
-	List<ModuleVersion> getListModuleVersionMatched(ModuleVersion moduleVersion);
+	boolean isMatchedModuleVersion(ModuleVersion moduleVersion);
+
+	/**
+	 * Returns the List of {@link ModuleVersion}'s corresponding to a specified
+	 * {@link Module} identified by its {@link NodePath}.
+	 *
+	 * @param nodePath NodePath. Can be null in which case all ModuleVersions's in the
+	 * ReferenceGraph are returned.
+	 * @return List of ModuleVersion's.
+	 */
+	List<ModuleVersion> getListModuleVersion(NodePath nodePath);
 
 	/**
 	 * Returns the List of {@link Referrer}'s to a specified {@link ModuleVersion}.
@@ -299,13 +336,15 @@ public interface ReferenceGraph {
 	void addReference(ModuleVersion moduleVersionReferrer, Reference reference);
 
 	/**
-	 * Adds a complete {@link ReferencePath} to the ReferenceGraph.
+	 * Adds a complete {@link ReferencePath} to the ReferenceGraph and makes the leaf
+	 * {@link ModuleVersion} matched.
 	 * <p>
-	 * {@link Reference}'s that already exist are not added.
+	 * {@link Reference}'s that already exist are not added. But the leaf
+	 * ModuleVersion is made matched (if not already).
 	 * <p>
-	 * The newly added Reference's must nost create cycles in the ReferenceGraph.
+	 * The newly added Reference's must not create cycles in the ReferenceGraph.
 	 *
 	 * @param referencePath ReferencePath.
 	 */
-	void addReferencePath(ReferencePath referencePath);
+	void addMatchedReferencePath(ReferencePath referencePath);
 }

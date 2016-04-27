@@ -145,6 +145,11 @@ public interface ExecContext {
 	<ExecContextPluginInterface extends ExecContextPlugin> ExecContextPluginInterface getExecContextPlugin(Class<ExecContextPluginInterface> classExecContextPluginInterface);
 
 	/**
+	 * @return Set of all initialization properties.
+	 */
+	Set<String> getSetInitProperty();
+
+	/**
 	 * Returns an initialization property.
 	 *
 	 * @param name Name of the property.
@@ -172,7 +177,8 @@ public interface ExecContext {
 	/**
 	 * Returns a Set of all workspace property names having a given prefix.
 	 *
-	 * @param prefix Prefix of the properties.
+	 * @param prefix Prefix of the properties. Can be null in which case all
+	 *   properties are returned.
 	 */
 	Set<String> getSetProperty(String prefix);
 

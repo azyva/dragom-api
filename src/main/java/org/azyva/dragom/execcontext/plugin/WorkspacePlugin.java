@@ -84,11 +84,11 @@ public interface WorkspacePlugin extends ExecContextPlugin {
 		 */
 		RESET_IF_EXIST;
 
-		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING = EnumSet.noneOf(GetWorkspaceDirMode.class);
-		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING_OR_CREATE = EnumSet.of(CREATE_IF_NOT_EXIST);
-		public static final EnumSet<GetWorkspaceDirMode> GET_EXISTING_OR_CREATE_NO_PATH = EnumSet.of(CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
-		public static final EnumSet<GetWorkspaceDirMode> CREATE_NEW = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST);
-		public static final EnumSet<GetWorkspaceDirMode> CREATE_NEW_NO_PATH = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
+		public static final EnumSet<GetWorkspaceDirMode> ENUM_SET_GET_EXISTING = EnumSet.noneOf(GetWorkspaceDirMode.class);
+		public static final EnumSet<GetWorkspaceDirMode> ENUM_SET_GET_EXISTING_OR_CREATE = EnumSet.of(CREATE_IF_NOT_EXIST);
+		public static final EnumSet<GetWorkspaceDirMode> ENUM_SET_GET_EXISTING_OR_CREATE_NO_PATH = EnumSet.of(CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
+		public static final EnumSet<GetWorkspaceDirMode> ENUM_SET_CREATE_NEW = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST);
+		public static final EnumSet<GetWorkspaceDirMode> ENUM_SET_CREATE_NEW_NO_PATH = EnumSet.of(MUST_NOT_EXIST, CREATE_IF_NOT_EXIST, DO_NOT_CREATE_PATH);
 	};
 
 	/**
