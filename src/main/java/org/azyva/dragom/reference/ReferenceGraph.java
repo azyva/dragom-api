@@ -255,6 +255,11 @@ public interface ReferenceGraph {
 	boolean isRootModuleVersion(ModuleVersion moduleVersion);
 
 	/**
+	 * @return List of {@link ModuleVersion} that are matched.
+	 */
+	List<ModuleVersion> getListModuleVersionMatched();
+
+	/**
 	 * @return Indicates if a {@link ModuleVersion} is matched.
 	 */
 	boolean isMatchedModuleVersion(ModuleVersion moduleVersion);

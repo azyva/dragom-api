@@ -23,6 +23,9 @@ import java.nio.file.Path;
 import java.util.EnumSet;
 import java.util.Set;
 
+import org.azyva.dragom.model.Module;
+import org.azyva.dragom.model.Version;
+
 /**
  * TODO: The workspace implementation can and should know about the various types of
  * directories (the various WorkspaceDir and SystemWorkspaceDir classes) and act accordingly.
@@ -122,7 +125,20 @@ public interface WorkspacePlugin extends ExecContextPlugin {
 
 	Path getPathWorkspace();
 
+	/**
+	 * @return Indicates if multiple {@link Version}'s of the same {@link Module} can
+	 *   exist in user workspace directories.
+	 */
+	// TODO: What about multiple different modules mapped to the same path (same module name, but different classification)
+	// For now lets say that we cannot inquire about this. And that the below applies to both user and system.
+	boolean isSupportMultipleModuleVersion();
+
 	boolean isWorkspaceDirExist(WorkspaceDir workspaceDir);
+
+	// null if no conflict.
+	// workspaceDir != return
+	// Should return null if isSupportMultipleModuleVersion is true, but not if multiple different modules but same module name.
+	WorkspaceDir getWorkspaceDirConflict(WorkspaceDir workspaceDir);
 
 	//TODO if workspace dir cannot be created for whatever reason, exception, even if it is because of conflit.
 	//Fow now. Eventually, maybe the caller would be interested in knowing if fail because of conflict behave

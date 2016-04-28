@@ -115,7 +115,7 @@ subtotal:   261.5
 2016-04-13: 14.5
 2016-04-17: 3.5
 2016-04-18: 2
-2016-04-27: 8:00 - 
+2016-04-27: 9
 
 
 To test
@@ -153,6 +153,10 @@ Hotfix new dynamic version.
 
 To implement soon
 =================
+
+In checkout, if a directory has remote changes, the building of the RG will probably halt
+requiring the user to sync before. So useless to to an update in checkout.
+
 
 GPSII has implemented simple variable references in POMs.
 The variable can be defined in same POM or in parent, provided it is in same module. 
