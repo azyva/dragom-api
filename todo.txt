@@ -162,9 +162,6 @@ GPSII has implemented simple variable references in POMs.
 The variable can be defined in same POM or in parent, provided it is in same module. 
 
 
-Have an option to transfert an external properties file to execcontext. 
-
-
 Implement information levels maybe (not sure).
 Maybe have the notion of importance in userInteractionCallback:
 - Info
@@ -219,18 +216,7 @@ Have to think this trough.
 
 
 
-Maybe have a tool to switch the version within the workspace (similar to checkout, but change version of existing module, if no unsynced changes).
-  This is already implemented I believe. Unless there is more to it, like actually doing a switch?
-Version report: Get the list of modules matching a given version regex.
-After that, ask to change the version of every references to these modules to that version.
-Use switch to dynamic version for that, but do not push changes.
-Build. This will validate if changes to currently modified modules are retrocompatible.
-Again:
-- No this seems like a different tool than checkout
-- Switch should remember which directory were switched, and not switch twice if ever two module with different versions exist in the same workspace
-- At the end should provide a report of what was not touched as these may be module which the user want to clean from workspace.
-- Because of end processing should probably be another job class derived from Root...
-- Maybe the checkout task can be reused and should be adapted to work in switch mode.
+At the end of switch should provide a report of what was not touched as these may be module which the user want to clean from workspace.
 
 
 
@@ -240,6 +226,7 @@ they may not want to impose that references to modules outside of the PIC are st
 
 
 Multiple versions of a module in workspace. Implications in ScmGitPlugin, mainly in switchVersion.
+- Multiple modules with same name also...
 
 
 

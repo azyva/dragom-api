@@ -20,6 +20,7 @@
 package org.azyva.dragom.execcontext;
 
 import java.util.Properties;
+import java.util.Set;
 
 import org.azyva.dragom.execcontext.plugin.ExecContextPlugin;
 import org.azyva.dragom.execcontext.plugin.RuntimePropertiesPlugin;
@@ -75,6 +76,15 @@ public interface ToolLifeCycleExecContext {
 	void endTool();
 
 	/**
+	 * Tool properties are those provided by a tool when calling
+	 * {@link #startTool}.
+	 *
+	 * @return Set of all tool properties.
+	 */
+
+	Set<String> getSetToolProperty();
+
+	/**
 	 * Returns the value of an tool property.
 	 * <p>
 	 * Tool properties are those provided by a tool when calling
@@ -83,6 +93,5 @@ public interface ToolLifeCycleExecContext {
 	 * @param name Name of the property.
 	 * @return Value of the property.
 	 */
-	//TODO: This is called in some places, but maybe RuntimeProperties should be used instead. Not sure.
 	String getToolProperty(String name);
 }
