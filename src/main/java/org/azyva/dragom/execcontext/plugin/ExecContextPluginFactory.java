@@ -34,5 +34,18 @@ import org.azyva.dragom.execcontext.ExecContext;
  *   returned by the ExecContextPluginFactory.
  */
 public interface ExecContextPluginFactory<ExecContextPluginInterface extends ExecContextPlugin> {
+	/**
+	 * Returns an instance of the {@link ExecContextPlugin}.
+	 * <p>
+	 * ExecContextPlugin's can hold on to the {@link ExecContext} the is passed as a
+	 * parameter as it is garanteed that the same ExecContext will remain used
+	 * throughout the life of the ExecContextPlugin. But in general,
+	 * {@link ExecContextHolder#get} should be used to obtain the ExecContext at
+	 * runtime.
+	 *
+	 * @param execContext ExecContext in the context of which the ExecContextPlugin is
+	 *   created.
+	 * @return ExecContextPlugin.
+	 */
 	ExecContextPluginInterface getExecContextPlugin(ExecContext execContext);
 }

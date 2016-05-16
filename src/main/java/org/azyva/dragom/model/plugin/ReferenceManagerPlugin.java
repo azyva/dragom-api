@@ -22,6 +22,7 @@ package org.azyva.dragom.model.plugin;
 import java.nio.file.Path;
 import java.util.List;
 
+import org.azyva.dragom.apiutil.ByReference;
 import org.azyva.dragom.model.ArtifactVersion;
 import org.azyva.dragom.model.Version;
 import org.azyva.dragom.reference.Reference;
@@ -109,10 +110,12 @@ public interface ReferenceManagerPlugin extends ModulePlugin {
 	 * @param pathModuleWorkspace Path to the module within the workspace.
 	 * @param reference Reference to modify.
 	 * @param version New version.
+	 * @param byReferenceReference The new Reference as would be returned by
+	 *   {@link #getListReference} will be stored there. Can be null.
 	 * @return Indicates if the reference was really updated. false is returned if it
 	 *   already had the specified value.
 	 */
-	boolean updateReferenceVersion(Path pathModuleWorkspace, Reference reference, Version version);
+	boolean updateReferenceVersion(Path pathModuleWorkspace, Reference reference, Version version, ByReference<Reference> byReferenceReference);
 
 	/**
 	 * Updates the version of a reference using an artifact version.
@@ -132,8 +135,10 @@ public interface ReferenceManagerPlugin extends ModulePlugin {
 	 * @param pathModuleWorkspace Path to the module within the workspace.
 	 * @param reference Reference to modify.
 	 * @param artifactVersion New ArtifactVersion.
+	 * @param byReferenceReference The new Reference as would be returned by
+	 *   {@link #getListReference} will be stored there. Can be null.
 	 * @return Indicates if the reference was really updated. false is returned if it
 	 *   already had the specified value.
 	 */
-	boolean updateReferenceArtifactVersion(Path pathModuleWorkspace, Reference reference, ArtifactVersion artifactVersion);
+	boolean updateReferenceArtifactVersion(Path pathModuleWorkspace, Reference reference, ArtifactVersion artifactVersion, ByReference<Reference> byReferenceReference);
 }

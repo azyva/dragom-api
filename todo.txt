@@ -117,6 +117,7 @@ subtotal:   261.5
 2016-04-18: 2
 2016-04-27: 9
 2016-05-11: 10.5
+2016-05-15: 4
 
 
 To test
@@ -155,42 +156,8 @@ Hotfix new dynamic version.
 To implement soon
 =================
 
-In checkout, if a directory has remote changes, the building of the RG will probably halt
-requiring the user to sync before. So useless to to an update in checkout.
 
 
-GPSII has implemented simple variable references in POMs.
-The variable can be defined in same POM or in parent, provided it is in same module. 
-
-
-Implement information levels maybe (not sure).
-Maybe have the notion of importance in userInteractionCallback:
-- Info
-- Important
-and have verbose modes --whisper and --silent (or --quiet?) to select which information is actually displayed
-Some tools may produce reports. This information is the actual payload and cant be quieted.
-Maybe the list of important actions (those that modify stuff) should be handled with userInteractionCallback?
-
-
-
-
-Not clear in GitScmPlugin the fact that access to the workspace with getPathModuleWorkspace does not reserve the workspace.
-We are really reading from it, so why wouldn't it reserve it for reading? Maybe the caller should always provide a path
-and it would be its responsibility to reserve it?
-
-In GitScmPlugin, maybe should validate that workspace directory is reserved when accepting a path.
-
-
-
-
-
-TO DOCUMENT:
-- ExecContextPlugin stuff (including implementations).
-- SimpleModel stuff
-- ModelNodeBuilderFactory stuff
-- Important for ExecContextPlugin to not keep the ExecContext passed at creation time.
-
-Review all comments and code documentation (including execcontext and plugin (old note))
 
 
 Peut-être que le Mapper plugin devrait utiliser des runtime property au lieu de model
@@ -205,9 +172,6 @@ When creating new dynamic version, maybe take into consideration base version of
 
 
 
-
-
-Reference re-creation in switchtodynamic. The new reference is not the same and contains less info.
 
 
 When referencing and checking out a version, Validate that the artifact version is OK since it was referenced
@@ -226,13 +190,32 @@ they may not want to impose that references to modules outside of the PIC are st
 
 
 
+
+
+To think
+========
+
+
 Multiple versions of a module in workspace. Implications in ScmGitPlugin, mainly in switchVersion.
 - Multiple modules with same name also...
 
 
 
-To think
-========
+Implement information levels maybe (not sure).
+Maybe have the notion of importance in userInteractionCallback:
+- Info
+- Important
+and have verbose modes --whisper and --silent (or --quiet?) to select which information is actually displayed
+Some tools may produce reports. This information is the actual payload and cant be quieted.
+Maybe the list of important actions (those that modify stuff) should be handled with userInteractionCallback?
+
+
+
+GPSII has implemented simple variable references in POMs.
+The variable can be defined in same POM or in parent, provided it is in same module.
+But what if multiple module references use the same variable? When chaning the variable, module modules can be affected, and Dragom is not equiped to react to this.
+But at some point they said they were not sure if it was worth implementing. 
+
 
 
 Should I implement automatic property references: the value of a property contains ${PROPERTY}, a reference to another property, as in QuickBuild.

@@ -44,7 +44,7 @@ import org.azyva.dragom.model.plugin.ReferenceManagerPlugin;
  * <li>Its hashCode is used to compute this class' hashCode;</li>
  * <li>Its string representation (toString method) is included in the string
  * representation of this class, unless it is null or the empty string.</li>
- *
+ * <p>
  * This class implements value semantics and is immutable.
  */
 public final class Reference {

@@ -42,7 +42,7 @@ import org.azyva.dragom.execcontext.ExecContext;
  * <li>It should call {@link #endTool} during tool termination.</li>
  * <p>
  * An ExecContext implementation is not forced to handle
- * ToolLifeCycleExecContextPlugin. In such as case, it must treat the
+ * ToolLifeCycleExecContextPlugin. In such a case, it must treat the
  * ExecContextPlugin as if isTransient returns true, implying tool binding. If
  * isTransient actually returns false, the fact that the ExecContextPlugin is
  * anyways released after each tool execution should not do any harm apart from

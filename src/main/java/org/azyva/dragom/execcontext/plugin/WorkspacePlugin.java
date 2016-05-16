@@ -152,6 +152,8 @@ public interface WorkspacePlugin extends ExecContextPlugin {
 
 	void releaseWorkspaceDir(Path pathWorkspaceDir);
 
+	WorkspaceDirAccessMode getWorkspaceDirAccessMode(Path pathWorkspaceDir);
+
 	void updateWorkspaceDir(WorkspaceDir workspaceDir, WorkspaceDir workspaceDirNew);
 
 	// If path exist, must delete it.
