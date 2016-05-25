@@ -126,14 +126,27 @@ public final class Reference {
 	}
 
 	/**
-	 * References are often displayed to the user and need to be shown in a human-
+	 * Reference's are often displayed to the user and need to be shown in a human-
 	 * friendly and not too cryptic way.
+	 * <p>
+	 * When Reference's are shown to the user they are generally as part of a
+	 * {@link ReferencePath} which puts the Reference's in context.
 	 */
 	@Override
 	public String toString() {
 		StringBuilder stringBuilder;
 
 		stringBuilder = new StringBuilder();
+
+		if (this.implData != null) {
+			String stringImplData;
+
+			stringImplData = this.implData.toString();
+
+			if ((stringImplData != null) && (stringImplData.length() != 0)) {
+				stringBuilder.append("[").append(stringImplData).append("] ");
+			}
+		}
 
 		if (this.moduleVersion != null) {
 			stringBuilder.append(this.moduleVersion);
@@ -143,16 +156,6 @@ public final class Reference {
 			}
 		} else {
 			stringBuilder.append(this.artifactGroupId).append(":").append(this.artifactVersion);
-		}
-
-		if (this.implData != null) {
-			String stringImplData;
-
-			stringImplData = this.implData.toString();
-
-			if ((stringImplData != null) && (stringImplData.length() != 0)) {
-				stringBuilder.append(" (").append(stringImplData).append(")");
-			}
 		}
 
 		return stringBuilder.toString();

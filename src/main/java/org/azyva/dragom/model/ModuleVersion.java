@@ -84,7 +84,7 @@ public final class ModuleVersion {
 		}
 
 		if (nodePath.isPartial()) {
-			throw new RuntimeException("The NodsePath " + nodePath + " must not be partial.");
+			throw new RuntimeException("The NodePath " + nodePath + " must not be partial.");
 		}
 
 		this.nodePath = nodePath;

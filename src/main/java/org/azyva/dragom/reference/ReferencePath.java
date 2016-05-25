@@ -178,4 +178,39 @@ public class ReferencePath {
 
 		return -1;
 	}
+
+	/**
+	 * ReferencePath's are often displayed to the user and need to be shown in a
+	 * human-friendly and not too cryptic way.
+	 * <p>
+	 * The {@link Reference}'s within a ReferencePath are not totally distinct
+	 * elements. A Reference includes a {@link ModuleVersion}, but also implementation
+	 * data that relates to how it is expressed in some parent ModuleVersion. When
+	 * such implementation data is available, the Reference is separated from its
+	 * parent using "->". Otherwise, "|>" is used to denote discontinuity. This
+	 * happens when Reference's are recreated during the traversal of reference
+	 * graphs in some jobs.
+	 */
+	@Override
+	public String toString() {
+		StringBuilder stringBuilder;
+		boolean indFirst;
+
+		stringBuilder = new StringBuilder();
+		indFirst = true;
+
+		for (Reference reference: this.listReference) {
+			if (!indFirst) {
+				if (reference.getImplData() == null) {
+					stringBuilder.append("|>");
+				} else {
+					stringBuilder.append("->");
+				}
+			}
+
+			stringBuilder.append(reference.toString());
+		}
+
+		return stringBuilder.toString();
+	}
 }

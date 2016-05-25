@@ -118,6 +118,7 @@ subtotal:   261.5
 2016-04-27: 9
 2016-05-11: 10.5
 2016-05-15: 4
+2016-05-25: 7:00
 
 
 To test
@@ -156,28 +157,9 @@ Hotfix new dynamic version.
 To implement soon
 =================
 
-
-
-
-
-Peut-être que le Mapper plugin devrait utiliser des runtime property au lieu de model
-  (le RT props pourraient être backées par le modèle)
-  De cette manière il serait possible de dire au plugin lors des différentes exécution comment se comporter
-  Il serait peut-être aussi pratique d'être en mesure de définir des groupes de règles.
-    Seulement la référence au groupes pourrait être déclarée at runtime.
-
-  
-When creating new dynamic version, maybe take into consideration base version of an exisisting dynamic version as the base for the next version.
-  Or the base of the static version.
-
-
-
-
-
 When referencing and checking out a version, Validate that the artifact version is OK since it was referenced
 But do not always validate. Do not validate when checkout in order to create a new version, in particular
 Have to think this trough.
-
 
 
 
@@ -185,15 +167,15 @@ At the end of switch should provide a report of what was not touched as these ma
 
 
 
+
+To think
+========
+
+
 The fact that when creating a static version all references must be static maybe should be a decision of the NewStaticVersionPlugin since for phases,
 they may not want to impose that references to modules outside of the PIC are static (references to Infra modules for instance).
 
 
-
-
-
-To think
-========
 
 
 Multiple versions of a module in workspace. Implications in ScmGitPlugin, mainly in switchVersion.

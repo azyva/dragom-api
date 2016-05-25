@@ -29,7 +29,7 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * Configuration of a {@link Node}.
  * <p>
  * A NodeConfig can represent a {@link Module} or a {@link ClassificationNode}, as
- * specified by @{link #getNodeType}. If a NodeConfig represents a Module, it will
+ * specified by {@link #getNodeType}. If a NodeConfig represents a Module, it will
  * also implement {@link ModuleConfig}. If a NodeConfig represents a
  * ClassificationNode, it will also implement {@link ClassificationNode}.
  *
