@@ -219,4 +219,19 @@ public interface ExecContext {
 	 *   could include a reference to that directory.
 	 */
 	String getName();
+
+	/**
+	 * If the ExecContext is cached, releases it so that a subsequent request for the
+	 * same ExecContext (for instance an ExecContext based on the same workspace) will
+	 * recreate it.
+	 * <p>
+	 * This method is not a regular release method that is meant to be called whenever
+	 * a tool is done with the ExecContext. It is a special method meant to be called
+	 * in exceptional situations when the user wants to do as if the ExecContext had
+	 * never been created, such as if data on disk has changed outside of the control
+	 * of the ExecContext.
+	 * <p>
+	 * If the ExecContext is not cached, this should be a noop operation.
+	 */
+	void release();
 }

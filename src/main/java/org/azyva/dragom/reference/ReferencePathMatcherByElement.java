@@ -1421,3 +1421,19 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 		return this.listElementMatcher.equals(referencePathMatcherByElementOther.listElementMatcher);
 	}
 }
+
+/* Unit test ideas:
+**
+**->*
+/Domain1/app-a
+/Domain1/app-a->**
+/Domain1/app-a:D/master
+/(Domain?/app.*):(D/.*)
+com.acme.domain1
+com.acme.domain1->**
+com.acme.domain1:app-a
+com.acme.domain1:app-a:master
+com.acme.domain1:app-a:master-SNAPSHOT
+com.acme.domain1:app-a:master-SNAPSHOT
+/Domain1/app-a:D/master->**->com.acme.domain1:app-a:master-SNAPSHOT->*
+*/

@@ -145,7 +145,7 @@ public final class NodePath {
 	 *
 	 * @param nodePathParent Parent NodePath (partial).
 	 * @param nodeName Node name.
-	 * @param isPartial Indicates if the NOdePath is partial.
+	 * @param isPartial Indicates if the NodePath is partial.
 	 */
 	public NodePath(NodePath nodePathParent, String nodeName, boolean isPartial) {
 		if (!NodePath.validateNodeName(nodeName)) {
@@ -166,6 +166,14 @@ public final class NodePath {
 			this.arrayNodeName[0] = nodeName;
 			this.isPartial = isPartial;
 		}
+	}
+
+	/**
+	 * Constructor used internally.
+	 * <p>
+	 * Used by {@link #getNodePathParent}.
+	 */
+	private NodePath() {
 	}
 
 	/**
@@ -258,7 +266,14 @@ public final class NodePath {
 	 * @return Partial parent NodePath of this NodePath.
 	 */
 	public NodePath getNodePathParent() {
-		return new NodePath(Arrays.copyOfRange(this.arrayNodeName,  0,  this.arrayNodeName.length - 1), true);
+		NodePath nodePathParent;
+
+		nodePathParent = new NodePath();
+
+		nodePathParent.arrayNodeName = Arrays.copyOfRange(this.arrayNodeName,  0,  this.arrayNodeName.length - 1);
+		nodePathParent.isPartial = true;
+
+		return nodePathParent;
 	}
 
 	/**
@@ -337,7 +352,7 @@ public final class NodePath {
 
 		matcher = NodePath.patternValidateNodeName.matcher(nodeName);
 
-		return !matcher.matches();
+		return matcher.matches();
 	}
 
 	@Override

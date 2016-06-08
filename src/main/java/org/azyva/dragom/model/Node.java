@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.azyva.dragom.execcontext.ExecContext;
 import org.azyva.dragom.execcontext.plugin.EventPlugin;
+import org.azyva.dragom.model.config.NodeConfig;
 import org.azyva.dragom.model.config.NodeType;
 import org.azyva.dragom.model.event.NodeEvent;
 import org.azyva.dragom.model.event.NodeEventListener;
@@ -48,7 +49,8 @@ public interface Node {
 	ClassificationNode getClassificationNodeParent();
 
 	/**
-	 * @return Name. This is equivalent to getNodeConfig().getName().
+	 * @return Name. This is essentially equivalent to getNodeConfig().getName() when
+	 *   a {@link NodeConfig} is available.
 	 */
 	String getName();
 
