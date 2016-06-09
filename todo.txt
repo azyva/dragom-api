@@ -121,11 +121,17 @@ subtotal:   261.5
 2016-05-25: 7.5
 2016-06-06: 2
 2016-06-07: 3
-2016-06-08: 10:00
+2016-06-08: 8
 
 
 To test
 =======
+
+- batch mode
+- bracket indent
+- wrap mode true and width
+- building reference graph but with more than one node
+- checkout with multiple versions for same module
 
 Empty elements in XML -> null? or empty string?
 
