@@ -123,14 +123,15 @@ subtotal:   261.5
 2016-06-07: 3
 2016-06-08: 8
 2016-06-13: 4.5
+2016-06-22: 9
 
 
 To test
 =======
 
+Mapping groupes in Config...
+
 - batch mode
-- bracket indent
-- wrap mode true and width
 - building reference graph but with more than one node
 - checkout with multiple versions for same module
 
@@ -166,6 +167,9 @@ Hotfix new dynamic version.
 
 To implement soon
 =================
+
+Store mapping in Config... in transient storage so that at least they are reused in one tool exécution.
+
 
 When referencing and checking out a version, Validate that the artifact version is OK since it was referenced
 But do not always validate. Do not validate when checkout in order to create a new version, in particular

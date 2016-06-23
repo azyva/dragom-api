@@ -170,7 +170,8 @@ public interface ScmPlugin extends ModulePlugin {
 	// TODO Absolutely requires a pathModuleWorkspace
 	// Probably have to distinguish between update required and commit/push required.
 	// maybe 2 methods.
-	// *** Only for dynamic version.
+	// *** Only for dynamic version
+	// ***** But if STATIC, should not fail (should simply return true) since it is convenient to be able to call on any version.
 	boolean isSync(Path pathModuleWorkspace, EnumSet<IsSyncFlag> enumSetIsSyncFlag);
 
 	// TODO Absolutely requires a pathModuleWorkspace

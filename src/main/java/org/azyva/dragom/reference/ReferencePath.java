@@ -209,6 +209,8 @@ public class ReferencePath {
 			}
 
 			stringBuilder.append(reference.toString());
+
+			indFirst = false;
 		}
 
 		return stringBuilder.toString();
