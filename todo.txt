@@ -124,10 +124,12 @@ subtotal:   261.5
 2016-06-08: 8
 2016-06-13: 4.5
 2016-06-22: 9
-
+2016-07-07: 7
 
 To test
 =======
+
+Test responses yes/yes always, etc.
 
 Mapping groupes in Config...
 
