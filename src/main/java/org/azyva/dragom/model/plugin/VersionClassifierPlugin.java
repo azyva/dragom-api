@@ -30,7 +30,7 @@ import org.azyva.dragom.model.Version;
  * Note that Version's generally represent source-level versions, or tags, as
  * opposed to artifact-level versions. That is so since Dragom is designed to work
  * more at the source level than at the artifact level and provides mapping
- * machanisms between the two versioning contexts ({@link VersionMapperPlugin}).
+ * mechanisms between the two versioning contexts ({@link VersionMapperPlugin}).
  * <p>
  * Among others, Version classification is used in reference graph reports.
  * <p>
@@ -62,7 +62,7 @@ import org.azyva.dragom.model.Version;
  * a dynamic Version of an older evolution path.
  * <p>
  * This interface extends Comparator<Version> to make it easy to use it in
- * conjonction with the Java Collections framework, such as to perform sort
+ * conjunction with the Java Collections framework, such as to perform sort
  * operations.
  *
  * @author David Raymond
