@@ -36,4 +36,9 @@ public class ByReference<Type> {
 	 * The referenced object.
 	 */
 	public Type object;
+
+	@Override
+	public String toString() {
+		return "Reference: " + ((this.object == null) ? "null" : this.object.toString());
+	}
 }
