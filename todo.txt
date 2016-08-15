@@ -894,3 +894,116 @@ If null need to ask the user
 Get default value from runtime properties (root node)
 if null, set AlwaysNeverAsk behavior 
 Check for AlwaysNeverAsk behavior
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A A NOde can be configurable at runtime.
+In this case it implements ConfigurableNode.
+ConfigurableClassificationNode and ConfigurableModule are sub-interfaces of ConfigurableNode.
+A ConfigurableNode is one that exists from a NodeConfig
+ConfigurableNde.getNodeConfig returns the NodeConfig for the Node.
+Node completed dynamically do not expose ConfigurableNode, or getNodeConfig returns null.
+
+
+
+ClassificationNode:
+getChildNode
+
+ConfigurableClassificationNode:
+getClassificationNodeConfig
+  - Can access child, but RO wrapper
+  - Then again, maybe no child accessible
+    - Argument: copy, so cannot copy child (too heavy).
+  - Calls underlying ClassificationNodeConfig.getClassificationNodeConfigValue of ModifiableClassificationNodeConfig subinterface of ClassificationNodeConfig
+    - ModifiableClassificationNodeConfig must be implemented by Config (contract with ConfigurableClassificationNode)
+    - Otherwise methods (get, set, deleteChild, createChild, etc.) return IllegalState or NotImplemented
+  - Returns a ClassificationNodeConfigValue (no child access, modifiable values for other fields).
+setClassificationNodeConfig(ClassificationNodeConfigValue)
+  - Cannot change child
+  - Should invalidate all child Node's
+  - Web Interface should not hold on to Node's, or ConfigurableNode, since they can disappear
+  - Maybe when modifying a node, should refresh the child tree
+  - Calls underlying ClassificationNodeConfig.setClassificationNodeConfigValue
+    - This is the call that will update DB.
+
+getListChild ??? from regular ClassificationNode?
+getChild ??? from regular ClassificationNode?
+  - For existing only
+  - Returns ConfigurableNode (or need cast to)
+deleteChild
+createChildModule/createChildClassificationNode
+  - Returns ConfigurableNode for the child
+  - In an initial non existing state
+  - Not even name set
+  - Need to call setNodeConfig to materialize
+  - Tool must know it is in creation mode
+  - Internally calls underlying ClassificationNodeConfig.createChildModule or ClassificationNodeConfig.createChildClassificationNode
+    - Which returns a ModifiableNodeConfig for which setClassificationNodeConfigValue is expected to be called to finalize the creation of the child.
+
+Should ConfigurableNode be an additional interface on Node, or some kind of mixin?
+- I guess that interface is OK.
+
+
+ModifiableClassificationNodeConfig:
+- getClassificationNodeConfigValue
+- setClassificationNodeConfigValue
+
+ModifiableModuleConfig:
+- getModuleConfigValue
+- setModuleConfigValue
+
+ModifiableNodeConfig:
+- getNodeConfigValue
+- setNodeConfigValue
+(defined by subclasses and expect subclasses of NodeConfigValue.
+
+
+
+Modifiable... interfaces are for "transactional", controller modification to config (to be compatible with JPA-based implementation, for instance)
+- But could be applied to other implementations, inclugin XML where presumably for each set..., the whole model would be rewritten.
+  - Locks would need to be managed, but internally.
+  
+
+...Value classes could be predefined and common (no need to be specific to particular Config implementation)
+
+
+ConfigurableNode exposed by Node required to force modifications to pass through Node for it to be aware of the modifications.
+
+
+Need to disable Node. Probably with a seperate boolean. Parent being null is not good because root has null parent.
+Probably need to disable plugins as well.
+Should do this for many non-value semantic classes.
+Classes should be use maps to cache nodes, etc. Must verify. I think already OK.
+If static data is required, ExecContext transiant data would be needed.
+
+
+For SimpleModel, must make clear that underlying Config is expected to not change, unless changed using ConfigurableNode...
+
+
+
+How to create XML from DB:
+- XmlClassificationNodeConfig implements ClassificationNodeConfig for integration with Node, etc.
+- But Xml... also provides methodes not in any interface to set values, add children, etc.
+- So simply take the Config from DB classes and recreate the classes from the Xml... set
+- And marshall.
+ -Maybe XmlConfig could have a constructor taking a Config and could recreate everything with Xml... classes.
+- Makes sense
+
+Maybe the reverse could be true also:
+- DbConfig could have a constructor that takes a Config and recreates everything using Db... classes.
+- Backup/restore fonctionnality!!!
