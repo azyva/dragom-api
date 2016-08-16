@@ -80,6 +80,12 @@ public interface NodeConfig {
 	 * The order of the PropertyDefConfig is generally expected to be as defined
 	 * in the underlying storage for the configuration, hence the List return type.
 	 * But no particular order is actually guaranteed.
+	 * <p>
+	 * An implementations should not return a List that could allow the caller to
+	 * modify its internal data structures. Either a copy or an unmodifiable List view
+	 * should be returned. Caller should not expect the returned List to be
+	 * modifiable, even if the intent is not modify the internal structure of the
+	 * implementation.
 	 *
 	 * @return See description.
 	 */
@@ -121,6 +127,12 @@ public interface NodeConfig {
 	 * The order of the PluginDefConfig is generally expected to be as defined
 	 * in the underlying storage for the configuration, hence the List return type.
 	 * But no particular order is actually guaranteed.
+	 * <p>
+	 * An implementations should not return a List that could allow the caller to
+	 * modify its internal data structures. Either a copy or an unmodifiable List view
+	 * should be returned. Caller should not expect the returned List to be
+	 * modifiable, even if the intent is not modify the internal structure of the
+	 * implementation.
 	 *
 	 * @return See description.
 	 */

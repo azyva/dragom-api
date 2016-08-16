@@ -19,23 +19,24 @@
 
 package org.azyva.dragom.model.config;
 
-import org.azyva.dragom.model.Model;
-
 /**
- * Root of a {@link Model} configuration.
+ * Mutable value object for a {@link ModuleConfig} data.
  * <p>
- * The Model used during the execution of tools is based on configuration data
- * provided by this interface and its members.
- * <p>
- * Config data exposed through this interface is considered static at runtime.
- * However, classes implementing this interface may also implement
- * {@link MutableConfig} allowing the configuration data to be changed.
+ * This class is similar to {@link SimpleModuleConfig} but serves a different
+ * purpose.
  *
  * @author David Raymond
  */
-public interface Config {
+public class ModuleConfigValue extends NodeConfigValue {
 	/**
-	 * @return Root {@link ClassificationNodeConfig}.
+	 * Constructor.
 	 */
-	ClassificationNodeConfig getClassificationNodeConfigRoot();
+	public ModuleConfigValue() {
+	}
+
+	@Override
+	public NodeType getNodeType() {
+		// TODO Auto-generated method stub
+		return NodeType.MODULE;
+	}
 }
