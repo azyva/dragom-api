@@ -22,25 +22,14 @@ package org.azyva.dragom.model.config;
 /**
  * Mutable value object for a {@link ClassificationNodeConfig} data.
  * <p>
- * This class is similar to {@link SimpleClassificationNodeConfig} but serves a
+ * This interface is similar to {@link ClassificationNodeConfig} but serves a
  * different purpose.
  * <p>
- * Child {@link NodeConfigValue}'s are not included in this class as the parent-
+ * Child {@link NodeConfigValue}'s are not included in this interface as the parent-
  * child relationship between {@link MutableNodeConfig}'s is managed separately
  * with methods in {@link MutableClassificationNodeConfig}.
  *
  * @author David Raymond
  */
-public class ClassificationNodeConfigValue extends NodeConfigValue {
-	/**
-	 * Constructor.
-	 */
-	public ClassificationNodeConfigValue() {
-	}
-
-	@Override
-	public NodeType getNodeType() {
-		return NodeType.CLASSIFICATION;
-	}
-
+public interface ClassificationNodeConfigValue extends NodeConfigValue {
 }

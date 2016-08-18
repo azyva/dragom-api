@@ -17,7 +17,12 @@
  * along with Dragom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.azyva.dragom.model.config;
+package org.azyva.dragom.model;
+
+import org.azyva.dragom.model.config.ClassificationNodeConfig;
+import org.azyva.dragom.model.config.ClassificationNodeConfigValue;
+import org.azyva.dragom.model.config.MutableClassificationNodeConfig;
+import org.azyva.dragom.model.config.MutableConfig;
 
 /**
  * Extension of {@link ClassificationNodeConfig} that allows changing the
@@ -26,7 +31,7 @@ package org.azyva.dragom.model.config;
  * @author David Raymond
  * @see MutableConfig
  */
-public interface MutableClassificationNodeConfig extends ClassificationNodeConfig, MutableNodeConfig {
+public interface MutableClassificationNode extends ClassificationNode {
 	/**
 	 * @return {@link ClassificationNodeConfigValue}.
 	 */
@@ -40,25 +45,25 @@ public interface MutableClassificationNodeConfig extends ClassificationNodeConfi
 	void setClassificationNodeConfigValue(ClassificationNodeConfigValue classificationNodeConfigValue);
 
 	/**
-	 * Creates a new uninitialized {@link MutableModuleConfig}.
+	 * Creates a new uninitialized {@link MutableModule}.
 	 * <p>
 	 * Creation is finalized and visible only once
-	 * {@link MutableModuleConfig#setModuleConfigValue} is called, replacing any
+	 * {@link MutableModule#setModuleConfigValue} is called, replacing any
 	 * MutableNodeConfig with the same name that may already be set.
 	 *
-	 * @return MutableModuleConfig.
+	 * @return MutableModule.
 	 */
-	MutableModuleConfig createChildModuleConfig();
+	MutableModule createChildModule();
 
 	/**
-	 * Creates a new uninitialized {@link MutableClassificationNodeConfig}.
+	 * Creates a new uninitialized {@link MutableClassificationNode}.
 	 * <p>
 	 * Creation is finalized and visible only once
 	 * {@link MutableClassificationNodeConfig#setClassificationNodeConfigValue} is
 	 * called, replacing any MutableNodeConfig with the same name that may already be
 	 * set.
 	 *
-	 * @return MutableClassificationNodeConfig.
+	 * @return MutableClassificationNode.
 	 */
-	MutableClassificationNodeConfig createChildClassificationNodeConfig();
+	MutableClassificationNode createChildClassificationNode();
 }

@@ -19,63 +19,46 @@
 
 package org.azyva.dragom.model.config;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**
  * Mutable value object for a {@link NodeConfig} data.
  * <p>
- * This class is similar to {@link SimpleNodeConfig} but serves a different
+ * {@link MutableNodeConfig} and its sub-interfaces return and take as argument
+ * this interface to allow getting and setting atomically data. See
+ * {@link MutableConfig}.
+ * <p>
+ * This interface is similar to {@link NodeConfig} but serves a different
  * purpose.
+ * <p>
+ * Since this interface represents a value object, implementations are generally
+ * straightforward, and in many cases, {@link SimplNodeConfigValue} will be
+ * adquate. But implementations subclass SimpleNodeCOnfigValue to add fields for
+ * managing concurrency, such as a last modification timestamp if the
+ * configuration data is persisted in a database and Dragom is used in a
+ * multi-user application context.
  *
  * @author David Raymond
  */
-public abstract class NodeConfigValue {
-	/**
-	 * Name.
-	 */
-	private String name;
-
-	/**
-	 * Map of PropertyDefConfig.
-	 */
-	private Map<String, PropertyDefConfig> mapPropertyDefConfig;
-
-	/**
-	 * Map of PluginDefConfig.
-	 */
-	private Map<PluginKey, PluginDefConfig> mapPluginDefConfig;
-
-	/**
-	 * Constructor.
-	 */
-	public NodeConfigValue() {
-		// LinkedHashMap are used to preserve insertion order.
-		this.mapPropertyDefConfig = new LinkedHashMap<String, PropertyDefConfig>();
-		this.mapPluginDefConfig = new LinkedHashMap<PluginKey, PluginDefConfig>();
-	}
-
+public interface NodeConfigValue {
 	/**
 	 * @return Name.
 	 */
-	public String getName() {
-		return this.name;
-	}
+	String getName();
 
 	/**
 	 * Sets the name.
 	 *
 	 * @param name See description.
 	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+	void setName(String name);
 
-	public abstract NodeType getNodeType();
+	/**
+	 * @return NodeType.
+	 */
+	NodeType getNodeType();
 
 	/**
 	 * Returns a {@link PropertyDefConfig}.
@@ -86,9 +69,7 @@ public abstract class NodeConfigValue {
 	 * @param name Name of the PropertyDefConfig.
 	 * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
 	 */
-	public PropertyDefConfig getPropertyDefConfig(String name) {
-		return this.mapPropertyDefConfig.get(name);
-	}
+	PropertyDefConfig getPropertyDefConfig(String name);
 
 	/**
 	 * Verifies if a {@link PropertyDefConfig} exists.
@@ -101,9 +82,7 @@ public abstract class NodeConfigValue {
 	 * @param name Name of the PropertyDefConfig.
 	 * @return Indicates if the PropertyDefConfig exists.
 	 */
-	public boolean isPropertyExists(String name) {
-		return this.mapPropertyDefConfig.containsKey(name);
-	}
+	boolean isPropertyExists(String name);
 
 	/**
 	 * Returns a List of all the {@link PropertyDefConfig}'s.
@@ -117,21 +96,14 @@ public abstract class NodeConfigValue {
 	 *
 	 * @return See description.
 	 */
-	public List<PropertyDefConfig> getListPropertyDefConfig() {
-		// A copy is returned to prevent the internal Map from being modified by the
-		// caller. Ideally, an unmodifiable List view of the Collection returned by
-		// Map.values should be returned, but that does not seem possible.
-		return new ArrayList<PropertyDefConfig>(this.mapPropertyDefConfig.values());
-	}
+	public List<PropertyDefConfig> getListPropertyDefConfig();
 
 	/**
 	 * Removes a {@link PropertyDefConfig}.
 	 *
 	 * @param name Name of the PropertyDefConfig.
 	 */
-	public void removePropertyDefConfig(String name) {
-		this.mapPropertyDefConfig.remove(name);
-	}
+	public void removePropertyDefConfig(String name);
 
 	/**
 	 * Sets a {@link PropertyDefConfig}.
@@ -146,9 +118,7 @@ public abstract class NodeConfigValue {
 	 * @return Indicates if a new PropertyDefConfig was added (as opposed to an
 	 *   existing one having been overwritten.
 	 */
-	public boolean setPropertyDefConfig(PropertyDefConfig propertyDefConfig) {
-		return (this.mapPropertyDefConfig.put(propertyDefConfig.getName(), propertyDefConfig) == null);
-	}
+	public boolean setPropertyDefConfig(PropertyDefConfig propertyDefConfig);
 
 	/**
 	 * Returns a {@link PluginDefConfig}.
@@ -161,9 +131,7 @@ public abstract class NodeConfigValue {
 	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
 	 * @return PluginDefConfig. null if the PluginDefConfig does not exist.
 	 */
-	public PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
-		return this.mapPluginDefConfig.get(new PluginKey(classNodePlugin, pluginId));
-	}
+	public PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
 	/**
 	 * Verifies if a {@link PluginDefConfig} exists.
@@ -177,9 +145,7 @@ public abstract class NodeConfigValue {
 	 * @param name Name of the PluginyDef.
 	 * @return Indicates if the PluginDefConfig exists.
 	 */
-	public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
-		return this.mapPluginDefConfig.containsKey(new PluginKey(classNodePlugin, pluginId));
-	}
+	public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
 	/**
 	 * Returns a List of all the {@link PluginDefConfig}'s.
@@ -193,21 +159,14 @@ public abstract class NodeConfigValue {
 	 *
 	 * @return See description.
 	 */
-	public List<PluginDefConfig> getListPluginDefConfig() {
-		// A copy is returned to prevent the internal Map from being modified by the
-		// caller. Ideally, an unmodifiable List view of the Collection returned by
-		// Map.values should be returned, but that does not seem possible.
-		return new ArrayList<PluginDefConfig>(this.mapPluginDefConfig.values());
-	}
+	public List<PluginDefConfig> getListPluginDefConfig();
 
 	/**
 	 * Removes a {@link PropertyDefConfig}.
 	 *
 	 * @param name Name of the PropertyDefConfig.
 	 */
-	public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
-		this.mapPropertyDefConfig.remove(new PluginKey(classNodePlugin, pluginId));
-	}
+	public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
 	/**
 	 * Sets a {@link PluginDefConfig}.
@@ -222,11 +181,5 @@ public abstract class NodeConfigValue {
 	 * @return Indicates if a new PluginDefConfig was added (as opposed to an existing
 	 *   one having been overwritten.
 	 */
-	public boolean setPluginDefConfig(PluginDefConfig pluginDefConfig) {
-		PluginKey pluginKey;
-
-		pluginKey = new PluginKey(pluginDefConfig.getClassNodePlugin(), pluginDefConfig.getPluginId());
-
-		return (this.mapPluginDefConfig.put(pluginKey, pluginDefConfig) == null);
-	}
+	public boolean setPluginDefConfig(PluginDefConfig pluginDefConfig);
 }

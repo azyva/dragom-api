@@ -17,15 +17,27 @@
  * along with Dragom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.azyva.dragom.model.config;
+package org.azyva.dragom.model;
+
+import org.azyva.dragom.model.config.ModuleConfigValue;
+import org.azyva.dragom.model.config.MutableConfig;
 
 /**
- * Mutable value object for a {@link ModuleConfig} data.
- * <p>
- * This interface is similar to {@link SimpleModuleConfig} but serves a different
- * purpose.
+ * Extension of {@link Module} that allows changing the configuration data.
  *
  * @author David Raymond
+ * @see MutableConfig
  */
-public interface ModuleConfigValue extends NodeConfigValue {
+public interface MutableModule extends Module {
+	/**
+	 * @return {@link ModuleConfigValue}.
+	 */
+	ModuleConfigValue getModuleConfigValue();
+
+	/**
+	 * Sets the {@link ModuleConfigValue}.
+	 *
+	 * @param moduleConfigValue NodeConfigValue.
+	 */
+	void setModuleConfigValue(ModuleConfigValue moduleConfigValue);
 }

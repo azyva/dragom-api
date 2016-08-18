@@ -139,4 +139,11 @@ public interface Node {
 	 * @param nodeEvent NodeEvent.
 	 */
 	void raiseNodeEvent(NodeEvent nodeEvent);
+
+	/**
+	 * @return Indicates if the Node was created dynamically. This generally means
+	 *   that it is not based on a {@link NodeConfig} and is inferred from some
+	 *   external system.
+	 */
+	boolean isCreatedDynamically();
 }

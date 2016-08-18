@@ -17,17 +17,19 @@
  * along with Dragom.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.azyva.dragom.model.config;
+package org.azyva.dragom.model;
+
+import org.azyva.dragom.model.config.NodeConfigValue;
 
 /**
- * Extension of {@link NodeConfig} that allows changing the configuration data.
+ * Extension of {@link Node} that allows changing the configuration data.
  *
  * @author David Raymond
- * @see MutableConfig
+ * @see MutableModel
  */
-public interface MutableNodeConfig extends NodeConfig {
+public interface MutableNode extends Node {
 	/**
-	 * @return Indicates that the MutableNodeConfig has just been created and that
+	 * @return Indicates that the MutableNode has just been created and that
 	 *   setNodeConfigValue has not been called yet.
 	 */
 	boolean isNew();
@@ -45,11 +47,16 @@ public interface MutableNodeConfig extends NodeConfig {
 	void setNodeConfigValue(NodeConfigValue nodeConfigValue);
 
 	/**
-	 * Deletes the {@link MutableNodeConfig}. If the implementation has a parent
-	 * object (.e.g.: MutableClassificationNodeConfig or MutableConfig), it must
-	 * ensure the parent is adjusted.
-	 * <p>
-	 * Once deleted, a MutableNodeConfig must not be used anymore.
+	 * Deletes the MutableNode. If the implementation has a parent object
+	 * (.e.g.: MutableClassificationNode or MutableModel), it must ensure the
+	 * the parent is adjusted.
 	 */
 	void delete();
+
+	/**
+	 * @return Indicates if the MutableNode is destroyed (either deleted using
+	 *   {@link MutableNode#delete} or removed from its parent cache because of a
+	 *   configuration data change so that it gets recreated when needed.
+	 */
+	boolean isDestroyed();
 }
