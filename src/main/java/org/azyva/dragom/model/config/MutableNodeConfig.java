@@ -19,6 +19,8 @@
 
 package org.azyva.dragom.model.config;
 
+import org.azyva.dragom.model.MutableNode;
+
 /**
  * Extension of {@link NodeConfig} that allows changing the configuration data.
  *
@@ -28,25 +30,35 @@ package org.azyva.dragom.model.config;
 public interface MutableNodeConfig extends NodeConfig {
 	/**
 	 * @return Indicates that the MutableNodeConfig has just been created and that
-	 *   setNodeConfigValue has not been called yet.
+	 *   {@link #setNodeConfigTransferObject} has not been called yet.
 	 */
 	boolean isNew();
 
 	/**
-	 * @return {@link NodeConfigValue}.
+	 * @return {@link NodeConfigTransferObject}.
 	 */
-	NodeConfigValue getNodeConfigValue();
+	NodeConfigTransferObject getNodeConfigTransferObject();
 
 	/**
-	 * Sets the {@link NodeConfigValue}.
+	 * Sets the {@link NodeConfigTransferObject}.
+	 * <p>
+	 * If the implementation supports throwing OptimisticLockException, it generally
+	 * does so by including a hidden last modification timestamp field within the
+	 * NodeConfigTransferObject.
 	 *
-	 * @param nodeConfigValue NodeConfigValue.
+	 * @param nodeConfigTransferObject NodeConfigTransferObject.
+	 * @throws OptimisticLockException When the implementation detects that the
+	 *   configuration data was changed since the call to
+	 *   {@link getNodeConfigTransferObject}. This detection is optional.
+	 * @throws DuplicateNodeExcpeption When the new configuration data would introduce
+	 *   a duplicate {@link MutableNode} within the parent.
 	 */
-	void setNodeConfigValue(NodeConfigValue nodeConfigValue);
+	void setNodeConfigTransferObject(NodeConfigTransferObject nodeConfigTransferObject) throws OptimisticLockException, DuplicateNodeException;
 
 	/**
-	 * Deletes the {@link MutableNodeConfig}. If the implementation has a parent
-	 * object (.e.g.: MutableClassificationNodeConfig or MutableConfig), it must
+	 * Deletes the MutableNodeConfig. If the implementation has a parent object
+	 * (i.e., it is a child of {@link MutableClassificationNodeConfig} or the root
+	 * {@link MutableClassificationNodeConfig} of {@link MutableConfig}), it must
 	 * ensure the parent is adjusted.
 	 * <p>
 	 * Once deleted, a MutableNodeConfig must not be used anymore.

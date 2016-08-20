@@ -20,7 +20,6 @@
 package org.azyva.dragom.model;
 
 import org.azyva.dragom.model.config.ClassificationNodeConfig;
-import org.azyva.dragom.model.config.ClassificationNodeConfigValue;
 import org.azyva.dragom.model.config.MutableClassificationNodeConfig;
 import org.azyva.dragom.model.config.MutableConfig;
 
@@ -33,37 +32,25 @@ import org.azyva.dragom.model.config.MutableConfig;
  */
 public interface MutableClassificationNode extends ClassificationNode {
 	/**
-	 * @return {@link ClassificationNodeConfigValue}.
-	 */
-	ClassificationNodeConfigValue getClassificationNodeConfigValue();
-
-	/**
-	 * Sets the {@link ClassificationNodeConfigValue}.
+	 * Creates a new uninitialized {@link MutableClassificationNode}.
+	 * <p>
+	 * Creation is finalized and visible only once
+	 * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is
+	 * called, replacing any MutableClassificationNodeConfig with the same name
+	 * that may already be set.
 	 *
-	 * @param classificationNodeConfigValue ClassificationNodeConfigValue.
+	 * @return MutableClassificationNode.
 	 */
-	void setClassificationNodeConfigValue(ClassificationNodeConfigValue classificationNodeConfigValue);
+	MutableClassificationNode createChildClassificationNode();
 
 	/**
 	 * Creates a new uninitialized {@link MutableModule}.
 	 * <p>
 	 * Creation is finalized and visible only once
-	 * {@link MutableModule#setModuleConfigValue} is called, replacing any
-	 * MutableNodeConfig with the same name that may already be set.
+	 * {@link MutableModule#setNodeConfigTransferObject} is called, replacing any
+	 * MutableModuleConfig with the same name that may already be set.
 	 *
 	 * @return MutableModule.
 	 */
 	MutableModule createChildModule();
-
-	/**
-	 * Creates a new uninitialized {@link MutableClassificationNode}.
-	 * <p>
-	 * Creation is finalized and visible only once
-	 * {@link MutableClassificationNodeConfig#setClassificationNodeConfigValue} is
-	 * called, replacing any MutableNodeConfig with the same name that may already be
-	 * set.
-	 *
-	 * @return MutableClassificationNode.
-	 */
-	MutableClassificationNode createChildClassificationNode();
 }

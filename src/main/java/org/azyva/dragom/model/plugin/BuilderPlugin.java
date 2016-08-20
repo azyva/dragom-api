@@ -31,7 +31,7 @@ import org.azyva.dragom.model.Module;
  * The notion of build is broad. It is up to implementations of this plugin to define
  * exactly what is a build or what happens during a build.
  * <p>
- * In particular the build of a Module generally involves taking source files and
+ * Specifically the build of a Module generally involves taking source files and
  * generating other files from them (compiling, packaging, etc.). But it can also
  * involve executing unit tests on the compiled code after building. This can even
  * very from Module to Module for the same plugin implementation. These different

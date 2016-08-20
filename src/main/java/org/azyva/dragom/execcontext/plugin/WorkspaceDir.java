@@ -42,7 +42,7 @@ import org.azyva.dragom.model.ModuleVersion;
  *   module's files, but has not been requested by the user.
  *
  * Only one marker interface is used for all types of workspace directories,
- * despite the two categories mentionned above as each class is handled
+ * despite the two categories mentioned above as each class is handled
  * specifically anyways. However, classes marked by this interface can include in
  * their name the work "user" or "system" to make things easier for developers.
  *

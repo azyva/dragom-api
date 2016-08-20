@@ -45,8 +45,8 @@ import org.azyva.dragom.model.Version;
 public interface NewDynamicVersionPlugin extends ModulePlugin {
 	/**
 	 * Gets a new dynamic Version to be created or switched to based on an existing
-	 * Version which can be static (e.g.: bugfix Version based on a release Version)
-	 * or dynamic (e.g.: feature Version based on a project Version).
+	 * Version which can be static (e.g., bugfix Version based on a release Version)
+	 * or dynamic (e.g., feature Version based on a project Version).
 	 *
 	 * The caller is responsible for verifying if the new dynamic Version exists. If
 	 * it does the Version returned in byReferenceVersionBase (if any) must be

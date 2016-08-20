@@ -28,8 +28,9 @@ import org.azyva.dragom.model.Model;
  * provided by this interface and its members.
  * <p>
  * Config data exposed through this interface is considered static at runtime.
- * However, classes implementing this interface may also implement
- * {@link MutableConfig} allowing the configuration data to be changed.
+ * However, classes and child classes implementing this interface and child
+ * interfaces may also implement {@link MutableConfig} and mutable child
+ * interfaces allowing the configuration data to be changed.
  *
  * @author David Raymond
  */

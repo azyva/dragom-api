@@ -34,7 +34,7 @@ import org.azyva.dragom.model.Node;
  * ({@link ExecContext#getProperty, etc.) and transient data
  * ({@link ExecContext#getTransientData}, etc.). But this must be done in a way
  * that is coherent with the fact that a NodePlugin is part of the {@link Model}
- * and as such must be considered in Model scope (static). In particular, a
+ * and as such must be considered in Model scope (static). Specifically a
  * NodePlugin must not affect its internal state based on ExecContext information,
  * which is at a lower level scope.
  *

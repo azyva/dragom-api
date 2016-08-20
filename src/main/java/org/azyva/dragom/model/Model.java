@@ -19,6 +19,8 @@
 
 package org.azyva.dragom.model;
 
+import org.azyva.dragom.model.config.Config;
+
 
 /**
  * Represents the runtime model. This interface and its members are used during
@@ -28,11 +30,21 @@ package org.azyva.dragom.model;
  * Model offers useful methods that are more global than those offered by
  * {@link Node}, {@link ClassificationNode} and {@link Module}.
  * <p>
+ * A Model and the child classes which implement this interface and child
+ * interfaces will generally be based on {@link Config} and child
+ * interfaces, although this is not strictly required.
+ * <p>
+ * The methods in this interface and child interfaces are similar to those in
+ * Config and child interfaces, which may seem redundant. The idea is that Dragom
+ * separates the Model from its Config so that Config implementations can be used
+ * interchangeably using the same Model implementation.
+ * <p>
  * A Model is essentially static in the sense that the properties of
- * Node's cannot be changed once the Model is created. However, a Model can
- * implement {@link ModelNodeBuilderFactory} if it allows new Node's to be
- * dynamically created. But once such new Node's are created, they become static
- * as other Node's.
+ * Node's cannot be changed once the Model is created, except if the Model is a
+ * {@link MutableModel}). However, a Model can implement
+ * {@link ModelNodeBuilderFactory} if it allows new Node's to be dynamically
+ * created. But once such new Node's are created, they become static as other
+ * Node's.
  *
  * @author David Raymond
  */

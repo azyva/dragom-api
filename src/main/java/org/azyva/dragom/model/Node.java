@@ -32,7 +32,7 @@ import org.azyva.dragom.model.plugin.NodePlugin;
 /**
  * Represents a node at runtime.
  * <p>
- * Two type of Node's exist each represented by a different subclass:
+ * Two type of Node's exist each represented by a different sub-interfaces:
  * <p>
  * <li>{@link ClassificationNode}</li>
  * <li>{@link Module}</li>

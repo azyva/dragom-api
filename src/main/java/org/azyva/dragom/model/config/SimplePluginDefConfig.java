@@ -25,10 +25,8 @@ import org.azyva.dragom.model.plugin.NodePlugin;
 /**
  * Simple implementation for {@link PluginDefConfig}.
  * <p>
- * Used within NodeConfigValue.
- * <p>
- * Can also be used as a simple PluginDefConfig within a {@link Node}
- * implementation.
+ * Can be used as a simple PluginDefConfig within {@link Node}, {@link NodeConfig}
+ * and {@link NodeConfigTransferObject} implementations.
  *
  * @author David Raymond
  * @see org.azyva.dragom.model.config.simple

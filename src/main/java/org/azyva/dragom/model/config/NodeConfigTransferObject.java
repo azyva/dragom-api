@@ -24,25 +24,29 @@ import java.util.List;
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**
- * Mutable value object for a {@link NodeConfig} data.
+ * Transfer object for a {@link NodeConfig} basic data.
  * <p>
  * {@link MutableNodeConfig} and its sub-interfaces return and take as argument
  * this interface to allow getting and setting atomically data. See
  * {@link MutableConfig}.
  * <p>
- * This interface is similar to {@link NodeConfig} but serves a different
- * purpose.
+ * It so happens that the only configuration data that can be transfered from and
+ * to MutableNodeConfig's (and its sub-interfaces) are the same and are
+ * represented by this interface. If MutableNodeConfig and its sub-interfaces
+ * eventually contain other configuration data that are not common, the
+ * orientation will probably be to introduce new transfer objects instead
+ * implementing an interface hierarchy to factor out commonality.
  * <p>
- * Since this interface represents a value object, implementations are generally
- * straightforward, and in many cases, {@link SimplNodeConfigValue} will be
- * adquate. But implementations subclass SimpleNodeCOnfigValue to add fields for
- * managing concurrency, such as a last modification timestamp if the
- * configuration data is persisted in a database and Dragom is used in a
- * multi-user application context.
+ * Since this interface represents a transfer object, implementations are
+ * generally straightforward, and in many cases,
+ * {@link SimplNodeConfigTransferObject} will be adequate. But implementations can
+ * subclass SimpleNodeConfigTransferObject to, for example, add a last
+ * modification timestamp to manage concurrency if the configuration data is
+ * persisted in a database and Dragom is used in a multi-user application context.
  *
  * @author David Raymond
  */
-public interface NodeConfigValue {
+public interface NodeConfigTransferObject {
 	/**
 	 * @return Name.
 	 */
@@ -54,11 +58,6 @@ public interface NodeConfigValue {
 	 * @param name See description.
 	 */
 	void setName(String name);
-
-	/**
-	 * @return NodeType.
-	 */
-	NodeType getNodeType();
 
 	/**
 	 * Returns a {@link PropertyDefConfig}.

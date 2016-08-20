@@ -19,29 +19,28 @@
 
 package org.azyva.dragom.model;
 
-import org.azyva.dragom.model.config.ClassificationNodeConfigValue;
-import org.azyva.dragom.model.config.Config;
-import org.azyva.dragom.model.config.ModuleConfigValue;
 import org.azyva.dragom.model.config.MutableConfig;
+import org.azyva.dragom.model.config.NodeConfigTransferObject;
 
 /**
  * Extension of {@link Model} that allows changing the underlying configuration
  * data from which the Model is created.
  * <p>
- * A Model which implements this interface will generally be based on
- * {@link MutableConfig}, although this is not strictly required since only the
- * {@link ModuleConfigValue} and {@link ClassificationNodeConfigValue} are
- * actually exposed through the model interfaces.
- * <p>
- * The methods in the mutable model interfaces are similar to those int he mutable
- * configuration interfaces, and this may seem redundant. The idea is that Dragom
- * separates the Model from its {@link Config} implementation can be used
- * interchangeably using the same Model implementation. And changes to the
- * Config cannot be done without the Model knowing about it since an active Model
- * can contains many dynamically instantiated objects such as plugins whose
- * configuration depend on the Model Config, and the Config changes, the Model
+ * A Model and child classes which implement this interface and child interfaces
+ * will generally be based on {@link MutableConfig} and mutable child interfaces,
+ * although this is not strictly required since only
+ * {@link NodeConfigTransferObject} is actually exposed through these interfaces.
+ * The reason for not exposing the underlying MutableConfig and mutable child
+ * interfaces is that changes to the MutableConfig and child interfaces cannot be
+ * done without the MutableModel knowing about it since an active MutableModel can
+ * contain many dynamically instantiated objects (e.g., plugins) whose
+ * configuration depend on the MutableConfig, and if it changes, the MutableModel
  * must make appropriate adjustments, such as clearing various caches to force the
  * recreation of the dynamically instantiated objects.
+ * <p>
+ * Runtime change events may eventually be supported so that the MutableModel can
+ * adjust to configuration changes at runtime.
+ *
  */
 public interface MutableModel extends Model {
 	/**

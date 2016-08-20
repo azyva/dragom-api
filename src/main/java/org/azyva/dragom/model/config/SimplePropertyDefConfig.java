@@ -24,10 +24,10 @@ import org.azyva.dragom.model.Model;
 /**
  * Simple implementation for {@link PropertyDefConfig}.
  * <p>
- * Used within NodeConfigValue.
  * <p>
- * Can also be used as a simple PropertyDefConfig within a {@link Node}
- * implementation.
+ * Can be used as a simple PropertyDefConfig within {@link Node},
+ * {@link NodeConfig} and {@link NodeConfigTransferObject} implementations.
+ * <p>
  *
  * @author David Raymond
  * @see org.azyva.dragom.model.config.simple

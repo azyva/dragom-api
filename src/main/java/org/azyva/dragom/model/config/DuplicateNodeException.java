@@ -19,13 +19,25 @@
 
 package org.azyva.dragom.model.config;
 
+import org.azyva.dragom.model.MutableNode;
+
 /**
- * Mutable value object for a {@link ModuleConfig} data.
+ * Thrown by {@link MutableNodeConfig#setNodeConfigTransferObject} and
+ * {@link MutableNode#setNodeConfigTransferObject} when the new configuration data
+ * would introduce a duplicate {@link MutableNodeConfig} or {@link MutableNode}
+ * within the parent.
  * <p>
- * This interface is similar to {@link SimpleModuleConfig} but serves a different
- * purpose.
- *
- * @author David Raymond
+ * This exception does not have the usual constructors taking a message and/or
+ * throwable parameter. The caller is expected to handle the exception and know the
+ * context in which it is thrown.
  */
-public interface ModuleConfigValue extends NodeConfigValue {
+public class DuplicateNodeException extends Exception {
+	// To keep the compiler from complaining.
+	static final long serialVersionUID = 0;
+
+	/**
+	 * Constructor.
+	 */
+	public DuplicateNodeException() {
+	}
 }

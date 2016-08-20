@@ -19,25 +19,17 @@
 
 package org.azyva.dragom.model;
 
-import org.azyva.dragom.model.config.ModuleConfigValue;
 import org.azyva.dragom.model.config.MutableConfig;
 
 /**
  * Extension of {@link Module} that allows changing the configuration data.
+ * <p>
+ * MutableModule does not provide members other than those of {@link MutableNode},
+ * so it can be considered a marker interface.
+ *
  *
  * @author David Raymond
  * @see MutableConfig
  */
 public interface MutableModule extends Module {
-	/**
-	 * @return {@link ModuleConfigValue}.
-	 */
-	ModuleConfigValue getModuleConfigValue();
-
-	/**
-	 * Sets the {@link ModuleConfigValue}.
-	 *
-	 * @param moduleConfigValue NodeConfigValue.
-	 */
-	void setModuleConfigValue(ModuleConfigValue moduleConfigValue);
 }

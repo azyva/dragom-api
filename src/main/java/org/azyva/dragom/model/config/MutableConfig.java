@@ -24,11 +24,11 @@ import org.azyva.dragom.model.Model;
 /**
  * Extension of {@link Config} that allows changing the configuration data.
  * <p>
- * The design orientation of the mutable extension to the configuration interfaces
+ * The design orientation of the mutable extension to Config and child interfaces
  * is to allow applying changes atomically to the various {@link NodeConfig}. That
- * is why mutable value objects are used.
+ * is why transfer objects are used.
  * <p>
- * The reason for implementing atomicity semantics are two-fold:
+ * The reason for implementing atomocity semantics are two-fold:
  * <p>
  * <li>If the configuration data is meant to be persisted, it is expected that
  *     persisting operations be performed for each mutation and mutating whole objects
@@ -45,9 +45,8 @@ public interface MutableConfig extends Config {
 	 * Creates a new uninitialized root {@link MutableClassificationNodeConfig}.
 	 * <p>
 	 * Creation is finalized and visible only once
-	 * {@link MutableClassificationNodeConfig#setClassificationNodeConfigValue} is
-	 * called, replacing any root MutableClassificationNodeConfig that may already be
-	 * set.
+	 * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is called,
+	 * replacing any root MutableClassificationNodeConfig that may already be set.
 	 *
 	 * @return Root MutableClassificationNodeConfig.
 	 */

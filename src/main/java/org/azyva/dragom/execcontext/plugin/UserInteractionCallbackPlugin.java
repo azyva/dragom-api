@@ -68,7 +68,7 @@ public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
 	 * The caller is responsible for closing the Writer when done so that the plugin
 	 * is able to associate all of the additional information with the initial call to
 	 * this method. Calling close in this case should not close some underlying stream
-	 * in such a way that would render the system unstable. In particular if the
+	 * in such a way that would render the system unstable. Specifically if the
 	 * Writer delegates to System.out, it must not delegate the close call. This use
 	 * of close is specific to the contract with this class and does not necessarily
 	 * respect the general contract of Writer.close.

@@ -28,37 +28,24 @@ package org.azyva.dragom.model.config;
  */
 public interface MutableClassificationNodeConfig extends ClassificationNodeConfig, MutableNodeConfig {
 	/**
-	 * @return {@link ClassificationNodeConfigValue}.
-	 */
-	ClassificationNodeConfigValue getClassificationNodeConfigValue();
-
-	/**
-	 * Sets the {@link ClassificationNodeConfigValue}.
+	 * Creates a new uninitialized {@link MutableClassificationNodeConfig}.
+	 * <p>
+	 * Creation is finalized and visible only once
+	 * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is called,
+	 * replacing any MutableNodeConfig with the same name that may already be set.
 	 *
-	 * @param classificationNodeConfigValue ClassificationNodeConfigValue.
+	 * @return MutableClassificationNodeConfig.
 	 */
-	void setClassificationNodeConfigValue(ClassificationNodeConfigValue classificationNodeConfigValue);
+	MutableClassificationNodeConfig createChildClassificationNodeConfig();
 
 	/**
 	 * Creates a new uninitialized {@link MutableModuleConfig}.
 	 * <p>
 	 * Creation is finalized and visible only once
-	 * {@link MutableModuleConfig#setModuleConfigValue} is called, replacing any
-	 * MutableNodeConfig with the same name that may already be set.
+	 * {@link MutableModuleConfig#setNodeConfigTransferObject} is called, replacing
+	 * any MutableNodeConfig with the same name that may already be set.
 	 *
 	 * @return MutableModuleConfig.
 	 */
 	MutableModuleConfig createChildModuleConfig();
-
-	/**
-	 * Creates a new uninitialized {@link MutableClassificationNodeConfig}.
-	 * <p>
-	 * Creation is finalized and visible only once
-	 * {@link MutableClassificationNodeConfig#setClassificationNodeConfigValue} is
-	 * called, replacing any MutableNodeConfig with the same name that may already be
-	 * set.
-	 *
-	 * @return MutableClassificationNodeConfig.
-	 */
-	MutableClassificationNodeConfig createChildClassificationNodeConfig();
 }

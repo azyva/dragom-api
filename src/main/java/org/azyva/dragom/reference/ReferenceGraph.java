@@ -49,7 +49,7 @@ import org.azyva.dragom.model.NodePath;
  * {@link Reference}'s between {@link Module}'s.
  * <p>
  * It is possible that eventually the concept of ReferenceGraph becomes more
- * important. In particular it is conceivable that ReferenceGraph data be cached
+ * important. Specifically it is conceivable that ReferenceGraph data be cached
  * in some persistent storage in order to improve performance of some operations
  * that otherwise require the repeated loading and interpretation of Module build
  * scripts to extract the Reference's.

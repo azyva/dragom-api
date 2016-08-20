@@ -28,7 +28,7 @@ package org.azyva.dragom.model;
  * <p>
  * There are similarities between the functionality provided by this interface and
  * that provided by {@link MutableNode} and its sub-interfaces
- * {@link MutableModule} and {@link MutableClassificationNode}. They both allow
+ * {@link MutableClassificationNode} and {@link MutableModule}. They both allow
  * new Node's to be created. But MutableNode and its sub-interfaces are related to
  * changing the configuration data for a {@link Model}, whereas the new Node's
  * created by this interface remain dynamic and not supported by underlying
