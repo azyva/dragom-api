@@ -52,7 +52,7 @@ public interface Model {
 	/**
 	 * @return Root ClassificationNode.
 	 */
-	Node getClassificationNodeRoot();
+	ClassificationNode getClassificationNodeRoot();
 
 	/**
 	 * Returns the {@link ClassificationNode} corresponding to a {@link NodePath}.

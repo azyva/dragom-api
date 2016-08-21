@@ -31,5 +31,5 @@ import org.azyva.dragom.model.config.MutableConfig;
  * @author David Raymond
  * @see MutableConfig
  */
-public interface MutableModule extends Module {
+public interface MutableModule extends Module, MutableNode {
 }

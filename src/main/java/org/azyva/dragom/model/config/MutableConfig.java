@@ -50,5 +50,5 @@ public interface MutableConfig extends Config {
 	 *
 	 * @return Root MutableClassificationNodeConfig.
 	 */
-	MutableClassificationNodeConfig createClassificationNodeConfigRoot();
+	MutableClassificationNodeConfig createMutableClassificationNodeConfigRoot();
 }

@@ -30,7 +30,7 @@ import org.azyva.dragom.model.config.MutableConfig;
  * @author David Raymond
  * @see MutableConfig
  */
-public interface MutableClassificationNode extends ClassificationNode {
+public interface MutableClassificationNode extends ClassificationNode, MutableNode {
 	/**
 	 * Creates a new uninitialized {@link MutableClassificationNode}.
 	 * <p>
@@ -41,7 +41,7 @@ public interface MutableClassificationNode extends ClassificationNode {
 	 *
 	 * @return MutableClassificationNode.
 	 */
-	MutableClassificationNode createChildClassificationNode();
+	MutableClassificationNode createChildMutableClassificationNode();
 
 	/**
 	 * Creates a new uninitialized {@link MutableModule}.
@@ -52,5 +52,5 @@ public interface MutableClassificationNode extends ClassificationNode {
 	 *
 	 * @return MutableModule.
 	 */
-	MutableModule createChildModule();
+	MutableModule createChildMutableModule();
 }

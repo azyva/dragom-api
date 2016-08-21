@@ -53,6 +53,6 @@ public interface MutableModel extends Model {
 	 *
 	 * @return Root MutableClassificationNodeConfig.
 	 */
-	MutableClassificationNode createClassificationNodeConfigRoot();
+	MutableClassificationNode createMutableClassificationNodeRoot();
 
 }

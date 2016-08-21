@@ -49,7 +49,7 @@ public interface MutableNodeConfig extends NodeConfig {
 	 * @param nodeConfigTransferObject NodeConfigTransferObject.
 	 * @throws OptimisticLockException When the implementation detects that the
 	 *   configuration data was changed since the call to
-	 *   {@link getNodeConfigTransferObject}. This detection is optional.
+	 *   {@link #getNodeConfigTransferObject}. This detection is optional.
 	 * @throws DuplicateNodeExcpeption When the new configuration data would introduce
 	 *   a duplicate {@link MutableNode} within the parent.
 	 */

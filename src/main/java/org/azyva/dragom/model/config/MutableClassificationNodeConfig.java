@@ -36,7 +36,7 @@ public interface MutableClassificationNodeConfig extends ClassificationNodeConfi
 	 *
 	 * @return MutableClassificationNodeConfig.
 	 */
-	MutableClassificationNodeConfig createChildClassificationNodeConfig();
+	MutableClassificationNodeConfig createChildMutableClassificationNodeConfig();
 
 	/**
 	 * Creates a new uninitialized {@link MutableModuleConfig}.
@@ -47,5 +47,5 @@ public interface MutableClassificationNodeConfig extends ClassificationNodeConfi
 	 *
 	 * @return MutableModuleConfig.
 	 */
-	MutableModuleConfig createChildModuleConfig();
+	MutableModuleConfig createChildMutableModuleConfig();
 }
