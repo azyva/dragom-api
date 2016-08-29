@@ -58,6 +58,11 @@ import java.util.regex.Pattern;
  * NodePath supports a literal form where "/" is used to separate Node names, as
  * in Domain/SubDomain/System/my-module. A partial NodePath ends with a trailing
  * "/".
+ *
+ * The empty NodePath literal represents the root ClassificationNode (a partial
+ * NodePath). Contrary to other partial NodePath's, it does not end with "/" since
+ * this may be confusing as NodePath's never begin with "/". So the empty NodePath
+ * literal is a special case.
  * <p>
  * A NodePath is always absolute, the first Node representing an immediate child
  * of the unnamed root ClassificationNode of the hierarchy. A NodePath does not
@@ -115,7 +120,7 @@ public final class NodePath {
 	 */
 	public NodePath(String[] arrayNodeName, boolean isPartial) {
 		if ((arrayNodeName.length == 0) && !isPartial) {
-			throw new RuntimeException("A NodsePath cannot be empty.");
+			throw new RuntimeException("A NodePath cannot be empty.");
 		}
 
 		for (String nodeName : arrayNodeName) {
@@ -184,28 +189,34 @@ public final class NodePath {
 	 * @param stringNodePath NodePath literal.
 	 */
 	public NodePath(String stringNodePath) {
-		Matcher matcher;
+		// We handle the case where the NodePath literal is the empty string separately.
+		if (stringNodePath.isEmpty()) {
+			this.isPartial = true;
+			this.arrayNodeName = new String[0];
+		} else {
+			try {
+				Matcher matcher;
 
-		try {
-			matcher = NodePath.patternValidateNodePathLiteral.matcher(stringNodePath);
+				matcher = NodePath.patternValidateNodePathLiteral.matcher(stringNodePath);
 
-			if (!matcher.matches()) {
-				throw new ParseException(MessageFormat.format(NodePath.resourceBundle.getString(NodePath.MSG_PATTERN_KEY_NODE_PATH_PARSING_ERROR), stringNodePath, NodePath.patternValidateNodePathLiteral), 0);
+				if (!matcher.matches()) {
+					throw new ParseException(MessageFormat.format(NodePath.resourceBundle.getString(NodePath.MSG_PATTERN_KEY_NODE_PATH_PARSING_ERROR), stringNodePath, NodePath.patternValidateNodePathLiteral), 0);
+				}
+
+				if (stringNodePath.charAt(stringNodePath.length() - 1) == '/') {
+					this.isPartial = true;
+					stringNodePath = stringNodePath.substring(0, stringNodePath.length() - 1);
+				} else {
+					this.isPartial = false;
+				}
+
+				this.arrayNodeName = stringNodePath.split("/");
+
+				// arrayNodeName cannot be empty here, even if stringNodePath is
+				// the empty String. This would have been caught above.
+			} catch (ParseException pe) {
+				throw new RuntimeException(pe);
 			}
-
-			if (stringNodePath.charAt(stringNodePath.length() - 1) == '/') {
-				this.isPartial = true;
-				stringNodePath = stringNodePath.substring(0, stringNodePath.length() - 1);
-			} else {
-				this.isPartial = false;
-			}
-
-			this.arrayNodeName = stringNodePath.split("/");
-
-			// arrayNodeName cannot be empty here, even if stringNodePath is
-			// the empty String. This would have been caught above.
-		} catch (ParseException pe) {
-			throw new RuntimeException(pe);
 		}
 	}
 

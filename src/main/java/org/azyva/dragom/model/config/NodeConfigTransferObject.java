@@ -39,7 +39,7 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * <p>
  * Since this interface represents a transfer object, implementations are
  * generally straightforward, and in many cases,
- * {@link SimplNodeConfigTransferObject} will be adequate. But implementations can
+ * {@link SimpleNodeConfigTransferObject} will be adequate. But implementations can
  * subclass SimpleNodeConfigTransferObject to, for example, add a last
  * modification timestamp to manage concurrency if the configuration data is
  * persisted in a database and Dragom is used in a multi-user application context.
