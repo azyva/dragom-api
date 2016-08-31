@@ -39,7 +39,7 @@ import org.azyva.dragom.model.Version;
  * the meaning of this order being generally related to the set of changes
  * included, and to some extent to the date at which the Version's were created,
  * although a more recently created Version does not necessarily contain more
- * changes that others (e.g., bugfix changes).
+ * changes than others (e.g., hotfix changes).
  * <p>
  * For example S/v-1.3 > S/v-1.2.3 > S/v-1.2.2 generally holds true.
  * <p>

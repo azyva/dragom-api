@@ -136,30 +136,23 @@ subtotal:   261.5
 2016-08-16: 6.5
 2016-08-20: 10
 2016-08-28: 3.5
-2016-08-30: 21:00 - 
+2016-08-30: 5
+2016-08-31: 7.5
 
 
 To test
 =======
 
-Test responses yes/yes always, etc.
-
 Mapping groupes in Config...
 
 - batch mode
 - building reference graph but with more than one node
-- checkout with multiple versions for same module
 
 Empty elements in XML -> null? or empty string?
 
 
 - Batch mode.
 - Test workspace within workspace
-- Workspace manager
-  - When empty.
-  - Commit, update, list.
-  - Commit, update when not synced, etc.
-  - Commit with PushBehavior = FORCE to force push of tags.
 - IsSync (check with Workspace status)
 - Creating new branch with setting up remote tracking separately.
 - Events (register dummy events just be see when they are triggered).
@@ -172,11 +165,11 @@ In the first set of tests, the following will not have been tested:
   - To be tested with Phase I believe
 - Simple version mapping (with the simple class)
 - TaskChangeReference
+Hotfix new dynamic version.
 
 
 If checkoutSystem in a workspace directory that is already checked out and not release, error.
 
-Hotfix new dynamic version.
 
 
 
@@ -503,18 +496,6 @@ It is ok to consider root and root reference graph path matchers for a system li
 Next tool: Report
 =================
 
-report [--graph] [--module-versions [--reference-graph-paths] [--most-recent-version] [--most-recent-available-version]]
-Text format
-XML format
-JSON format
-
-I have been asked for the tool to analyse version coherence within graph and change version.
-  Make sure this is possible.
-
-Also, need to be able to search where a module version is referenced.
-This is probably already possible using reference graph paths matchers.
-Yes it seems to be. Not totally global search since not performance enough. For given root ModuleVersion, a search can be performed.
-
 For the version coherence report, maybe have it configurable so that only certain modules are considered.
 Dragom cannot really know if a module dependency is compile-type or runtime type. But it can be told.
 Work with coherence rules.
@@ -537,16 +518,14 @@ Information:
 
 
 
-Other tool: Switch
-
 Marketing and Dragom web site (info from FL)
 ============================================
 
 Use what François has setup.
   
 URL : https://fidooda02.sbin.ca:8080/
-login: draymond
-pass: meSu#MB83
+
+
 
 IP hosting :  199.19.212.118  (pour le "A Record")
 
@@ -556,11 +535,10 @@ Lorsque le A Record sera updaté :
 
 site:
 
-https://dragom.com
-https://dragom.com/wp-admin
+https://dragom.org
+https://dragom.org/wp-admin
 
-login : draymond
-pass : CN9yCNuw?c
+
 
 Il resterait juste le setup du SSL à faire.  Je suggère y aller direct en https only.
 
@@ -896,11 +874,6 @@ Sujets:
 
 
 
-Get node-specific param using RuntimeProperties
-If null need to ask the user
-Get default value from runtime properties (root node)
-if null, set AlwaysNeverAsk behavior 
-Check for AlwaysNeverAsk behavior
 
 
 
@@ -910,96 +883,6 @@ Check for AlwaysNeverAsk behavior
 
 
 
-
-
-
-
-
-
-
-
-
-A A NOde can be configurable at runtime.
-In this case it implements ConfigurableNode.
-ConfigurableClassificationNode and ConfigurableModule are sub-interfaces of ConfigurableNode.
-A ConfigurableNode is one that exists from a NodeConfig
-ConfigurableNde.getNodeConfig returns the NodeConfig for the Node.
-Node completed dynamically do not expose ConfigurableNode, or getNodeConfig returns null.
-
-
-
-ClassificationNode:
-getChildNode
-
-ConfigurableClassificationNode:
-getClassificationNodeConfig
-  - Can access child, but RO wrapper
-  - Then again, maybe no child accessible
-    - Argument: copy, so cannot copy child (too heavy).
-  - Calls underlying ClassificationNodeConfig.getClassificationNodeConfigValue of ModifiableClassificationNodeConfig subinterface of ClassificationNodeConfig
-    - ModifiableClassificationNodeConfig must be implemented by Config (contract with ConfigurableClassificationNode)
-    - Otherwise methods (get, set, deleteChild, createChild, etc.) return IllegalState or NotImplemented
-  - Returns a ClassificationNodeConfigValue (no child access, modifiable values for other fields).
-setClassificationNodeConfig(ClassificationNodeConfigValue)
-  - Cannot change child
-  - Should invalidate all child Node's
-  - Web Interface should not hold on to Node's, or ConfigurableNode, since they can disappear
-  - Maybe when modifying a node, should refresh the child tree
-  - Calls underlying ClassificationNodeConfig.setClassificationNodeConfigValue
-    - This is the call that will update DB.
-
-getListChild ??? from regular ClassificationNode?
-getChild ??? from regular ClassificationNode?
-  - For existing only
-  - Returns ConfigurableNode (or need cast to)
-deleteChild
-createChildModule/createChildClassificationNode
-  - Returns ConfigurableNode for the child
-  - In an initial non existing state
-  - Not even name set
-  - Need to call setNodeConfig to materialize
-  - Tool must know it is in creation mode
-  - Internally calls underlying ClassificationNodeConfig.createChildModule or ClassificationNodeConfig.createChildClassificationNode
-    - Which returns a ModifiableNodeConfig for which setClassificationNodeConfigValue is expected to be called to finalize the creation of the child.
-
-Should ConfigurableNode be an additional interface on Node, or some kind of mixin?
-- I guess that interface is OK.
-
-
-ModifiableClassificationNodeConfig:
-- getClassificationNodeConfigValue
-- setClassificationNodeConfigValue
-
-ModifiableModuleConfig:
-- getModuleConfigValue
-- setModuleConfigValue
-
-ModifiableNodeConfig:
-- getNodeConfigValue
-- setNodeConfigValue
-(defined by subclasses and expect subclasses of NodeConfigValue.
-
-
-
-Modifiable... interfaces are for "transactional", controller modification to config (to be compatible with JPA-based implementation, for instance)
-- But could be applied to other implementations, inclugin XML where presumably for each set..., the whole model would be rewritten.
-  - Locks would need to be managed, but internally.
-  
-
-...Value classes could be predefined and common (no need to be specific to particular Config implementation)
-
-
-ConfigurableNode exposed by Node required to force modifications to pass through Node for it to be aware of the modifications.
-
-
-Need to disable Node. Probably with a seperate boolean. Parent being null is not good because root has null parent.
-Probably need to disable plugins as well.
-Should do this for many non-value semantic classes.
-Classes should be use maps to cache nodes, etc. Must verify. I think already OK.
-If static data is required, ExecContext transiant data would be needed.
-
-
-For SimpleModel, must make clear that underlying Config is expected to not change, unless changed using ConfigurableNode...
 
 
 
@@ -1014,3 +897,20 @@ How to create XML from DB:
 Maybe the reverse could be true also:
 - DbConfig could have a constructor that takes a Config and recreates everything using Db... classes.
 - Backup/restore fonctionnality!!!
+
+
+
+
+The notion of being mutable or not (indMutable) is local to each class (Model, Node, etc.)
+- Maybe this does not make sense. Can we have a mutable Node within a non-mutable Model?
+- Not sure what would be cleaner.
+
+
+Maybe GitScmPlugin can convert _ in version to / and vice-versa?
+Version cannot contain / and this is probably correct.
+But it would be convenient to exploit the fact that Git can have / in versions (contrary to many other tools).
+Maybe this mapping can be configurable.
+
+
+When workspace is cleaned, the main workspace directories maintained by git plugin are not removed from exec.properties
+- This may or may not be a problem. Probably worth investigating.

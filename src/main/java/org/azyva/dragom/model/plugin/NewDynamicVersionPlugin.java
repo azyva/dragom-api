@@ -20,7 +20,9 @@
 package org.azyva.dragom.model.plugin;
 
 import org.azyva.dragom.apiutil.ByReference;
+import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.model.Version;
+import org.azyva.dragom.reference.ReferencePath;
 
 /**
  * This plugin is used by tools when a new dynamic Version needs to be created. It
@@ -45,7 +47,7 @@ import org.azyva.dragom.model.Version;
 public interface NewDynamicVersionPlugin extends ModulePlugin {
 	/**
 	 * Gets a new dynamic Version to be created or switched to based on an existing
-	 * Version which can be static (e.g., bugfix Version based on a release Version)
+	 * Version which can be static (e.g., hotfix Version based on a release Version)
 	 * or dynamic (e.g., feature Version based on a project Version).
 	 *
 	 * The caller is responsible for verifying if the new dynamic Version exists. If
@@ -59,7 +61,12 @@ public interface NewDynamicVersionPlugin extends ModulePlugin {
 	 * @param version Base version.
 	 * @param byReferenceVersionBase The base Version to use for creating the new
 	 *   dynamic Version will be stored there.
-	 * @return Dynamic Version. May be the same as the original version.
+	 * @param referencePath ReferencePath of the {@link ModuleVersion}.
+	 *   Implementations can use this information to, for example, validate that the
+	 *   ModuleVersion exists within a ReferencePath that contains only static
+	 *   Versions (for hotfixes).
+	 * @return Dynamic Version. May be the same as the original version. Can be null
+	 *   to indicate to the caller that no switch should be performed.
 	 */
-	Version getVersionNewDynamic(Version version, ByReference<Version> byReferenceVersionBase);
+	Version getVersionNewDynamic(Version version, ByReference<Version> byReferenceVersionBase, ReferencePath referencePath);
 }

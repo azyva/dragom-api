@@ -24,10 +24,10 @@ import java.util.List;
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**
- * Transfer object for a {@link NodeConfig} basic data.
+ * Transfer object for a {@link MutableNodeConfig} basic configuration data.
  * <p>
- * {@link MutableNodeConfig} and its sub-interfaces return and take as argument
- * this interface to allow getting and setting atomically data. See
+ * MutableNodeConfig and its sub-interfaces return and take as argument this
+ * interface to allow getting and setting atomically data. See
  * {@link MutableConfig}.
  * <p>
  * It so happens that the only configuration data that can be transfered from and
@@ -38,12 +38,11 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * implementing an interface hierarchy to factor out commonality.
  * <p>
  * Since this interface represents a transfer object, implementations are
- * generally straightforward, and in many cases,
- * {@link SimpleNodeConfigTransferObject} will be adequate. But implementations can
- * subclass SimpleNodeConfigTransferObject to, for example, add a last
- * modification timestamp to manage concurrency if the configuration data is
- * persisted in a database and Dragom is used in a multi-user application context.
- * TODO: Review above????????????????????????? No other implementation is expected.
+ * generally straightforward, and in most cases,
+ * {@link SimpleNodeConfigTransferObject} will be adequate. Specifically if an
+ * implementation of MutableNodeConfig needs to manage concurrency with optimistic
+ * locking, {@link OptimisticLockHandle} should be used instead of including some
+ * hidden field within the NodeConfigTransferObject implementation.
  *
  * @author David Raymond
  */
