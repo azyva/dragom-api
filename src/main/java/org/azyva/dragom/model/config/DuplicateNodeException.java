@@ -31,7 +31,7 @@ import org.azyva.dragom.model.MutableNode;
  * throwable parameter. The caller is expected to handle the exception and know the
  * context in which it is thrown.
  */
-public class DuplicateNodeException extends Exception {
+public class DuplicateNodeException extends RuntimeException {
 	// To keep the compiler from complaining.
 	static final long serialVersionUID = 0;
 

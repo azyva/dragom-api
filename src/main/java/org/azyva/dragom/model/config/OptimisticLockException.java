@@ -22,13 +22,10 @@ package org.azyva.dragom.model.config;
 import org.azyva.dragom.model.MutableNode;
 
 /**
- * Thrown by {@link MutableNodeConfig#setNodeConfigTransferObject} and
- * {@link MutableNode#setNodeConfigTransferObject} when they detect
- * that the configuration data has been modified since the call to
- * {@link MutableNodeConfig#getNodeConfigTransferObject} or
- * {@link MutableNode#getNodeConfigTransferObject}.
+ * Thrown by {@link MutableNodeConfig} and {@link MutableNode} in relation to the
+ * handling of {@link OptimisticLockHandle}.
  * <p>
- * We do not reused the existing javax.persistence.OptimisticLockException since:
+ * We do not reuse the existing javax.persistence.OptimisticLockException since:
  * <p>
  * <li>It relates specifically to JPA and MutableNodeConfig data are not necessarily
  *     managed by JPA;</li>
@@ -41,7 +38,7 @@ import org.azyva.dragom.model.MutableNode;
  *
  * @author David Raymond
  */
-public class OptimisticLockException extends Exception {
+public class OptimisticLockException extends RuntimeException {
 	// To keep the compiler from complaining.
 	static final long serialVersionUID = 0;
 

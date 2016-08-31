@@ -43,6 +43,7 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * subclass SimpleNodeConfigTransferObject to, for example, add a last
  * modification timestamp to manage concurrency if the configuration data is
  * persisted in a database and Dragom is used in a multi-user application context.
+ * TODO: Review above????????????????????????? No other implementation is expected.
  *
  * @author David Raymond
  */
