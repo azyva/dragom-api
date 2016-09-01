@@ -137,7 +137,7 @@ subtotal:   261.5
 2016-08-20: 10
 2016-08-28: 3.5
 2016-08-30: 5
-2016-08-31: 7.5
+2016-08-31: 10.5
 
 
 To test
@@ -914,3 +914,7 @@ Maybe this mapping can be configurable.
 
 When workspace is cleaned, the main workspace directories maintained by git plugin are not removed from exec.properties
 - This may or may not be a problem. Probably worth investigating.
+
+
+
+Maybe make the various Y, N, Yes all, etc. responses more coherent (sometimes Y means Yes always, other times it is A).
