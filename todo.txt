@@ -138,6 +138,7 @@ subtotal:   261.5
 2016-08-28: 3.5
 2016-08-30: 5
 2016-08-31: 10.5
+2016-09-07: 7.5
 
 
 To test
@@ -918,3 +919,11 @@ When workspace is cleaned, the main workspace directories maintained by git plug
 
 
 Maybe make the various Y, N, Yes all, etc. responses more coherent (sometimes Y means Yes always, other times it is A).
+
+
+
+In CreateStaticVersion, no switch is performed. But the root ModuleVersion is changed. This may seem inconsistent
+But deeper in the graph if a ModuleVersion is released and the parent points to released version, it is the same thing:
+  We leave the dynamic version but the parent now refers to static released version
+Should we switch everything to the static release version? Probably not since Eclipse would have to switch
+So if we do not switch, we keep dynamic, but the root should be symetrical with parent reference. 
