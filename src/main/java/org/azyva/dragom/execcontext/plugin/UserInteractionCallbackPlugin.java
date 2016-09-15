@@ -83,5 +83,18 @@ public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
 
 	String getInfo(String prompt);
 
+	String getInfoPassword(String prompt);
+
 	String getInfoWithDefault(String prompt, String defaultValue);
+
+	/**
+	 * @return Indicates if the plugin, which essentially is the interaction point with
+	 *   the user, operates in batch mode, meaning that calls to {@link #getInfo} and
+	 *   {@link #getInfoWithDefault} are not allowed. Generally, caller should not
+	 *   worry about this and let these method fail if in batch mode. But some
+	 *   classes, such as DefaultCredetialStorePluginImpl, may need to know whether
+	 *   batch mode is enabled.
+
+	 */
+	boolean isBatchMode();
 }
