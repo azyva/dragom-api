@@ -19,8 +19,6 @@
 
 package org.azyva.dragom.execcontext.plugin;
 
-
-
 /**
  * Provides access to credentials.
  * <p>
@@ -28,27 +26,28 @@ package org.azyva.dragom.execcontext.plugin;
  * Jenkins.
  * <p>
  * Provides only read access to credentials. This interface is not meant to allow
- * managing the credentitals (adding, updating, removing) as it is not expected
- * callers within Dragom need to manage credentials. However, nothing prevents an
- * implementation class to provide such facilities.
- * {@link DefaultCredentialStoarePluginImpl} does, and
+ * managing the credentials (adding, updating, removing) as it is not expected
+ * that callers within Dragom need to manage credentials. However, nothing prevents
+ * an implementation class to provide such facilities that a corresponding tool
+ * class can use. {@link DefaultCredentialStoarePluginImpl} does, and
  * {@link CredentialManagerTool} is a CLI tool that allows the user to manage
  * credentials.
  * <p>
- * Also, if requested credentials do not exist, the implementation class can
- * interact with the user (through {@link UserIntefactionCallbackPlugin}) to
- * obtain the missing credentials.
+ * If requested credentials do not exist, the implementation class can interact
+ * with the user (through {@link UserInteractionCallbackPlugin}) to obtain the
+ * missing credentials if {@link UserInteractionCallbackPlugin#isBatchMode}
+ * returns false.
  * <p>
  * This interface supports the concept of resource to which credentials are
  * associated. The meaning of resources is not defined by this interface. But it
  * is expected that resources be URL of external systems. It is the responsibility
  * of the implementing class to implement the mapping logic between credentials
- * and resources. Generally such mapping is not one to one since there maybe
+ * and resources. Generally such mapping is not one to one since there may be
  * multiple resources requiring the same credentials. In such cases, the
  * implementation class can classify resources by realms and map credentials to
  * realms. But this is purely an implementation detail.
  * <p>
- * Only passowrd-type credentials are supported, or credentials that can be
+ * Only password-type credentials are supported, or credentials that can be
  * stored as a simple String.
  *
  * @author David Raymond
@@ -124,8 +123,8 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * <p>
 	 * If credentialValidator is not null, the method should validate the credentials
 	 * before returning them. This includes both the cases where the credentials are
-	 * already available (store) and when the method interacts with the user to obtain
-	 * them.
+	 * already available (since they may be invalid) and when the method interacts with
+	 * the user to obtain them.
 	 *
 	 * @param resource Resource.
 	 * @param user User. Can be null (see above).
@@ -135,7 +134,10 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	boolean isCredentialsExist(String resource, String user, CredentialValidator credentialValidator);
 
 	/**
-	 * Returns the credentials for the specified resource and user.
+	 * Returns the credentials for the specified resource and user. If requested
+	 * credentials are not available (even following interaction with the user, if
+	 * appropriate), an exception should be raised. If the caller handles unavailable
+	 * credentials, {@link #isCredentialsExist} should be used before calling this method.
 	 * <p>
 	 * If user is null it means the caller does not know the user and expects the
 	 * CredentialStorePlugin to provide it. It is up to the implementation to support
@@ -153,13 +155,41 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * <p>
 	 * If credentialValidator is not null, the method should validate the credentials
 	 * before returning them. This includes both the cases where the credentials are
-	 * already available (store) and when the method interacts with the user to obtain
-	 * them.
+	 * already available (since they may be invalid) and when the method interacts with
+	 * the user to obtain them.
 	 *
 	 * @param resource Resource.
 	 * @param user User. Can be null (see above).
 	 * @param credentialValidator CredentialValidator. Can be null (see above).
-	 * @return Credentials.
+	 * @return Credentials. Cannot be null.
 	 */
 	Credentials getCredentials(String resource, String user, CredentialValidator credentialValidator);
+
+	/**
+	 * Resets the credentials for the specified resource and user.
+	 * <p>
+	 * This method allows the caller to implement credential validation logic without
+	 * using {@link CredentialStorePlugin.CredentialValidator}. The caller would call
+	 * {@link #getCredentials} (which could cause interaction with the user) and
+	 * validate the credentials. If invalid, the caller would call this method and
+	 * loop.
+	 * <p>
+	 * If user is null it means the caller does not know the user and expects the
+	 * CredentialStorePlugin to provide it. It is up to the implementation to support
+	 * extracting the user from the resource (e.g.,
+	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
+	 * If no user can be determined, the method should do nothing. It should not
+	 * attempt to interact with the user.
+	 * <p>
+	 * If user is not null and the implementation supports extracting the user from
+	 * the resource, it should validate that the user is the same as that specified
+	 * by the resource, if any. If they do not match, an exception should be raised
+	 * since if the caller specified the user it presumably comes from some
+	 * configuration and is not designed to change it.
+	 * <p>
+	 *
+	 * @param resource Resource.
+	 * @param user User. Can be null (see above).
+	 */
+	void resetCredentials(String resource, String user);
 }
