@@ -103,15 +103,16 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * Indicates if the credentials are available for the specified resource and user.
 	 * <p>
 	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it. It is up to the implementation to support
-	 * extracting the user from the resource (e.g.,
-	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
+	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
+	 * to the implementation to support extracting the user from the resource (e.g.,
+	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
+	 * potentially interacting with the user to obtain that information.
 	 * <p>
 	 * If user is not null and the implementation supports extracting the user from
 	 * the resource, it should validate that the user is the same as that specified
 	 * by the resource, if any. If they do not match, an exception should be raised
 	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to change it.
+	 * configuration and is not designed to be overridden.
 	 * <p>
 	 * If there is no credentials stored for the specified resource and user, and the
 	 * implementation supports interacting with the user to obtain missing
@@ -137,18 +138,20 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * Returns the credentials for the specified resource and user. If requested
 	 * credentials are not available (even following interaction with the user, if
 	 * appropriate), an exception should be raised. If the caller handles unavailable
-	 * credentials, {@link #isCredentialsExist} should be used before calling this method.
+	 * credentials, {@link #isCredentialsExist} should be used before calling this
+	 * method.
 	 * <p>
 	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it. It is up to the implementation to support
-	 * extracting the user from the resource (e.g.,
-	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
+	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
+	 * to the implementation to support extracting the user from the resource (e.g.,
+	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
+	 * potentially interacting with the user to obtain that information.
 	 * <p>
 	 * If user is not null and the implementation supports extracting the user from
 	 * the resource, it should validate that the user is the same as that specified
 	 * by the resource, if any. If they do not match, an exception should be raised
 	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to change it.
+	 * configuration and is not designed to be overridden.
 	 * <p>
 	 * If there is no credentials stored for the specified resource and user, the
 	 * implementation can interact with the user to obtain the missing credentials.
@@ -171,12 +174,12 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * This method allows the caller to implement credential validation logic without
 	 * using {@link CredentialStorePlugin.CredentialValidator}. The caller would call
 	 * {@link #getCredentials} (which could cause interaction with the user) and
-	 * validate the credentials. If invalid, the caller would call this method and
-	 * loop.
+	 * validate the obtained (non validated) credentials. If invalid, the caller would
+	 * call this method and loop.
 	 * <p>
 	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it. It is up to the implementation to support
-	 * extracting the user from the resource (e.g.,
+	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
+	 * to the implementation to support extracting the user from the resource (e.g.,
 	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
 	 * If no user can be determined, the method should do nothing. It should not
 	 * attempt to interact with the user.
@@ -185,7 +188,7 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
 	 * the resource, it should validate that the user is the same as that specified
 	 * by the resource, if any. If they do not match, an exception should be raised
 	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to change it.
+	 * configuration and is not designed to be overridden.
 	 * <p>
 	 *
 	 * @param resource Resource.
