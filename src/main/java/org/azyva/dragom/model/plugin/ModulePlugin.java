@@ -22,7 +22,7 @@ package org.azyva.dragom.model.plugin;
 import org.azyva.dragom.model.Module;
 
 /**
- * Base interface for module plugins..
+ * Base interface for module plugins.
  *
  * @author David Raymond
  */
