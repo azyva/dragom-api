@@ -40,7 +40,7 @@ import org.azyva.dragom.reference.ReferenceGraph;
 public interface JenkinsJobCreationPlugin extends ModulePlugin {
 	/**
 	 * Returns the full name of the template to use for creating the job, as in
-	 * TopFolder/SubFolder/template. By template, we mean templates as implemented
+	 * TopFolder/SubFolder/template. By template, we mean a template as implemented
 	 * by the Template Plugin in CloudBees Jenkins Platform.
 	 * <p>
 	 * null is returned to indicate that the job must be created as a regular
@@ -70,7 +70,7 @@ public interface JenkinsJobCreationPlugin extends ModulePlugin {
 	 *   which the instance of this plugin is associated.
 	 * @return See description.
 	 */
-	Map<String, String> getTemplateParams(ReferenceGraph referenceGraph, Version version);
+	Map<String, String> getMapTemplateParam(ReferenceGraph referenceGraph, Version version);
 
 	/**
 	 * Returns a Reader from which the XML configuration of the job to be created can

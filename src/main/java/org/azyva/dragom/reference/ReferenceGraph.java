@@ -25,6 +25,7 @@ import java.util.List;
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.model.NodePath;
+import org.azyva.dragom.reference.ReferenceGraph.VisitAction;
 
 /**
  * Represents a reference graph of {@link ModuleVersion}'s and operations that can
@@ -150,6 +151,30 @@ public interface ReferenceGraph {
 	}
 
 	/**
+	 * Reentry mode to determine what to do when a {@link ModuleVersion} has already
+	 * been visisted during the traversal of a {@link ReferenceGraph}.
+	 */
+	public enum ReentryMode {
+		/**
+		 * {@link ModuleVersion}'s in the ReferenceGraph are all visited.
+		 */
+		REENTRY,
+
+		/**
+		 * Reentry is avoided, but when a {@link ModuleVersion} that is encountered has
+		 * already been visited, it is visited again with {@link VisitAction#REPEATED},
+		 * but its children are not.
+		 */
+		ONLY_PARENT,
+
+		/**
+		 * Reentry is avoided altogether. A given {@link ModuleVersion} will not be
+		 * visited twice.
+		 */
+		NO_REENTRY
+	}
+
+	/**
 	 * Action during the traversal of a {@link ReferenceGraph}.
 	 * <p>
 	 * These are used as flags and provided as part of an EnumSet since many of them
@@ -182,28 +207,25 @@ public interface ReferenceGraph {
 		 * {@link STEP_IN} will have occurred previously for the parent ModuleVersion. But
 		 * if traversal is depth-first STEP_IN for all the ModuleVersion in the
 		 * {@link ReferencePath} will have also occurred with no intervening visit for the
-		 * intermediate ModuleVersion.
+		 * intermediate ModuleVersion's.
 		 * <p>
 		 * {@link STEP_OUT} will occur thereafter for the parent ModuleVersion, after
 		 * having visited all of its child ModuleVersion.
-		 * <p>
-		 * If indAvoidReentry is true when calling
-		 * {@link ReferenceGraph#traverseReferenceGraph} this is used only for all
-		 * visits of a given leaf ModuleVersion, but for subsequent visits,
-		 * {@link REPEATED} is also included.
 		 * <p>
 		 * This is the only VisitAction used by visitLeafModuleVersionReferencePaths.
 		 */
 		VISIT,
 
 		/**
-		 * Used in conjunction with {@link #VISIT} when indAvoidReentry is true when
-		 * calling {@link ReferenceGraph#traverseReferenceGraph} and the
-		 * {@link ModuleVersion} has already been visited.
+		 * Used in conjunction with {@link #VISIT} when the {@link ModuleVersion} has
+		 * already been visited.
 		 * <p>
-		 * This will occur for a ModuleVersion that was already visited, but not for its
-		 * children as it is in the references that reentry is avoided, and caller is
-		 * expected to be interested in the ModuleVersion itself.
+		 * If {@link ReentryMode#NO_REENTRY} is specified when calling
+		 * {@link ReferenceGraph#traverseReferenceGraph}, this will not occur. If
+		 * {@link ReentryMode#ONLY_PARENT} is specified, this will not occur for
+		 * children of an already visited parent. It will occur only for the top-most
+		 * revisited parent. If {@link ReentryMode#REENTRY} is specifed, which will occur
+		 * for every ModuleVersion that is revisited.
 		 * <p>
 		 * Not used by visitLeafModuleVersionReferencePaths.
 		 */
@@ -224,16 +246,55 @@ public interface ReferenceGraph {
 	}
 
 	/**
+	 * Controls the subsequent visit actions during a traversal of the
+	 * ReferenceGraph. This is the type returned by {@link Visitor.visit}.
+	 */
+	public enum VisitControl {
+		/**
+		 * Continue.
+		 */
+		CONTINUE,
+
+		/**
+		 * Aborts the traversal.
+		 */
+		ABORT,
+
+		/**
+		 * Skip the children and continue.
+		 * <p>
+		 * Not valid when {@link VisitAction#STEP_OUT}.
+		 * <p>
+		 * Not valid when {@link ReferenceGraph#traverseReferenceGraph} is called with
+		 * indDepthFirst and {@link VisitAction.VISIT}.
+		 * <p>
+		 * Not valid when {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
+		 */
+		SKIP_CHILDREN,
+
+		/**
+		 * Skip the current root {@link ModuleVersion} and continue with the next one, if
+		 * any.
+		 * <p>
+		 * Not valid when {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
+		 */
+		SKIP_CURRENT_ROOT
+	}
+
+	/**
 	 * Visitor interface.
 	 */
 	public static interface Visitor {
 		/**
 		 * Called when visiting a {@link ModuleVersion} in the ReferenceGraph.
 		 *
+		 * @param referenceGraph ReferenceGraph in the context of which the ModuleVersion
+		 *   is being visited.
 		 * @param referencePath ReferencePath of the ModuleVersion being visited.
 		 * @param visitAction VisitAction.
+		 * @return VisitControl.
 		 */
-		void visit(ReferencePath referencePath, EnumSet<ReferenceGraph.VisitAction> enumSetVisitAction);
+		VisitControl visit(ReferenceGraph referenceGraph, ReferencePath referencePath, EnumSet<ReferenceGraph.VisitAction> enumSetVisitAction);
 	}
 
 	/**
@@ -298,20 +359,22 @@ public interface ReferenceGraph {
 	 *   to indicate to perform the traversal for each root ModuleVersion.
 	 * @param indDepthFirst Indicates that the traversal is depth-first, as opposed to
 	 *   parent-first.
-	 * @param indAvoidReentry Indicates to avoid revisiting the references of
-	 *   ModuleVersion that was already visited. The ModuleVesion itself is visited
-	 *   for each occurrence.
+	 * @param reentryMode ReentryMode.
 	 * @param visitor Visitor.
+	 * @return Indicates if the traversal has been aborted (if {@link Visitor#visit}
+	 *   returned {@link VisitControl#ABORT}).
 	 */
-	void traverseReferenceGraph(ModuleVersion moduleVersion, boolean indDepthFirst, boolean indAvoidReentry, Visitor visitor);
+	boolean traverseReferenceGraph(ModuleVersion moduleVersion, boolean indDepthFirst, ReentryMode reentryMode, Visitor visitor);
 
 	/**
 	 * Visits all {@link ReferencePath}'s ending with a leaf ModuleVersion.
 	 *
 	 * @param moduleVersion Leaf ModuleVersion.
 	 * @param visitor Visitor.
+	 * @return Indicates if the traversal has been aborted (if {@link Visitor#visit}
+	 *   returned {@link VisitControl#ABORT}).
 	 */
-	void visitLeafModuleVersionReferencePaths(ModuleVersion moduleVersion, Visitor visitor);
+	boolean visitLeafModuleVersionReferencePaths(ModuleVersion moduleVersion, Visitor visitor);
 
 	/**
 	 * Adds a root {@link ModuleVersion}.
