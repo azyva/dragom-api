@@ -29,15 +29,52 @@ import org.azyva.dragom.model.Version;
 import org.azyva.dragom.reference.ReferenceGraph;
 
 /**
- * Abstracts the details of creating a job in Jenkins.
+ * Abstracts the mechanism for obtaining the information about the Jenkins job
+ * corresponding to the module.
  * <p>
- * This plugin is used by {@link SetupJenkinsJobs} which takes care of the details
- * of communicating with Jenkins (base URL, security, where to create the job,
- * etc.). This plugin only handes the actual job configuration.
+ * This plugin is used by {@link SetupJenkinsJobs}. SetupJenkinsJobs takes care of
+ * interacting with Jenkins for creating jobs (and folders). It takes care of the
+ * Jenkins base URL and credentials. It manages persisting the items that are
+ * created so that jobs can be created and updated across multiple invocations
+ * while maintaining a common context. These are considered common services which
+ * do not need to be abstracted.
+ * <p>
+ * This plugin takes care of providing the information about a Jenkins job to
+ * SetupJenkinsJobs, such as the job's full name and its configuration data. These
+ * are specific to each situation and need to be abstracted into a plugin.
+ * <p>
+ * Jenkins jobs can often be created in different contexts. If this is the case,
+ * then it is up to the implementations of this plugin to support that such a
+ * context be specified externally, such as with a runtime property, and that
+ * different parameters be associated with the various contexts.
  *
  * @author David Raymond
  */
-public interface JenkinsJobCreationPlugin extends ModulePlugin {
+public interface JenkinsJobInfoPlugin extends ModulePlugin {
+	/**
+	 * Returns the full name of the job.
+	 * <p>
+	 * This is used by {@link SetupJenkinsJobs} to know which job to create. It can
+	 * also be used by implementations themselves of this plugin to obtain the
+	 * downstream jobs that handle building {@link Module}'s which depend on the
+	 * current Module so that the configuration of the latter can, if appropriate,
+	 * contain these references.
+	 *
+	 * @param version Version of the ModuleVersion for which a job must be created. A
+	 *   ModuleVersion is not passed as a parameter since the {@link NodePath} in the
+	 *   ModuleVersion would be redundant with the NodePath of the {@link Module} to
+	 *   which the instance of this plugin is associated.
+	 * @return See description.
+	 */
+	String getJobFullName(Version version);
+
+	/**
+	 * @return Indicates if the parent folder in the job full name returned by
+	 *   {@link #getJobFullName} is not static, is specific to some projects and could
+	 *   not exist and need to be created.
+	 */
+	boolean isHandleParentFolderCreation();
+
 	/**
 	 * Returns the full name of the template to use for creating the job, as in
 	 * TopFolder/SubFolder/template. By template, we mean a template as implemented

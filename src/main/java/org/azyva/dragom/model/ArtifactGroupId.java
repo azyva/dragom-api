@@ -53,7 +53,7 @@ public final class ArtifactGroupId {
 	/**
 	 * Pattern for parsing an ArtifactGroupId literal.
 	 */
-	private static Pattern patternArtifactGroupIdLiteral = Pattern.compile("([a-zA-Z][a-zA-Z0-9\\.\\-_]*):([a-zA-Z][a-zA-Z0-9\\.\\-_]*)");
+	private static final Pattern patternArtifactGroupIdLiteral = Pattern.compile("([a-zA-Z][a-zA-Z0-9\\.\\-_]*):([a-zA-Z][a-zA-Z0-9\\.\\-_]*)");
 
 	/**
 	 * GroupId.

@@ -25,7 +25,6 @@ import java.util.List;
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.model.NodePath;
-import org.azyva.dragom.reference.ReferenceGraph.VisitAction;
 
 /**
  * Represents a reference graph of {@link ModuleVersion}'s and operations that can
@@ -162,7 +161,7 @@ public interface ReferenceGraph {
 
 		/**
 		 * Reentry is avoided, but when a {@link ModuleVersion} that is encountered has
-		 * already been visited, it is visited again with {@link VisitAction#REPEATED},
+		 * already been visited, it is visited again with {@link ReferenceGraph.VisitAction#REPEATED},
 		 * but its children are not.
 		 */
 		ONLY_PARENT,
@@ -263,10 +262,10 @@ public interface ReferenceGraph {
 		/**
 		 * Skip the children and continue.
 		 * <p>
-		 * Not valid when {@link VisitAction#STEP_OUT}.
+		 * Not valid when {@link ReferenceGraph.VisitAction#STEP_OUT}.
 		 * <p>
 		 * Not valid when {@link ReferenceGraph#traverseReferenceGraph} is called with
-		 * indDepthFirst and {@link VisitAction.VISIT}.
+		 * indDepthFirst and {@link ReferenceGraph.VisitAction.VISIT}.
 		 * <p>
 		 * Not valid when {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
 		 */

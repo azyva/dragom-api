@@ -86,7 +86,7 @@ public final class NodePath {
 	 * <p>
 	 * Not used for actually parsing.
 	 */
-	private static Pattern patternValidateNodePathLiteral = Pattern.compile("(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*/)*(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*)?");
+	private static final Pattern patternValidateNodePathLiteral = Pattern.compile("(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*/)*(?:[A-Za-z0-9_][A-Za-z0-9\\-_]*)?");
 
 	/**
 	 * Pattern for validating a {@link Node} names.

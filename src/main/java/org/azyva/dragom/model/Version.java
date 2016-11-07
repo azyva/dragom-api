@@ -66,7 +66,7 @@ public final class Version {
 	/**
 	 * Pattern for parsing a Version literal.
 	 */
-	private static Pattern patternVersionLiteral = Pattern.compile("(D|S)/([a-zA-Z0-9\\.\\-_]+)");
+	private static final Pattern patternVersionLiteral = Pattern.compile("(D|S)/([a-zA-Z0-9\\.\\-_]+)");
 
 	/**
 	 * VersionType.

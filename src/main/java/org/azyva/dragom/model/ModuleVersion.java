@@ -59,7 +59,7 @@ public final class ModuleVersion {
 	/**
 	 * Pattern for parsing an ModuleVersion literal.
 	 */
-	private static Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
+	private static final Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
 
 	/**
 	 * NodePath.

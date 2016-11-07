@@ -84,7 +84,7 @@ public final class ArtifactVersion {
 	/**
 	 * Pattern for parsing an ArtifactVersion literal.
 	 */
-	private static Pattern patternArtifactVersionLiteral = Pattern.compile("([a-zA-Z0-9\\.\\-_]+)(-SNAPSHOT)?+");
+	private static final Pattern patternArtifactVersionLiteral = Pattern.compile("([a-zA-Z0-9\\.\\-_]+)(-SNAPSHOT)?+");
 
 	/**
 	 * VersionType.
