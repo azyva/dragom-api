@@ -223,7 +223,7 @@ public interface ReferenceGraph {
 		 * {@link ReferenceGraph#traverseReferenceGraph}, this will not occur. If
 		 * {@link ReentryMode#ONLY_PARENT} is specified, this will not occur for
 		 * children of an already visited parent. It will occur only for the top-most
-		 * revisited parent. If {@link ReentryMode#REENTRY} is specifed, which will occur
+		 * revisited parent. If {@link ReentryMode#REENTRY} is specified, this will occur
 		 * for every ModuleVersion that is revisited.
 		 * <p>
 		 * Not used by visitLeafModuleVersionReferencePaths.

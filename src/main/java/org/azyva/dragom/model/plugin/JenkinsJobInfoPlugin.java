@@ -127,5 +127,5 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 	 *   which the instance of this plugin is associated.
 	 * @return
 	 */
-	Reader getConfig(ReferenceGraph referenceGraph, Version version);
+	Reader getReaderConfig(ReferenceGraph referenceGraph, Version version);
 }
