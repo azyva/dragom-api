@@ -60,13 +60,13 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 	 * current Module so that the configuration of the latter can, if appropriate,
 	 * contain these references.
 	 *
-	 * @param version Version of the ModuleVersion for which a job must be created. A
-	 *   ModuleVersion is not passed as a parameter since the {@link NodePath} in the
-	 *   ModuleVersion would be redundant with the NodePath of the {@link Module} to
-	 *   which the instance of this plugin is associated.
+	 * @param versionDynamic Dynamic Version of the ModuleVersion for which a job must
+	 *   be created. A ModuleVersion is not passed as a parameter since the
+	 *   {@link NodePath} in the ModuleVersion would be redundant with the NodePath of
+	 *   the {@link Module} to which the instance of this plugin is associated.
 	 * @return See description.
 	 */
-	String getJobFullName(Version version);
+	String getJobFullName(Version versionDynamic);
 
 	/**
 	 * @return Indicates if the parent folder in the job full name returned by
