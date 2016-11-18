@@ -155,6 +155,8 @@ subtotal: 455.5
 2016-11-06: 2
 2016-11-08: 5
 2016-11-09: 9.5
+2016-11-10: 1
+2016-11-17: 2.5
 
 
 To test
@@ -192,6 +194,19 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 
 To implement soon
 =================
+
+In tests, validate that exeception is thrown when one must be.
+
+Could ServiceLocator be used to get instances of other services, such as ExecContext, ExecContext plugins, Model?
+
+Have an external cache of modules (checkoutSystem)
+- Needs to be synchronized
+
+Parallel checkouts
+- Maybe parallel everything managed by RootModuleVersion.... generic job
+
+Possibility to provide the ReferencePathMatchers in an external file instead or on top of command line.
+- GPSII could provide it more conveniently
 
 Store mapping in Config... in transient storage so that at least they are reused in one tool exécution.
 
@@ -545,6 +560,7 @@ URL : https://fidooda02.sbin.ca:8080/
 
 
 IP hosting :  199.19.212.118  (pour le "A Record")
+2016-11-13: Ceci est l'IP du serveur de François. J'ai changé pour GitHub Pages 192.30.252.153.
 
 
 
