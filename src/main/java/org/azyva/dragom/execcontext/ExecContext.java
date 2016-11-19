@@ -206,6 +206,10 @@ public interface ExecContext {
 
 	/**
 	 * Sets a transient data.
+	 * <p>
+	 * Transient data are generally very specific to and implementation details of the
+	 * class that sets them. The name of a transient data should therefore be prefixed
+	 * with the name of the caller class in order to avoid name clashes.
 	 *
 	 * @param name Name of the data.
 	 * @param value Value of the data. Can be null, in which case the data is
