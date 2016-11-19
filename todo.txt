@@ -227,7 +227,7 @@ To think
 ========
 
 
-The fact that when creating a static version all references must be static maybe should be a decision of the NewStaticVersionPlugin since for phases,
+The fact that when creating a static version all references must be static maybe should be a decision of the SelectStaticVersionPlugin since for phases,
 they may not want to impose that references to modules outside of the PIC are static (references to Infra modules for instance).
 
 
@@ -955,8 +955,20 @@ Maybe make the various Y, N, Yes all, etc. responses more coherent (sometimes Y 
 
 
 
-In CreateStaticVersion, no switch is performed. But the root ModuleVersion is changed. This may seem inconsistent
+In Release, no switch is performed. But the root ModuleVersion is changed. This may seem inconsistent
 But deeper in the graph if a ModuleVersion is released and the parent points to released version, it is the same thing:
   We leave the dynamic version but the parent now refers to static released version
 Should we switch everything to the static release version? Probably not since Eclipse would have to switch
 So if we do not switch, we keep dynamic, but the root should be symetrical with parent reference. 
+
+
+NEW_DYNAMIC_VERSION_SWITCHED -> SELECTED_DYNAMIC_VERSION_SWITCHED
+NEW_DYNAMIC_VERSION_DOES_NOT_EXIST_CURRENT_VERSION_BASE -> SELECTED_DYNAMIC_VERSION_DOES_NOT_EXIST_CURRENT_VERSION_BASE
+NEW_DYNAMIC_VERSION_ALREADY_EXISTS_CURRENT_VERSION_NOT_BASE -> SELECTED_DYNAMIC_VERSION_ALREADY_EXISTS_CURRENT_VERSION_NOT_BASE
+NEW_DYNAMIC_VERSION_ALREADY_EXISTS_BASE_UNKNOWN -> SELECTED_DYNAMIC_VERSION_ALREADY_EXISTS_BASE_UNKNOWN
+NEW_STATIC_VERSION_SPECIFIED -> STATIC_VERSION_SPECIFIED
+NEW_DYNAMIC_VERSION_SPECIFIED -> DYNAMIC_VERSION_SPECIFIED
+NEW_DYNAMIC_VERSION_SAME_AS_CURRENT -> SELECTED_DYNAMIC_VERSION_SAME_AS_CURRENT
+INPUT_NEW_DYNAMIC_VERSION -> INPUT_DYNAMIC_VERSION
+NEW_DYNAMIC_VERSION_DOES_NOT_EXIST -> DYNAMIC_VERSION_DOES_NOT_EXIST
+INPUT_NEW_BASE_VERSION -> INPUT_BASE_VERSION

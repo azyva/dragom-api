@@ -25,11 +25,11 @@ import org.azyva.dragom.model.Version;
 import org.azyva.dragom.reference.ReferencePath;
 
 /**
- * This plugin is used by tools when a new dynamic Version needs to be created. It
- * is responsible for establishing what that new Version will be.
+ * This plugin is used by tools when a dynamic Version needs to be selected.
+ * It is responsible for selecting what that Version will be.
  *
  * It is up to the plugin implementation to use whatever strategy is appropriate
- * for establishing the new Version.
+ * for selecting the Version.
  *
  * The strategy can include interacting with the user through the
  * UserInteractionCallbackPlugin plugin within the ExecContext.
@@ -44,14 +44,14 @@ import org.azyva.dragom.reference.ReferencePath;
  *
  * @author David Raymond
  */
-public interface NewDynamicVersionPlugin extends ModulePlugin {
+public interface SelectDynamicVersionPlugin extends ModulePlugin {
 	/**
-	 * Gets a new dynamic Version to be created or switched to based on an existing
-	 * Version which can be static (e.g., hotfix Version based on a release Version)
-	 * or dynamic (e.g., feature Version based on a project Version).
+	 * Selects a dynamic Version based on an existing Version which can be static
+	 * (e.g., hotfix Version based on a release Version) or dynamic (e.g., feature
+	 * Version based on a project Version).
 	 *
-	 * The caller is responsible for verifying if the new dynamic Version exists. If
-	 * it does the Version returned in byReferenceVersionBase (if any) must be
+	 * The caller is responsible for verifying if the selected dynamic Version exists.
+	 * If it does the Version returned in byReferenceVersionBase (if any) must be
 	 * ignored. But the caller must not infer whether the dynamic Version exists or
 	 * not based on whether a base Version was returned.
 	 *
@@ -66,7 +66,7 @@ public interface NewDynamicVersionPlugin extends ModulePlugin {
 	 *   ModuleVersion exists within a ReferencePath that contains only static
 	 *   Versions (for hotfixes).
 	 * @return Dynamic Version. May be the same as the original version. Can be null
-	 *   to indicate to the caller that no switch should be performed.
+	 *   to indicate to the caller that the existing Version should not be changed.
 	 */
-	Version getVersionNewDynamic(Version version, ByReference<Version> byReferenceVersionBase, ReferencePath referencePath);
+	Version selectDynamicVersion(Version version, ByReference<Version> byReferenceVersionBase, ReferencePath referencePath);
 }

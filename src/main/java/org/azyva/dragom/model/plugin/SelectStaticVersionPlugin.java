@@ -22,11 +22,11 @@ package org.azyva.dragom.model.plugin;
 import org.azyva.dragom.model.Version;
 
 /**
- * This plugin is used by tools when a new static Version needs to be created. It
- * is responsible for establishing what that new Version will be.
+ * This plugin is used by tools when a static Version needs to be selected. It
+ * is responsible for selecting what that Version will be.
  *
  * It is up to the plugin implementation to use whatever strategy is appropriate
- * for establishing the new Version.
+ * for selecting the Version.
  *
  * The strategy can include interacting with the user through the
  * UserInteractionCallbackPlugin plugin within the ExecContext.
@@ -41,12 +41,14 @@ import org.azyva.dragom.model.Version;
  *
  * @author David Raymond
  */
-public interface NewStaticVersionPlugin extends ModulePlugin {
+public interface SelectStaticVersionPlugin extends ModulePlugin {
 	/**
-	 * Gets a new static Version to be created based on an existing dynamic Version.
+	 * Selected a static Version based on an existing dynamic Version.
+	 * <p>
+	 * The static Version may or may not exist.
 	 *
 	 * @param versionDynamic Base dynamic Version.
 	 * @return Static Version.
 	 */
-	Version getVersionNewStatic(Version versionDynamic);
+	Version selectStaticVersion(Version versionDynamic);
 }

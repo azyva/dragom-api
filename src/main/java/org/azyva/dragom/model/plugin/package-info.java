@@ -29,8 +29,8 @@
  * {@link org.azyva.dragom.reference.Reference} graph and the calls for creating
  * the dynamic {@link org.azyva.dragom.model.Version}'s and for updating the
  * Reference's, while NodePlugin's are used to get the source code (@link
- * org.azyva.dragom.model.plugin.ScmPlugin}, established the new Version's
- * ({@link org.azyva.dragom.model.plugin.NewDynamicVersionPlugin}, etc.
+ * org.azyva.dragom.model.plugin.ScmPlugin}, select the Version's
+ * ({@link org.azyva.dragom.model.plugin.SelectDynamicVersionPlugin}, etc.
  */
 
 package org.azyva.dragom.model.plugin;

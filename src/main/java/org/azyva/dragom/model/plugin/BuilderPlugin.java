@@ -89,7 +89,7 @@ public interface BuilderPlugin extends ModulePlugin {
 	 * contexts:
 	 * <p>
 	 * <li>new-static-version: When the Module is built before creating a new static
-	 *     version using {@link CreateStaticVersionTool};</li>
+	 *     version using {@link ReleaseTool};</li>
 	 * <li>build: When the Module is built by {@link Build}.</li>
 	 * <p>
 	 * It is up to the plugin implementation whether and how to take the context
