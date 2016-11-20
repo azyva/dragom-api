@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 AZYVA INC.
+ * Copyright 2015 - 2017 AZYVA INC. INC.
  *
  * This file is part of Dragom.
  *
@@ -35,5 +35,5 @@ public interface WorkspaceExecContextFactory {
 	 * workspace directory is. If not, the {@link ExecContextFactory} is expected to
 	 * use the current working directory as the workspace directory.
 	 */
-	String getWorkspaceDirInitProp();
+	String getWorkspaceDirInitProperty();
 }

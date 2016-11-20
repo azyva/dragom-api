@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 AZYVA INC.
+ * Copyright 2015 - 2017 AZYVA INC. INC.
  *
  * This file is part of Dragom.
  *
@@ -87,7 +87,7 @@ public interface VersionClassifierPlugin extends ModulePlugin, Comparator<Versio
 	 * Returns the evolution path associated with a Version.
 	 * <p>
 	 * Currently Dragom does not manage evolution paths. But it is expected that
-	 * this information be eventually exploited by some new functionnality.
+	 * this information be eventually exploited by some new functionality.
 	 *
 	 * @param version
 	 * @return Evolution path. null is an acceptable value if, for exemple,

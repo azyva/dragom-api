@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 AZYVA INC.
+ * Copyright 2015 - 2017 AZYVA INC. INC.
  *
  * This file is part of Dragom.
  *
@@ -21,13 +21,55 @@ package org.azyva.dragom.execcontext;
 
 import java.nio.file.Path;
 
+import org.azyva.dragom.execcontext.plugin.WorkspacePlugin;
+
 /**
  * Interface implemented by ExecContext implementations that support the workspace
  * directory concept.
+ * <p>
+ * It is expected that a {@link WorkspacePlugin} implementation manage workspace
+ * data and that such plugin implementations require a WorkspaceExecContext. In
+ * order to support long-lived workspaces, WorkspaceExecContext supports the
+ * of workspace format and version that can be used by WorkspacePlugin
+ * implementations to validate that existing workspaces are usable.
+ * <p>
+ * It is up to WorkspacePlugin implementations to recognize various workspace
+ * formats and versions and permit workspace format and version migration.
  *
  * @author David Raymond
  */
 public interface WorkspaceExecContext {
+	/**
+	 * Workspace format and version.
+	 */
+	public static class WorkspaceFormatVersion {
+		/**
+		 * Workspace format.
+		 */
+		public String format;
+
+		/**
+		 * Workspace version.
+		 */
+		public String version;
+
+		/**
+		 * Constructor.
+		 *
+		 * @param format Format.
+		 * @param version Version.
+		 */
+		public WorkspaceFormatVersion(String format, String version) {
+			this.format = format;
+			this.version = version;
+		}
+
+		@Override
+		public String toString() {
+			return this.format + ':' + this.version;
+		}
+	}
+
 	/**
 	 * @return Path to the workspace directory associated with the ExecContext.
 	 */
@@ -39,4 +81,14 @@ public interface WorkspaceExecContext {
 	 *   store metadata that should remain persisted with the workspace.
 	 */
 	Path getPathMetadataDir();
+
+	/**
+	 * @return WorkspaceFormatVersion. null if workspace has not been initialized.
+	 */
+	WorkspaceFormatVersion getWorkspaceFormatVersion();
+
+	/**
+	 * @param workspaceFormatVersion WorkspaceFormatVersion.
+	 */
+	void setWorkspaceFormatVersion(WorkspaceFormatVersion workspaceFormatVersion);
 }

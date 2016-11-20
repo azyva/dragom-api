@@ -158,10 +158,14 @@ subtotal: 455.5
 2016-11-10: 1
 2016-11-17: 2.5
 2016-11-18: 4.5
+2016-11-19: 12
 
 
 To test
 =======
+
+MainModuleVersionWorkspacePlugin
+
 
 Mapping groupes in Config...
 
@@ -195,6 +199,9 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 
 To implement soon
 =================
+
+Specify ReferencePathMatcher's in a file, with boolean logic
+Support accessing properties in matcher, such as commit attributes and other (Expression language eventually).
 
 In tests, validate that exeception is thrown when one must be.
 
@@ -962,13 +969,19 @@ Should we switch everything to the static release version? Probably not since Ec
 So if we do not switch, we keep dynamic, but the root should be symetrical with parent reference. 
 
 
-NEW_DYNAMIC_VERSION_SWITCHED -> SELECTED_DYNAMIC_VERSION_SWITCHED
-NEW_DYNAMIC_VERSION_DOES_NOT_EXIST_CURRENT_VERSION_BASE -> SELECTED_DYNAMIC_VERSION_DOES_NOT_EXIST_CURRENT_VERSION_BASE
-NEW_DYNAMIC_VERSION_ALREADY_EXISTS_CURRENT_VERSION_NOT_BASE -> SELECTED_DYNAMIC_VERSION_ALREADY_EXISTS_CURRENT_VERSION_NOT_BASE
-NEW_DYNAMIC_VERSION_ALREADY_EXISTS_BASE_UNKNOWN -> SELECTED_DYNAMIC_VERSION_ALREADY_EXISTS_BASE_UNKNOWN
-NEW_STATIC_VERSION_SPECIFIED -> STATIC_VERSION_SPECIFIED
-NEW_DYNAMIC_VERSION_SPECIFIED -> DYNAMIC_VERSION_SPECIFIED
-NEW_DYNAMIC_VERSION_SAME_AS_CURRENT -> SELECTED_DYNAMIC_VERSION_SAME_AS_CURRENT
-INPUT_NEW_DYNAMIC_VERSION -> INPUT_DYNAMIC_VERSION
-NEW_DYNAMIC_VERSION_DOES_NOT_EXIST -> DYNAMIC_VERSION_DOES_NOT_EXIST
-INPUT_NEW_BASE_VERSION -> INPUT_BASE_VERSION
+
+CD:
+When releasing a ModuleVersion, is there a difference between the ModuleVersion itself and its references?
+When release a MV, the references must be released, but nothing says we must release them.
+Maybe a mode would just mean ensure they are released and select a release version.
+
+But would it simply be a matter of using a different SelectStaticVersionPlugin for the references?
+Maybe can specify a given SelectStaticVeresionPlugin for the specific Module (runtime properties) and have a global one that applies to all other modules.
+- Makes sense!
+
+So it is solely the responsibility of the ***SelectStaticVersionPlugin to manage the mapping from dynamic version to corresponding static.
+
+Would that behavior be useful elsewhere?
+
+Like a plugin that returns the base static version to scan for the most recent one.
+Would the inverse mapping be useful? (given a static, which dynamic drives the various releases)
