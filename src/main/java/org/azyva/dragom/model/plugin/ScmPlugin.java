@@ -227,7 +227,79 @@ public interface ScmPlugin extends ModulePlugin {
 
 	// TODO: No: Maybe always specify a pathModuleWorkspace to take the original version from
 	// Use origin version from workspace.
+	// If temporary dynamic Version, it realses the TDV.
+	// If !indSwitch, it reverts back to the base version. Logical.
 	void createVersion(Path pathModuleWorkspace, Version versionTarget, boolean indSwitch);
+
+	/**
+	 * Creates a temporary dynamic {@link Version}.
+	 * <p>
+	 * The actual Version is not provided to the caller, but the {@link Module} is
+	 * switched to that Version.
+	 * <p>
+	 * When a temporary dynamic Version is created, the Module workspace becomes in a
+	 * special state which changes the behavior of some methods. This should be
+	 * considered temporary and the caller should release it as soon as possible. At
+	 * the very least it should be released before the tool completes.
+	 * {@link #releaeTempDynamicVersion} and {@link #createVersion} can be used for
+	 * that purpose.
+	 * <p>
+	 * While a temporary dynamic Version is created, the caller should restrict itself
+	 * to:
+	 * <p>
+	 * <li>commit</li>
+	 * <li>createVersion</li>
+	 * <li>releaseTempDynamicVersion</li>
+	 * <li>Other methods which do not consider or return the path to the Module in the
+	 *     workspace</li>
+	 * <p>
+	 * Note that checkoutSystem cannot be called is a temporary dynamic Version is in
+	 * effect since this would mean that a caller could get a hold on the path to the
+	 * Module in the workspace and not be aware of the temporary dynamic Version
+	 * context. If access to the path to the module in the workspace is required from
+	 * various places, that path will need to be shared programmatically.
+	 * <p>
+	 * Whether or not temporary dynamic Versions are visible in the remote repository
+	 * is not specified.
+	 * <p>
+	 * Temporary dynamic Versions must be regarded as a feature related to making
+	 * changes to a Module, not as the creation of a Version in itself. When the new
+	 * temporary dynamic Version is created, the workspace directory need not be
+	 * synchronized. In particular, there can be local changes intended to be
+	 * committed in the temporary dynamic Version once created.
+	 * <p>
+	 * The concept of temporary dynamic Version provides an abstraction for the
+	 * facility in some SCM such as Git to work locally on some changes before
+	 * committing them as a real Version. This is useful when performing a release
+	 * where adjustments are required on a {ModuleVersion} before creating the release
+	 * Version, but these changes must not be visible on the main dynamic Version from
+	 * which the release is performed.
+	 * <p>
+	 * For SCM which do not support such concepts, it is up to the implementation to
+	 * provide an equivalent behavior using, for exemple, regular branches, or to
+	 * simply not support the operations related to temporary dynamic Versions,
+	 * preventing the use of these features in tools.
+	 *
+	 * @param pathModuleWorkspace Path to the module within the workspaace.
+	 */
+	void createTempDynamicVersion(Path pathModuleWorkspace);
+
+	/**
+	 * Verifies if there is a temporary dynamic Version with the specified Version as
+	 * its base.
+	 * <p>
+	 * This can be used by callers to be aware of the existence of a temporary dynamic
+	 * Version and adapt their behavior accordingly. However, callers that are not in
+	 * the know and do not have a hold on the path to the module in workspace will not
+	 * be able to obtain it as {@link #checkoutSystem} cannot be used in that case.
+	 *
+	 * @param versionBase Base Version.
+	 * @return See description.
+	 */
+	boolean isTempDynamicVersion(Version versionBase);
+
+	// switches back to the original version, dropping any changes made to the temporary dynamic Version.
+	void releaseTempDynamicVersion(Path pathModuleWorkspace);
 
 	// TODO Absolutely requires a pathModuleWorkspace
 	// not sure how to handle the push vs no push. For now, let's keep it simple and always push.
