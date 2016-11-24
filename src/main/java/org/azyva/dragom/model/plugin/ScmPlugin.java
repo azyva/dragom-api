@@ -43,16 +43,6 @@ public interface ScmPlugin extends ModulePlugin {
 	String COMMIT_ATTR_EQUIVALENT_STATIC_VERSION = "dragom-equivalent-static-version";
 
 	/**
-	 * Commit attribute to store the base {@link Version} of a new Version.
-	 * <p>
-	 * This applies to both static and dynamic Version's.
-	 * <p>
-	 * This is often not directly used by ScmPlugin implementations, but this is still
-	 * the most logical place to declare this constant.
-	 */
-	public static final String COMMIT_ATTR_BASE_VERSION = "dragom-base-version";
-
-	/**
 	 * Commit attribute indicating that the commit changes the {@link ArtifactVersion}
 	 * of the {@link Module}. The possible values are true and false, although if a
 	 * commit does not change the ArtifactVersion this attribute will generally not be
@@ -74,6 +64,14 @@ public interface ScmPlugin extends ModulePlugin {
 	 * the most logical place to declare this constant.
 	 */
 	public static final String COMMIT_ATTR_REFERENCE_VERSION_CHANGE = "dragom-reference-version-change";
+
+	/**
+	 * {@link Version} attribute specifying the project code associated with a
+	 * Version.
+	 * <p>
+	 * See {@link RootModuleVersionJobAbstractImpl#RUNTIME_PROPERTY_PROJECT_CODE}.
+	 */
+	public static final String VERSION_ATTR_PROJECT_CODE = "dragom-project-code";
 
 	// Represents a commit.
 	public class Commit {
@@ -229,7 +227,12 @@ public interface ScmPlugin extends ModulePlugin {
 	// Use origin version from workspace.
 	// If temporary dynamic Version, it realses the TDV.
 	// If !indSwitch, it reverts back to the base version. Logical.
-	void createVersion(Path pathModuleWorkspace, Version versionTarget, boolean indSwitch);
+	// Some SCM may not support version attributes (Git does not support version attributes for dynamic Versions, for static Versions, use JSON in tag message).
+	//   then again, maybe use attributes on initial dummy commit for dynamic version.
+	void createVersion(Path pathModuleWorkspace, Version versionTarget, Map<String, String> mapVersionAttr, boolean indSwitch);
+
+	// Cannot return null (but empty map, yes).
+	Map<String, String> getMapVersionAttr(Version version);
 
 	/**
 	 * Creates a temporary dynamic {@link Version}.

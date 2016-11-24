@@ -160,12 +160,14 @@ subtotal: 455.5
 2016-11-18: 4.5
 2016-11-19: 14
 2016-11-20: 7
+2016-11-23: 3
 
 
 To test
 =======
 
 MainModuleVersionWorkspacePlugin
+PROJECT_CODE (checkout, release, switchtodynamic)
 
 
 Mapping groupes in Config...
