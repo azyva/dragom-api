@@ -31,7 +31,7 @@ import org.azyva.dragom.execcontext.ExecContext;
  * The ExecContext implementation having an ExecContextPlugin whose implementation
  * implements this ToolLifeCycleExecContextPlugin is expected to behave in the
  * following manner:
- * <p>
+ * <ul>
  * <li>If {@link #isTransient} returns true, it must create and release the
  *     ExecContextPlugin for each tool execution. This implies that the
  *     ExecContextPlugin is bound to tool scope;</li>
@@ -40,7 +40,7 @@ import org.azyva.dragom.execcontext.ExecContext;
  *     ExecContextPlugin is bound to workspace scope;</li>
  * <li>It should call {@link #startTool} during tool initialization;</li>
  * <li>It should call {@link #endTool} during tool termination.</li>
- * <p>
+ * </ul>
  * An ExecContext implementation is not forced to handle
  * ToolLifeCycleExecContextPlugin. In such a case, it must treat the
  * ExecContextPlugin as if isTransient returns true, implying tool binding. If
@@ -69,9 +69,9 @@ import org.azyva.dragom.execcontext.ExecContext;
  * simultaneously on the same ExecContext (on different threads), and thus with
  * the same ExecContextPlugin instance. It is up to the ExecContextPlugin to
  * handle this situation, or prevent it from happening.
- * {@link DefaultWorkspacePluginFactory} prevents this from happening by locking
- * the workspace directory, and thus the ExecContext to which it is associated,
- * using a marker lock file.
+ * DefaultWorkspacePluginFactory from dragom-core prevents this from happening by
+ * locking the workspace directory, and thus the ExecContext to which it is
+ * associated, using a marker lock file.
  *
  * @author David Raymond
  */

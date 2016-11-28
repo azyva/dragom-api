@@ -52,7 +52,7 @@ public class SimpleNodeConfigTransferObject implements NodeConfigTransferObject 
 	 * <p>
 	 * This constructor is public since instances can be created by classes in
 	 * different Dragom packages. Instances are meant to be created only by
-	 * implementations of {@link MutableConfg} and child interfaces. We could
+	 * implementations of {@link MutableConfig} and child interfaces. We could
 	 * enforce this by making the constructor protected and requiring specific
 	 * subclasses with a package-scope constructor to be implemented for each
 	 * implementation package, but for now, we keep it simple.
@@ -63,66 +63,26 @@ public class SimpleNodeConfigTransferObject implements NodeConfigTransferObject 
 		this.mapPluginDefConfig = new LinkedHashMap<PluginKey, PluginDefConfig>();
 	}
 
-	/**
-	 * @return Name.
-	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
 
-	/**
-	 * Sets the name.
-	 *
-	 * @param name See description.
-	 */
 	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * Returns a {@link PropertyDefConfig}.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, a PropertyDefConfig is returned (instead of returning null).
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
-	 */
 	@Override
 	public PropertyDefConfig getPropertyDefConfig(String name) {
 		return this.mapPropertyDefConfig.get(name);
 	}
 
-	/**
-	 * Verifies if a {@link PropertyDefConfig} exists.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPropertyDefConfig} does not return null.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return Indicates if the PropertyDefConfig exists.
-	 */
 	@Override
 	public boolean isPropertyExists(String name) {
 		return this.mapPropertyDefConfig.containsKey(name);
 	}
 
-	/**
-	 * Returns a List of all the {@link PropertyDefConfig}'s.
-	 * <p>
-	 * If no PropertyDefConfig is defined for the NodeConfig, an empty List is
-	 * returned (as opposed to null).
-	 * <p>
-	 * The order of the PropertyDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 *
-	 * @return See description.
-	 */
 	@Override
 	public List<PropertyDefConfig> getListPropertyDefConfig() {
 		// A copy is returned to prevent the internal Map from being modified by the
@@ -131,79 +91,26 @@ public class SimpleNodeConfigTransferObject implements NodeConfigTransferObject 
 		return new ArrayList<PropertyDefConfig>(this.mapPropertyDefConfig.values());
 	}
 
-	/**
-	 * Removes a {@link PropertyDefConfig}.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 */
 	@Override
 	public void removePropertyDefConfig(String name) {
 		this.mapPropertyDefConfig.remove(name);
 	}
 
-	/**
-	 * Sets a {@link PropertyDefConfig}.
-	 * <p>
-	 * If one already exists with the same name, it is overwritten. Otherwise it is
-	 * added.
-	 * <p>
-	 * Mostly any implementation of PropertyDefConfig can be used, although
-	 * {@link SimplePropertyDefConfig} is generally the better choice.
-	 *
-	 * @param propertyDefConfig PropertyDefConfig.
-	 * @return Indicates if a new PropertyDefConfig was added (as opposed to an
-	 *   existing one having been overwritten.
-	 */
 	@Override
 	public boolean setPropertyDefConfig(PropertyDefConfig propertyDefConfig) {
 		return (this.mapPropertyDefConfig.put(propertyDefConfig.getName(), propertyDefConfig) == null);
 	}
 
-	/**
-	 * Returns a {@link PluginDefConfig}.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, a PluginDefConfig is returned (instead of returning null).
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 * @return PluginDefConfig. null if the PluginDefConfig does not exist.
-	 */
 	@Override
 	public PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
 		return this.mapPluginDefConfig.get(new PluginKey(classNodePlugin, pluginId));
 	}
 
-	/**
-	 * Verifies if a {@link PluginDefConfig} exists.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPluginDefConfig(Class<? extends NodePlugin>, String}
-	 * does not return null.
-	 *
-	 * @param name Name of the PluginyDef.
-	 * @return Indicates if the PluginDefConfig exists.
-	 */
 	@Override
 	public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
 		return this.mapPluginDefConfig.containsKey(new PluginKey(classNodePlugin, pluginId));
 	}
 
-	/**
-	 * Returns a List of all the {@link PluginDefConfig}'s.
-	 * <p>
-	 * If no PluginDefConfig is defined for the NodeConfig, an empty Set is returned
-	 * (as opposed to null).
-	 * <p>
-	 * The order of the PluginDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 *
-	 * @return See description.
-	 */
 	@Override
 	public List<PluginDefConfig> getListPluginDefConfig() {
 		// A copy is returned to prevent the internal Map from being modified by the
@@ -212,29 +119,11 @@ public class SimpleNodeConfigTransferObject implements NodeConfigTransferObject 
 		return new ArrayList<PluginDefConfig>(this.mapPluginDefConfig.values());
 	}
 
-	/**
-	 * Removes a {@link PropertyDefConfig}.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 */
 	@Override
 	public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
 		this.mapPropertyDefConfig.remove(new PluginKey(classNodePlugin, pluginId));
 	}
 
-	/**
-	 * Sets a {@link PluginDefConfig}.
-	 * <p>
-	 * If one already exists with the same {@link PluginKey}, it is overwritten.
-	 * Otherwise it is added.
-	 * <p>
-	 * Mostly any implementation of PluginDefConfig can be used, although
-	 * {@link SimplePluginDefConfig} is generally the better choice.
-	 *
-	 * @param pluginDefConfig PluginDefConfig.
-	 * @return Indicates if a new PluginDefConfig was added (as opposed to an existing
-	 *   one having been overwritten.
-	 */
 	@Override
 	public boolean setPluginDefConfig(PluginDefConfig pluginDefConfig) {
 		PluginKey pluginKey;

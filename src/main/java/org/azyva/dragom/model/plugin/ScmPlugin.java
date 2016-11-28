@@ -69,7 +69,8 @@ public interface ScmPlugin extends ModulePlugin {
 	 * {@link Version} attribute specifying the project code associated with a
 	 * Version.
 	 * <p>
-	 * See {@link RootModuleVersionJobAbstractImpl#RUNTIME_PROPERTY_PROJECT_CODE}.
+	 * See RootModuleVersionJobAbstractImpl#RUNTIME_PROPERTY_PROJECT_CODE from
+	 * dragom-core.
 	 */
 	public static final String VERSION_ATTR_PROJECT_CODE = "dragom-project-code";
 
@@ -188,11 +189,11 @@ public interface ScmPlugin extends ModulePlugin {
 	 * from which the static version was created, up to the first commit after the
 	 * creation of that base Version.
 	 *
-	 * @param versionDynamic Dynamic Version.
+	 * @param version Version.
 	 * @param commitPaging CommitPaging information passed and returned. Can be null
 	 *   in which case all Commit are returned.
 	 * @param enumSetGetListCommitFlag EnumSet of GetListCommitFlag. Can be null.
-	 * @return
+	 * @return See description.
 	 */
 	List<Commit> getListCommit(Version version, CommitPaging commitPaging, EnumSet<GetListCommitFlag> enumSetGetListCommitFlag);
 
@@ -205,7 +206,7 @@ public interface ScmPlugin extends ModulePlugin {
 	 * @param commitPaging {@link CommitPaging} information passed and returned. Can
 	 *   be null in which case all Commit are returned.
 	 * @param enumSetGetListCommitFlag EnumSet of GetListCommitFlag. Can be null.
-	 * @return
+	 * @return See description.
 	 */
 	List<Commit> getListCommitDiverge(Version versionSrc, Version versionDest, CommitPaging commitPaging, EnumSet<GetListCommitFlag> enumSetGetListCommitFlag);
 
@@ -213,7 +214,7 @@ public interface ScmPlugin extends ModulePlugin {
 	BaseVersion getBaseVersion(Version version);
 
 	/**
-	 * Gets the list of all static Version of the module.
+	 * @return List of all static Version of the module.
 	 */
 	List<Version> getListVersionStatic();
 
@@ -244,18 +245,18 @@ public interface ScmPlugin extends ModulePlugin {
 	 * special state which changes the behavior of some methods. This should be
 	 * considered temporary and the caller should release it as soon as possible. At
 	 * the very least it should be released before the tool completes.
-	 * {@link #releaeTempDynamicVersion} and {@link #createVersion} can be used for
+	 * {@link #releaseTempDynamicVersion} and {@link #createVersion} can be used for
 	 * that purpose.
 	 * <p>
 	 * While a temporary dynamic Version is created, the caller should restrict itself
 	 * to:
-	 * <p>
+	 * <ul>
 	 * <li>commit</li>
 	 * <li>createVersion</li>
 	 * <li>releaseTempDynamicVersion</li>
 	 * <li>Other methods which do not consider or return the path to the Module in the
 	 *     workspace</li>
-	 * <p>
+	 * </ul>
 	 * Note that checkoutSystem cannot be called is a temporary dynamic Version is in
 	 * effect since this would mean that a caller could get a hold on the path to the
 	 * Module in the workspace and not be aware of the temporary dynamic Version

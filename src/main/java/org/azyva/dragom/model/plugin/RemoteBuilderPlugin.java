@@ -36,7 +36,7 @@ import org.azyva.dragom.model.Version;
  * controlled environment typically provided by a tool such as Jenkins.
  * <p>
  * This plugin provides an abstract interface to such remote build environments so
- * that they can be triggered by {@link BuildRemote}.
+ * that they can be triggered by BuildRemote from dragom-core.
  *
  * @author David Raymond
  */
@@ -54,7 +54,7 @@ public interface RemoteBuilderPlugin extends ModulePlugin {
 			 * Indicates that this build cannot be performed remotely.
 			 * <p>
 			 * If the build cannot be performed remotely, this must be its initial and only
-			 * status after calling the {@link RemoteBuilderPlugin.build}.
+			 * status after calling the {@link RemoteBuilderPlugin#submitBuild}.
 			 */
 			CANNOT_BUILD_REMOTELY,
 
@@ -105,6 +105,8 @@ public interface RemoteBuilderPlugin extends ModulePlugin {
 		 * <p>
 		 * Can only be called if getRemoteBuildStatus returned
 		 * RemoteBuildStatus.CANNOT_BUILD_REMOTELY.
+		 *
+		 * @return See description.
 		 */
 		String getCannotBuildRemotelyReason();
 

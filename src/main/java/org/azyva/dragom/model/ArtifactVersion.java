@@ -40,12 +40,12 @@ import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
  * type mismatch and ensuring type safety.
  * <p>
  * As for Version, two types of ArtifactVersion's are recognized:
- * <p>
+ * <ul>
  * <li>Dynamic: Refers to a state of something that can change. This type of
  *     ArtifactVersion is generally called a SNAPSHOT.</li>
  * <li>Static: Refers to a state of something that is fixed, immutable. This type
  *     of ArtifactVersion is generally called a release.</li>
- * <p>
+ * </ul>
  * An ArtifactVersion is essentially a String. This class offers additional
  * methods which handle the distinction between dynamic and static
  * ArtifactVersion's.

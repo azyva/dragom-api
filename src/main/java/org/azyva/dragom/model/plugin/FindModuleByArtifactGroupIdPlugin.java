@@ -66,6 +66,7 @@ public interface FindModuleByArtifactGroupIdPlugin extends ClassificationNodePlu
 	 * Generally the modules returned should be immediate children of the
 	 * classification node associated with the plugin. But this is not mandatory.
 	 *
+	 * @param artifactGroupId ArfactGroupId.
 	 * @return See description.
 	 */
 	List<NodePath> getListModulePossiblyProduceArtifactGroupId(ArtifactGroupId artifactGroupId);

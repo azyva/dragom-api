@@ -37,12 +37,12 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * Map keys.
  * </p>
  * Two types of Version's are recognized:
- * <p>
+ * <ul>
  * <li>Dynamic: Refers to a state of something that can change. This type of
  *     Version is generally called a branch.</li>
  * <li>Static: Refers to a state of something that is fixed, immutable. This type
  *     of Version is generally called a tag.</li>
- * <p>
+ * </ul>
  * Version support the literal form [D|S]/&lt;version&gt;, where the D or S
  * prefix differentiates between a dynamic and static Version. This format is
  * Dragom-specific and SCM independent. It is up to {@link ScmPlugin} to interpret

@@ -26,12 +26,12 @@ import org.azyva.dragom.model.MutableNode;
  * handling of {@link OptimisticLockHandle}.
  * <p>
  * We do not reuse the existing javax.persistence.OptimisticLockException since:
- * <p>
+ * <ul>
  * <li>It relates specifically to JPA and MutableNodeConfig data are not necessarily
  *     managed by JPA;</li>
  * <li>It is a RuntimeException whereas in Dragom it is a regular Exception to force
  *     the caller to handle it.</li>
- * <p>
+ * </ul>
  * This exception does not have the usual constructors taking a message and/or
  * throwable parameter. The caller is expected to handle the exception and know the
  * context in which it is thrown.

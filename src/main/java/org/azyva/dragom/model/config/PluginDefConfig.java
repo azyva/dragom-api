@@ -20,6 +20,7 @@
 package org.azyva.dragom.model.config;
 
 import org.azyva.dragom.model.Model;
+import org.azyva.dragom.model.Node;
 import org.azyva.dragom.model.plugin.NodePlugin;
 import org.azyva.dragom.model.plugin.PluginFactory;
 
@@ -43,12 +44,12 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * interface of {@link NodePlugin} (constructor design pattern), it is up to the
  * implementation to implement a default mechanism for the classNodePlugin
  * property. But the following is recommended:
- * <p>
+ * <ul>
  * <li>If the class implements the static method getDefaultClassNodePlugin with no
  *     parameter, call this method to get the default value of the property
  *     classNodePlugin;</li>
  * <li>Otherwise, use the first NodePlugin sub-interface as the default.</li>
- * <p>
+ * </ul>
  * Similarly for the pluginId property:
  * <p>
  * If pluginClass refers to a class that implements PluginFactory,
@@ -57,15 +58,15 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * that directly implements a sub-interface of NodePlugin, it is up to the
  * implementation to implement a default mechanism for the pluginId property. But
  * the following is recommended:
- * <p>
+ * <ul>
  * <li>If the class implements the static method getDefaultPluginId with the
  *     Class of the NodePlugin as parameter (property classNodePlugin), call this
  *     method to get the default value of the property pluginId;</li>
- * <li>Otherwise, use null as the value of the pluginId property..</li>
- * <p>
+ * <li>Otherwise, use null as the value of the pluginId property.</li>
+ * </ul>
  * The strategy described above for obtaining the default values for the
  * classNodePlugin and pluginId properties is implemented by
- * {@link Util#getDefaultClassNodePlugin} and {@link Util#getDefaultPluginId}
+ * Util.getDefaultClassNodePlugin and Util.getDefaultPluginId from dragom-core.
  * which implementations can use.
  * <p>
  * During the design of {@link Config} and its members, it was debated whether the
@@ -74,7 +75,7 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * {@link Node}. It was finally decided to give that responsibility to the
  * implementations of this interface, even if it means that the strategy needs to
  * be implemented in multiple places, for the following reasons:
- * <p>
+ * <ul>
  * <li>Simpler implementation of Node;</li>
  * <li>From the point of view of the consumers of Config (essentially the Node
  *     class) it makes sense to not have to worry about these default details and
@@ -82,6 +83,7 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * <li>The duplication of code is not a big problem as most of the strategy is
  *     implemented by Util.getDefaultClassNodePlugin and
  *     Util.getDefaultPluginId.</li>
+ * </ul>
  *
  * @author David Raymond
  * @see Config
@@ -104,7 +106,7 @@ public interface PluginDefConfig {
 	 * <p>
 	 * This class must either implement {@link PluginFactory} or have a constructor
 	 * and implement the {@link NodePlugin} and the appropriate sub-interface
-	 * identified by {@link #getPluginInterface}.
+	 * identified by {@link #getClassNodePlugin}.
 	 *
 	 * @return See description.
 	 */

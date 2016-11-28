@@ -32,7 +32,7 @@ public abstract class NodeEvent {
 	/**
 	 * Constructor.
 	 *
-	 * @param {@link Node} on which the event is raised.
+	 * @param node Node on which the event is raised.
 	 */
 	public NodeEvent(Node node) {
 		this.node = node;

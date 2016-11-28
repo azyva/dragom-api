@@ -30,7 +30,7 @@ public abstract class ModuleEvent extends NodeEvent {
 	/**
 	 * Constructor.
 	 *
-	 * @param {@link Module} on which the event is raised.
+	 * @param module on which the event is raised.
 	 */
 	public ModuleEvent(Module module) {
 		super(module);

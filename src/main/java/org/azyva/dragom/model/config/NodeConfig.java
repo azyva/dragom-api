@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.azyva.dragom.model.ClassificationNode;
 import org.azyva.dragom.model.Module;
+import org.azyva.dragom.model.Node;
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**
@@ -110,10 +111,11 @@ public interface NodeConfig {
 	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
 	 * null, true is returned.
 	 * <p>
-	 * Returns true if an only if {@link #getPluginDefConfig(Class<? extends NodePlugin>, String}
-	 * does not return null.
+	 * Returns true if an only if {@link #getPluginDefConfig} does not return null.
 	 *
-	 * @param name Name of the PluginyDef.
+	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
+	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
+	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
 	 * @return Indicates if the PluginDefConfig exists.
 	 */
 	boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);

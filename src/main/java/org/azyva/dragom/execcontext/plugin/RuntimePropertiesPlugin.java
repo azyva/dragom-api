@@ -38,11 +38,12 @@ public interface RuntimePropertiesPlugin extends ExecContextPlugin {
 	 * <p>
 	 * It is up to the plugin implementation to use the appropriate property
 	 * resolution algorithm. Such an algorithm can involve:
-	 * <p>
+	 * <ul>
 	 * <li>Evaluating the property as an expression</li>
 	 * <li>Using the properties of the Node as default values for RuntimeProperties
 	 *     that may not be explicitly defined</li>
 	 * <li>Implementing property inheritance</li>
+	 * </ul>
 	 *
 	 * @param node Node in the context of which the property is requested. May be
 	 *   null as equivalent to specifying the Model root Node.

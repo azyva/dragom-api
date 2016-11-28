@@ -138,10 +138,11 @@ public interface NodeConfigTransferObject {
 	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
 	 * null, true is returned.
 	 * <p>
-	 * Returns true if an only if {@link #getPluginDefConfig(Class<? extends NodePlugin>, String}
-	 * does not return null.
+	 * Returns true if an only if {@link #getPluginDefConfig} does not return null.
 	 *
-	 * @param name Name of the PluginyDef.
+	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
+	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
+	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
 	 * @return Indicates if the PluginDefConfig exists.
 	 */
 	public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
@@ -163,7 +164,9 @@ public interface NodeConfigTransferObject {
 	/**
 	 * Removes a {@link PropertyDefConfig}.
 	 *
-	 * @param name Name of the PropertyDefConfig.
+	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
+	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
+	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
 	 */
 	public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 

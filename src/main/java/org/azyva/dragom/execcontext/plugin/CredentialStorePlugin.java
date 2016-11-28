@@ -29,9 +29,9 @@ package org.azyva.dragom.execcontext.plugin;
  * managing the credentials (adding, updating, removing) as it is not expected
  * that callers within Dragom need to manage credentials. However, nothing prevents
  * an implementation class to provide such facilities that a corresponding tool
- * class can use. {@link DefaultCredentialStoarePluginImpl} does, and
- * {@link CredentialManagerTool} is a CLI tool that allows the user to manage
- * credentials.
+ * class can use. DefaultCredentialStoarePluginImpl from dragom-core does, and
+ * CredentialManagerTool from dragom-cli-tools is a CLI tool that allows the user
+ * to manage credentials.
  * <p>
  * If requested credentials do not exist, the implementation class can interact
  * with the user (through {@link UserInteractionCallbackPlugin}) to obtain the

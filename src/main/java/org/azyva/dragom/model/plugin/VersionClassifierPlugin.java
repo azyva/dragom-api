@@ -30,7 +30,8 @@ import org.azyva.dragom.model.Version;
  * Note that Version's generally represent source-level versions, or tags, as
  * opposed to artifact-level versions. That is so since Dragom is designed to work
  * more at the source level than at the artifact level and provides mapping
- * mechanisms between the two versioning contexts ({@link VersionMapperPlugin}).
+ * mechanisms between the two versioning contexts
+ * ({@link ArtifactVersionMapperPlugin}).
  * <p>
  * Among others, Version classification is used in reference graph reports.
  * <p>
@@ -41,7 +42,7 @@ import org.azyva.dragom.model.Version;
  * although a more recently created Version does not necessarily contain more
  * changes than others (e.g., hotfix changes).
  * <p>
- * For example S/v-1.3 > S/v-1.2.3 > S/v-1.2.2 generally holds true.
+ * For example S/v-1.3 &gt; S/v-1.2.3 &gt; S/v-1.2.2 generally holds true.
  * <p>
  * Different versioning strategies can be used for different {@link Module}'s so
  * that different Version classifications strategies can be used.
@@ -61,7 +62,7 @@ import org.azyva.dragom.model.Version;
  * static Version of a more recent evolution path could be considered greater than
  * a dynamic Version of an older evolution path.
  * <p>
- * This interface extends Comparator<Version> to make it easy to use it in
+ * This interface extends {@code Comparator<Version>} to make it easy to use it in
  * conjunction with the Java Collections framework, such as to perform sort
  * operations.
  *
@@ -77,7 +78,7 @@ public interface VersionClassifierPlugin extends ModulePlugin, Comparator<Versio
 	 *
 	 * @param version1 First Version.
 	 * @param version2 Second Version.
-	 * @return -1 if version1 < version2, 1 if version1 > versions2 and 0 if
+	 * @return -1 if version1 &lt; version2, 1 if version1 &gt; versions2 and 0 if
 	 *   version1 = version2.
 	 */
 	@Override
@@ -89,7 +90,7 @@ public interface VersionClassifierPlugin extends ModulePlugin, Comparator<Versio
 	 * Currently Dragom does not manage evolution paths. But it is expected that
 	 * this information be eventually exploited by some new functionality.
 	 *
-	 * @param version
+	 * @param version Version.
 	 * @return Evolution path. null is an acceptable value if, for exemple,
 	 *   evolution paths are not supported.
 	 */
@@ -103,8 +104,8 @@ public interface VersionClassifierPlugin extends ModulePlugin, Comparator<Versio
 	 *
 	 * @param evolutionPath1 First evolution path.
 	 * @param evolutionPath2 Second evolution path.
-	 * @return -1 if evolutionPath1 < evolutionPath2,
-	 *   1 if evolutionPath1 > evolution Path2 and 0 if
+	 * @return -1 if evolutionPath1 &lt; evolutionPath2,
+	 *   1 if evolutionPath1 &gt; evolution Path2 and 0 if
 	 *   evolutionPath1 = evolutionPath2. If evolution paths are not supported,
 	 *   java.lang.UnsupportedOperationException can be raised.
 	 */

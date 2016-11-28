@@ -19,6 +19,8 @@
 
 package org.azyva.dragom.model.config;
 
+import org.azyva.dragom.model.Node;
+
 /**
  * Defines the types of ({@link NodeConfig}'s. Used also by {@link Node}.
  *

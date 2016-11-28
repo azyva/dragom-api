@@ -51,6 +51,10 @@ public class ReferencePathMatcherVersionAttribute implements ReferencePathMatche
 
 	/**
 	 * Constructor.
+	 *
+	 * @param versionAttributeName Version attribute name.
+	 * @param versionAttributeValue Version attribute value.
+	 * @param model Model.
 	 */
 	public ReferencePathMatcherVersionAttribute(String versionAttributeName, String versionAttributeValue, Model model) {
 		this.versionAttributeName = versionAttributeName;

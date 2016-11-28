@@ -20,6 +20,7 @@
 package org.azyva.dragom.model.config;
 
 import org.azyva.dragom.model.Model;
+import org.azyva.dragom.model.Node;
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**
@@ -27,9 +28,11 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * <p>
  * Can be used as a simple PluginDefConfig within {@link Node}, {@link NodeConfig}
  * and {@link NodeConfigTransferObject} implementations.
+ * <p>
+ * See org.azyva.dragom.model.config.impl.simple from dragom-core.
+
  *
  * @author David Raymond
- * @see org.azyva.dragom.model.config.simple
  */
 public class SimplePluginDefConfig implements PluginDefConfig {
 	private Class<? extends NodePlugin> classNodePlugin;

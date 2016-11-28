@@ -63,7 +63,7 @@ public interface ToolLifeCycleExecContext {
 	 * Should be called by tools during initialization when the ExecContext
 	 * implementation implements this interface.
 	 *
-	 * @param propertieInit Initialization properties specific to the tool.
+	 * @param propertiesInit Initialization properties specific to the tool.
 	 */
 	void startTool(Properties propertiesInit);
 

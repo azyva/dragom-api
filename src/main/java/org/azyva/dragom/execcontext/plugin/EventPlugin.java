@@ -43,12 +43,13 @@ public interface EventPlugin extends ExecContextPlugin {
 	 * It is also possible to register NodeEventListener's directly on a Node, and
 	 * thus within the {@link Model}.
 	 * <p>
-	 * Generally {@link Event}'s are raised (by {@link NodePlugin}'s, tools or other)
-	 * by calling {@link Node#raisehNodeEvent} which after having
+	 * Generally {@link NodeEvent}'s are raised (by {@link NodePlugin}'s, tools or
+	 * other) by calling {@link Node#raiseNodeEvent} which after having
 	 * dispatched the Event to EventListener's registered within Node's, calls the
-	 * {@link #raiseEvent} method to dispatch the Event to EventListener's registered
-	 * within the ExecContext.
+	 * {@link #raiseNodeEvent} method to dispatch the Event to EventListener's
+	 * registered within the ExecContext.
 	 *
+	 * @param <NodeEventClass> NodeEvent class.
 	 * @param node Node.
 	 * @param nodeEventListener NodeEventListener.
 	 * @param indChildrenAlso Indicates if

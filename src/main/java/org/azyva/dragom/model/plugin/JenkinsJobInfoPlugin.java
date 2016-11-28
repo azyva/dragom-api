@@ -32,12 +32,12 @@ import org.azyva.dragom.reference.ReferenceGraph;
  * Abstracts the mechanism for obtaining the information about the Jenkins job
  * corresponding to the module.
  * <p>
- * This plugin is used by {@link SetupJenkinsJobs}. SetupJenkinsJobs takes care of
- * interacting with Jenkins for creating jobs (and folders). It takes care of the
- * Jenkins base URL and credentials. It manages persisting the items that are
- * created so that jobs can be created and updated across multiple invocations
- * while maintaining a common context. These are considered common services which
- * do not need to be abstracted.
+ * This plugin is used by SetupJenkinsJobs from dragom-core. SetupJenkinsJobs
+ * takes care of interacting with Jenkins for creating jobs (and folders). It
+ * takes care of the Jenkins base URL and credentials. It manages persisting the
+ * items that are created so that jobs can be created and updated across multiple
+ * invocations while maintaining a common context. These are considered common
+ * services which do not need to be abstracted.
  * <p>
  * This plugin takes care of providing the information about a Jenkins job to
  * SetupJenkinsJobs, such as the job's full name and its configuration data. These
@@ -54,8 +54,8 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 	/**
 	 * Returns the full name of the job.
 	 * <p>
-	 * This is used by {@link SetupJenkinsJobs} to know which job to create. It can
-	 * also be used by implementations themselves of this plugin to obtain the
+	 * This is used by SetupJenkinsJobs from dragom-core to know which job to create.
+	 * It can also be used by implementations themselves of this plugin to obtain the
 	 * downstream jobs that handle building {@link Module}'s which depend on the
 	 * current Module so that the configuration of the latter can, if appropriate,
 	 * contain these references.
@@ -83,11 +83,11 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 	 * null is returned to indicate that the job must be created as a regular
 	 * non-templatized job.
 	 * <p>
-	 * If null is not returned, {@link #getTemplateParams} is expected to be called to
+	 * If null is not returned, {@link #getMapTemplateParam} is expected to be called to
 	 * obtain the template parameters.
 	 * <p>
-	 * If null is returned, {@link #getConfig} is expected to be called to obtain the
-	 * complete job configuration.
+	 * If null is returned, {@link #getReaderConfig} is expected to be called to
+	 * obtain the complete job configuration.
 	 *
 	 * @return See description.
 	 */
@@ -125,7 +125,7 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 	 *   ModuleVersion is not passed as a parameter since the {@link NodePath} in the
 	 *   ModuleVersion would be redundant with the NodePath of the {@link Module} to
 	 *   which the instance of this plugin is associated.
-	 * @return
+	 * @return See description.
 	 */
 	Reader getReaderConfig(ReferenceGraph referenceGraph, Version version);
 }

@@ -32,10 +32,10 @@ import org.azyva.dragom.model.config.OptimisticLockHandle;
  * <p>
  * Methods in this interface are similar to those in {@link MutableNodeConfig}.
  * This is normal since what is mutable is the configuration data, which
- * MutableNode simply exposes. Note however that only {@link NodeConfigData} is
- * exposed, and not MutableNodeConfig itself. This could allow a MutableNode
- * implementation to not be based on MutableNodeConfig, although the inverse is
- * generally the case.
+ * MutableNode simply exposes. Note however that only
+ * {@link NodeConfigTransferObject} is exposed, and not MutableNodeConfig itself.
+ * This could allow a MutableNode implementation to not be based on
+ * MutableNodeConfig, although the inverse is generally the case.
  * <p>
  * {@link OptimisticLockHandle} is used to handle optimistic locking. Support for
  * optimistic locking is not required. But if not supported, implementations must
@@ -84,8 +84,8 @@ public interface MutableNode extends Node {
 	 * See {@link MutableNodeConfig#getNodeConfigTransferObject}.
 	 *
 	 * @param optimisticLockHandle OptimisticLockHandle. Can be null.
-	 * @return {@link NodeConfigTransferObject}.
-	 * @throws OptimisticLockException. This is a RuntimeException that may be of
+	 * @return NodeConfigTransferObject.
+	 * @throws OptimisticLockException This is a RuntimeException that may be of
 	 *   interest to the caller.
 	 */
 	NodeConfigTransferObject getNodeConfigTransferObject(OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException;
@@ -97,9 +97,9 @@ public interface MutableNode extends Node {
 	 *
 	 * @param nodeConfigTransferObject NodeConfigTransferObject.
 	 * @param optimisticLockHandle OptimisticLockHandle. Can be null.
-	 * @throws OptimisticLockException. This is a RuntimeException that may be of
+	 * @throws OptimisticLockException This is a RuntimeException that may be of
 	 *   interest to the caller.
-	 * @throws DuplicateNodeExcpeption. This is a RuntimeException that may be of
+	 * @throws DuplicateNodeException This is a RuntimeException that may be of
 	 *   interest to the caller.
 	 */
 	void setNodeConfigTransferObject(NodeConfigTransferObject nodeConfigTransferObject, OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException, DuplicateNodeException;

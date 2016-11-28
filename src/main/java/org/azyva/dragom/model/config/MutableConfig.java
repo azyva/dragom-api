@@ -29,14 +29,14 @@ import org.azyva.dragom.model.Model;
  * is why transfer objects are used.
  * <p>
  * The reason for implementing atomocity semantics are two-fold:
- * <p>
+ * <ul>
  * <li>If the configuration data is meant to be persisted, it is expected that
  *     persisting operations be performed for each mutation and mutating whole objects
  *     at a time provides more efficiency than persisting each individual change;</li>
  * <li>We want to support configuration data undergoing changes while a {@link Model}
  *     is active and requiring the associated Model to react to whole object changes
- *     provides more efficiency than reacting to each individual change.<li>
- * <p>
+ *     provides more efficiency than reacting to each individual change.</li>
+ * </ul>
  * Runtime change events may eventually be supported so that the Model can adjust
  * to configuration changes at runtime.
  */

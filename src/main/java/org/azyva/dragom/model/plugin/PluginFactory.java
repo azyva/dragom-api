@@ -58,6 +58,7 @@ public interface PluginFactory {
 	 * generally be identified using a given plugin ID which can be returned by this
 	 * method. This avoid having to specify the plugin ID in Config.
 	 *
+	 * @param classNodePlugin Class of the NodePlugin interface.
 	 * @return Default plugin ID. Can be null.
 	 */
 	String getDefaultPluginId(Class<? extends NodePlugin> classNodePlugin);
@@ -68,6 +69,7 @@ public interface PluginFactory {
 	 * This method is useful mostly for configuration tools that interact with
 	 * the user and that may want to validate user input.
 	 *
+	 * @param <NodePluginInterface> NodePlugin interface.
 	 * @param classNodePlugin Class of the NodePlugin.
 	 * @return Indicates if the NodePlugin is supported.
 	 */
@@ -79,6 +81,7 @@ public interface PluginFactory {
 	 * Generally a new NodePlugin instance is returned as Node caches instantiated
 	 * NodePlugin's.
 	 *
+	 * @param <NodePluginInterface> NodePlugin interface.
 	 * @param classNodePlugin Class of the NodePlugin.
 	 * @param node Node.
 	 * @return NodePlugin.

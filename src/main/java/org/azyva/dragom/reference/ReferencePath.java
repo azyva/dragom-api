@@ -120,7 +120,8 @@ public class ReferencePath {
 
 	/**
 	 * Removes a given number of root {@link Reference}'s (from the head of the List).
-	 * @param nbReferences
+	 *
+	 * @param nbReferences Number of references.
 	 */
 	public void removeRootReferences(int nbReferences) {
 		this.listReference.subList(0, nbReferences).clear();
@@ -141,14 +142,16 @@ public class ReferencePath {
 	}
 
 	/**
-	 * Removes the leaf {@Link Reference) (from the tail of the List).
+	 * Removes the leaf {@link Reference} (from the tail of the List).
 	 */
 	public void removeLeafReference() {
 		this.listReference.remove(this.listReference.size() - 1);
 	}
 
 	/**
-	 * Removes a given number of leaf {@Link Reference) (from the tail of the List).
+	 * Removes a given number of leaf {@link Reference} (from the tail of the List).
+	 *
+	 * @param nbReferences Number of references.
 	 */
 	public void removeLeafReferences(int nbReferences) {
 		this.listReference.subList(this.listReference.size() - nbReferences, nbReferences).clear();
@@ -187,7 +190,7 @@ public class ReferencePath {
 	 * elements. A Reference includes a {@link ModuleVersion}, but also implementation
 	 * data that relates to how it is expressed in some parent ModuleVersion. When
 	 * such implementation data is available, the Reference is separated from its
-	 * parent using "->". Otherwise, "|>" is used to denote discontinuity. This
+	 * parent using "-&gt;". Otherwise, "|&gt;" is used to denote discontinuity. This
 	 * happens when Reference's are recreated during the traversal of reference
 	 * graphs in some jobs.
 	 */

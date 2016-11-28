@@ -21,6 +21,7 @@ package org.azyva.dragom.model.config;
 
 import org.azyva.dragom.model.Model;
 import org.azyva.dragom.model.MutableNode;
+import org.azyva.dragom.model.Node;
 
 /**
  * Represents an optimistic lock held on an entity.

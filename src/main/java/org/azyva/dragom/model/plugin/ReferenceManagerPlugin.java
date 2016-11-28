@@ -34,11 +34,11 @@ import org.azyva.dragom.reference.Reference;
  * been named DependencyManagerPlugin. But the name ReferenceManagerPlugin
  * reflects the fact that a module has references to other modules, but that these
  * references are not necessarily dependencies. For example in a Maven module, the
- * <dependencyManagement> section of the POM contains references to other modules,
- * but these are dependencies only if the POM also includes a reference to the
- * module in the <dependencies> section. Similarly, in the <dependencies> section,
- * if a module is identified without a version, that is not considered a reference
- * from the point of view of this plugin.
+ * {@code <dependencyManagement>} section of the POM contains references to other
+ * modules, but these are dependencies only if the POM also includes a reference
+ * to the module in the {@code <dependencies>} section. Similarly, in the
+ * {@code <dependencies>} section, if a module is identified without a version,
+ * that is not considered a reference from the point of view of this plugin.
  *
  * Only direct references are managed by this plugin. If a module A references
  * another module B which in turn references module C, module C's references are

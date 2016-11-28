@@ -35,7 +35,7 @@ import org.azyva.dragom.model.plugin.ReferenceManagerPlugin;
  * extra implementation data.
  * <p>
  * When implData is specified, it is used in the following way by this class:
- * <p>
+ * <ul>
  * <li>It is included in equality tests (equals and equalsNoVersion method). The
  *     equals method should not consider any version information so that it can be
  *     used by equals and equalsNoVersion. If ever extra implementation data
@@ -44,7 +44,7 @@ import org.azyva.dragom.model.plugin.ReferenceManagerPlugin;
  * <li>Its hashCode is used to compute this class' hashCode;</li>
  * <li>Its string representation (toString method) is included in the string
  * representation of this class, unless it is null or the empty string.</li>
- * <p>
+ * </ul>
  * This class implements value semantics and is immutable.
  */
 public final class Reference {
@@ -70,6 +70,11 @@ public final class Reference {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param moduleVersion ModuleVersion.
+	 * @param artifactGroupId ArtifactGroupId.
+	 * @param artifactVersion ArtifactVersion.
+	 * @param implData Extra implementation data.
 	 */
 	public Reference(ModuleVersion moduleVersion, ArtifactGroupId artifactGroupId, ArtifactVersion artifactVersion, Object implData) {
 		this.moduleVersion = moduleVersion;
@@ -80,6 +85,10 @@ public final class Reference {
 
 	/**
 	 * Constructor with no extra implementation data.
+	 *
+	 * @param moduleVersion ModuleVersion.
+	 * @param artifactGroupId ArtifactGroupId.
+	 * @param artifactVersion ArtifactVersion.
 	 */
 	public Reference(ModuleVersion moduleVersion, ArtifactGroupId artifactGroupId, ArtifactVersion artifactVersion) {
 		this.moduleVersion = moduleVersion;
@@ -232,7 +241,7 @@ public final class Reference {
 	 * This is useful when the Version of a Reference can change within a collection
 	 * and we want to find the original Reference.
 	 *
-	 * @param other
+	 * @param referenceOther Other Reference.
 	 * @return If the Reference is equal to referenceOther.
 	 */
 	public boolean equalsNoVersion(Reference referenceOther) {

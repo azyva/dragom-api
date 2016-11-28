@@ -119,7 +119,7 @@ public interface MutableNodeConfig extends NodeConfig {
 	 * @throws OptimisticLockException Can be thrown only if optimisticLockHandle is
 	 *   not null. This is a RuntimeException that may be of interest to
 	 *   the caller.
-	 * @throws DuplicateNodeExcpeption When the new configuration data would introduce
+	 * @throws DuplicateNodeException When the new configuration data would introduce
 	 *   a duplicate {@link MutableNode} within the parent. This is a RuntimeException
 	 *   that may be of interest to the caller.
 	 */

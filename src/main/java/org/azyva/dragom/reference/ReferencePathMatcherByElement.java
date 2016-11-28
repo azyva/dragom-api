@@ -75,22 +75,22 @@ import org.azyva.dragom.model.Version;
  * the corresponding ReferencePath element part.
  *
  * A ReferencePathMatcherByElement has a literal form which is a sequence of
- * ElementMatcher literals separated with "->". Each ElementMatcher literal has
+ * ElementMatcher literals separated with "-&gt;". Each ElementMatcher literal has
  * either of the following forms:
  *
- * - "/<module-node-path-matcher>[:<version-matcher>]" for source-level part
+ * - {@code /<module-node-path-matcher>[:<version-matcher>]} for source-level part
  *   matchers. The leading "/" differentiates from artifact-level ElementMatcher
  *   and is not part of the NodePath. But since nodes in a NodePath are separated
  *   with this same character this makes it intuitive.
  *
- * - "<group-id-matcher>[:<artifact-id-matcher>[:<artifact-version-matcher>]]" for
- *   artifact-level part matchers.
+ * - {@code <group-id-matcher>[:<artifact-id-matcher>[:<artifact-version-matcher>]]}
+ *   for artifact-level part matchers.
  *
- * - "**" for a "**" ElementMatcher. This notation is used for similarity with
+ * - {@code **} for a "**" ElementMatcher. This notation is used for similarity
+ *   with Ant-style globs.
+ *
+ * - {@code *} for a "*" ElementMatcher. This notation is used for similarity with
  *   Ant-style globs.
- *
- * - "*" for a "*" ElementMatcher. This notation is used for similarity with Ant-
- *   style globs.
  *
  * A given ReferencePathMatcherByElement literal can contain a mix of source-level
  * and artifact-level ElementMatcher's. But obviously a given ElementMatcher is
@@ -107,17 +107,17 @@ import org.azyva.dragom.model.Version;
  * it is treated as a Java regex (Pattern class), these characters not actually
  * being part of the regex itself. "(" and ")" are reserved characters in regexes
  * but can still be used since a ")" will be considered as a closing delimiter
- * only if followed by ":", "->" or the end of the ReferencePathMatcherByElement
+ * only if followed by ":", "-&gt;" or the end of the ReferencePathMatcherByElement
  * literal.
  *
  * Because of the way the different parts of a ReferencePathMatcherByElement
  * literal are delimited, some characters and character sequences cannot be used
- * within ElementMatcher parts. They are ":" and "->". Dragom currently does not
+ * within ElementMatcher parts. They are ":" and "-&gt;". Dragom currently does not
  * support escaping them. Fortunately they are generally not used within
  * ReferencePath elements. And ":" can still be used within a regex, either as a
  * literal (escaped with "\") or as the special character, since when the opening
  * regex delimiter "(" is found, the part is delimited by the closing ")" followed
- * by ":", "->" or the end of the ReferencePathMatcherByElement literal,
+ * by ":", "-&gt;" or the end of the ReferencePathMatcherByElement literal,
  * regardless of occurrences of ":" within the regex.
  *
  * Note that a ReferencePath is, as implied by its name, a sequence of references
@@ -148,24 +148,24 @@ import org.azyva.dragom.model.Version;
  * Here are examples of ReferencePathMatcherByElement literals along with some
  * explanations:
  *
- * - "/Domain1/app-a": Matches the specific Module whose NodePath is
+ * - {@code /Domain1/app-a}: Matches the specific Module whose NodePath is
  *   "Domain1/app-a", regardless of its Version, when that Module is the first
  *   element of the ReferencePath;
  *
- * - "**->/Domain1/app-a:(D/.*)": Matches the specific Module whose NodePath is
- *   "Domain1/app-a" if its Version is dynamic, when
- *   that module is the last element of the ReferencePath (there can be any number
- *   of other elements preceding it within the ReferencePath;
+ * - {@code **->/Domain1/app-a:(D/.*)}: Matches the specific Module whose NodePath
+ *   is "Domain1/app-a" if its Version is dynamic, when that module is the last
+ *   element of the ReferencePath (there can be any number of other elements
+ *   preceding it within the ReferencePath;
  *
- * - "/Domain1/app-a->**": Matches any ReferencePath of depth 1 or more, as long
- *   as the first Module has the NodePath "Domain1/app-a";
+ * - {@code /Domain1/app-a->**}: Matches any ReferencePath of depth 1 or more, as
+ *   long as the first Module has the NodePath "Domain1/app-a";
  *
- * - "*->/Domain1/app-a->**": Matches any ReferencePath of depth 2 or more, as
- *   long as the second Module has the NodePath "Domain1/app-a";
+ * - {@code *->/Domain1/app-a->**}: Matches any ReferencePath of depth 2 or more,
+ *   as long as the second Module has the NodePath "Domain1/app-a";
  *
- * - "**->com.acme::(.*-SNAPSHOT)": Matches any ReferencePath of depth 1 or more,
- *   where the last reference is to an artifact having the groupId "com.acme" and
- *   a SNAPSHOT ArtifactVersion.
+ * - {@code **->com.acme::(.*-SNAPSHOT)}: Matches any ReferencePath of depth 1 or
+ *   more, where the last reference is to an artifact having the groupId
+ *   "com.acme" and a SNAPSHOT ArtifactVersion.
  *
  * @author David Raymond
  */
@@ -1235,17 +1235,17 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 	 * Verifies if a ReferencePathMatcherByElement can potentially match children of a
 	 * ReferencePath.
 	 * <p>
-	 * In many cases this is obvious. ReferencePathMatcherByElement X -> Y will not
-	 * match any children of ReferencePath A -> B.
+	 * In many cases this is obvious. ReferencePathMatcherByElement X -&gt; Y will not
+	 * match any children of ReferencePath A -&gt; B.
 	 * <p>
 	 * But the rule that forbids any Module cycle within a reference graph allows us
 	 * to determine in certain cases that the children of a ReferencePath cannot be
 	 * matched by a ReferencePathMatcherByElement. For example
-	 * ReferencePathMatcherByElement ** -> B -> A cannot match children of
-	 * ReferencePath A -> B since this would imply a cycle A -> B -> A which is not
-	 * permitted. There are many other more subtle cases that are covered by this
-	 * method such as ReferencePathMatcherByElement A -> ** -> B -> ** -> C that can
-	 * match children of A -> E, but not A -> C.
+	 * ReferencePathMatcherByElement ** -&gt; B -&gt; A cannot match children of
+	 * ReferencePath A -&gt; B since this would imply a cycle A -&gt; B -&gt; A which
+	 * is not permitted. There are many other more subtle cases that are covered by
+	 * this method such as ReferencePathMatcherByElement A -&gt; ** -&gt; B -&gt; **
+	 * -&gt; C that can match children of A -&gt; E, but not A -&gt; C.
 	 * <p>
 	 * This is used for optimizing the traversal of reference graphs (traversal
 	 * avoidance).

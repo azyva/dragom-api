@@ -19,6 +19,7 @@
 
 package org.azyva.dragom.model.config;
 
+import org.azyva.dragom.model.Node;
 import org.azyva.dragom.model.plugin.NodePlugin;
 
 /**

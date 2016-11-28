@@ -22,7 +22,7 @@ package org.azyva.dragom.model.config;
 import org.azyva.dragom.model.Model;
 
 /**
- * Configuration of a {@link PropertyDef} within a {@link NodeConfig}.
+ * Configuration of a property within a {@link NodeConfig}.
  *
  * @author David Raymond
  * @see Config

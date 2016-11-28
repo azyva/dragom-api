@@ -223,7 +223,7 @@ public final class NodePath {
 	/**
 	 * Parses a NodePath literal.
 	 *
-	 * @param stringNodePath
+	 * @param stringNodePath NodePath literal.
 	 * @return NodePath
 	 * @throws ParseException If parsing fails.
 	 */

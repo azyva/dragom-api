@@ -22,6 +22,7 @@ package org.azyva.dragom.model.plugin;
 import org.azyva.dragom.model.ClassificationNode;
 import org.azyva.dragom.model.Model;
 import org.azyva.dragom.model.Module;
+import org.azyva.dragom.model.MutableClassificationNode;
 import org.azyva.dragom.model.config.Config;
 
 /**
@@ -48,7 +49,8 @@ public interface UndefinedDescendantNodeManagerPlugin extends ClassificationNode
 	 * be created because it does not exist or any other reason.
 	 * <p>
 	 * If a ClassificationNode is returned, it must be completely created, installed
-	 * within the {@link Model} (using {@link ClassificationNode#addChildNode}) and
+	 * within the {@link Model} (using
+	 * {@link MutableClassificationNode#createChildMutableClassificationNode}) and
 	 * ready to use.
 	 *
 	 * @param name Name of the ClassificationNode.
@@ -64,7 +66,8 @@ public interface UndefinedDescendantNodeManagerPlugin extends ClassificationNode
 	 * because it does not exist or any other reason.
 	 * <p>
 	 * If a Module is returned, it must be completely created, installed within the
-	 * {@link Model} (using {@link ClassificationNode#addChildNode}) and ready to use.
+	 * {@link Model} (using
+	 * {@link MutableClassificationNode#createChildMutableModule}) and ready to use.
 	 *
 	 * @param name Name of the Module.
 	 * @return Newly created Module. null if the Module cannot be created.

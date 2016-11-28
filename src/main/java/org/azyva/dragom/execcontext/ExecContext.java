@@ -22,38 +22,41 @@ package org.azyva.dragom.execcontext;
 import java.util.Set;
 
 import org.azyva.dragom.execcontext.plugin.ExecContextPlugin;
+import org.azyva.dragom.execcontext.plugin.UserInteractionCallbackPlugin;
 import org.azyva.dragom.execcontext.plugin.WorkspacePlugin;
 import org.azyva.dragom.model.Model;
+
 /**
  * Provides contextual information and behavior during the execution of tools.
- * <p>
- * Classes use {@link ExecContextHolder#get} to retrieve an ExecContext when
- * needed.
- * <p>
- * The initialization phase of tools use {@link ExecContextFactory} to instantiate
- * or retrieve existing ExecContext's that will be set within ExecContextHolder
- * and used throughout the tool execution.
- * {@link DefaultExecContextFactory} is an implementation of ExecContextFactory.
- * <p>
- * Although it is not entirely explicit, ExecContext's conceptually manage 3
+ *
+ * <p>Classes generally use ExecContextHolder from dragom-core to retrieve an
+ * ExecContext when needed.
+ *
+ * <p>The initialization phase of tools generally use {@link ExecContextFactory}
+ * to instantiate or retrieve existing ExecContext's that will be set within
+ * ExecContextHolder and used throughout the tool execution.
+ * DefaultExecContextFactory from dragom-core is an implementation of
+ * ExecContextFactory.
+ *
+ * <p>Although it is not entirely explicit, ExecContext's conceptually manage 3
  * information scopes:
- * <p>
+ * <ul>
  * <li>Global: Information that is considered constant among workspaces and tool
  *     invocations. Global information essentially includes the
- *     {@link Model};</li>
+ *     {@link Model};
  * <li>Workspace: Information that is specific to a workspace. Such information
  *     can be changed during the execution of tools and is expected to be
  *     persisted within the workspace. Workspace information includes the
  *     non-transient properties ({@link #getProperty}, etc.). It also includes any
  *     information which
- *     {@link ExecContextPlugin}'s decide to manage with workspace scope;</li>
+ *     {@link ExecContextPlugin}'s decide to manage with workspace scope;
  * <li>Tool: Information that is local to a tool execution. Tools and plugins that
  *     execute within the context of a tool can manage such information which is
  *     expected to be released when the tool execution ends. Tool information
  *     includes the transient data ({@link #getTransientData}, etc.). It
  *     also includes any information which ExecContextPlugin's decide to manage
- *     with tool scope.</li>
- * <p>
+ *     with tool scope.
+ * </ul>
  * The distinction between the various scopes can be somewhat blurry, especially
  * if each tool execution is performed in its own JVM, which is often the case. In
  * such a case, it can be argued to some extent that all information is transient
@@ -61,7 +64,7 @@ import org.azyva.dragom.model.Model;
  * from memory. But it is possible to configure multiple tool executions to share
  * a JVM instance which would behave as a background service with which a front-
  * end would interact to start tool executions
- * (<a href="http://www.martiansoftware.com/nailgun/">NaigGun<a> can be useful in
+ * (<a href="http://www.martiansoftware.com/nailgun/">NaigGun</a> can be useful in
  * that regard). In such cases the distinction between scopes become clearer. In
  * particular, it is more obvious that care must be taken to distinguish between
  * workspace and tool scopes as even if the JVM is not terminated at the end of a
@@ -75,7 +78,7 @@ import org.azyva.dragom.model.Model;
  * Functionality. But in doing so they need to have access to the various aspects
  * of the ExecContext which, apart from general workspace properties, are provided
  * by plugins, such as {@link WorkspacePlugin} for workspace directories and
- * {@link UserInteractionCallBackPlugin}) for user interaction.
+ * {@link UserInteractionCallbackPlugin}) for user interaction.
  * <p>
  * A relation between ExecContextPlugin's and information scope exists. See
  * {@link ToolLifeCycleExecContext} for more information.
@@ -139,6 +142,7 @@ public interface ExecContext {
 	 * <p>
 	 * ExecContextPlugin's are identified by their (interface) class.
 	 *
+	 * @param <ExecContextPluginInterface> Interface of the ExecContextPlugin.
 	 * @param classExecContextPluginInterface Class of the ExecContextPlugin.
 	 * @return ExecContextPlugin. null if not found.
 	 */
@@ -179,6 +183,7 @@ public interface ExecContext {
 	 *
 	 * @param prefix Prefix of the properties. Can be null in which case all
 	 *   properties are returned.
+	 * @return See description.
 	 */
 	Set<String> getSetProperty(String prefix);
 

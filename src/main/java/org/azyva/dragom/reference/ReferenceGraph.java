@@ -246,7 +246,7 @@ public interface ReferenceGraph {
 
 	/**
 	 * Controls the subsequent visit actions during a traversal of the
-	 * ReferenceGraph. This is the type returned by {@link Visitor.visit}.
+	 * ReferenceGraph. This is the type returned by {@link Visitor#visit}.
 	 */
 	public enum VisitControl {
 		/**
@@ -265,7 +265,7 @@ public interface ReferenceGraph {
 		 * Not valid when {@link ReferenceGraph.VisitAction#STEP_OUT}.
 		 * <p>
 		 * Not valid when {@link ReferenceGraph#traverseReferenceGraph} is called with
-		 * indDepthFirst and {@link ReferenceGraph.VisitAction.VISIT}.
+		 * indDepthFirst and {@link ReferenceGraph.VisitAction#VISIT}.
 		 * <p>
 		 * Not valid when {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
 		 */
@@ -290,7 +290,7 @@ public interface ReferenceGraph {
 		 * @param referenceGraph ReferenceGraph in the context of which the ModuleVersion
 		 *   is being visited.
 		 * @param referencePath ReferencePath of the ModuleVersion being visited.
-		 * @param visitAction VisitAction.
+		 * @param enumSetVisitAction EnumSet of VisitAction's.
 		 * @return VisitControl.
 		 */
 		VisitControl visit(ReferenceGraph referenceGraph, ReferencePath referencePath, EnumSet<ReferenceGraph.VisitAction> enumSetVisitAction);
@@ -310,7 +310,10 @@ public interface ReferenceGraph {
 	List<ModuleVersion> getListModuleVersionRoot();
 
 	/**
-	 * @return Indicates if a {@link ModuleVersion} is a root of the ReferenceGraph.
+	 * Indicates if a {@link ModuleVersion} is a root of the ReferenceGraph.
+	 *
+	 * @param moduleVersion ModuleVersion.
+	 * @return See description.
 	 */
 	boolean isRootModuleVersion(ModuleVersion moduleVersion);
 
@@ -320,7 +323,10 @@ public interface ReferenceGraph {
 	List<ModuleVersion> getListModuleVersionMatched();
 
 	/**
-	 * @return Indicates if a {@link ModuleVersion} is matched.
+	 * Indicates if a {@link ModuleVersion} is matched.
+	 *
+	 * @param moduleVersion ModuleVersion.
+	 * @return See description.
 	 */
 	boolean isMatchedModuleVersion(ModuleVersion moduleVersion);
 

@@ -27,8 +27,8 @@ import org.azyva.dragom.execcontext.ExecContextFactory;
  * Factory for getting a {@link Model}.
  * <p>
  * The factory design pattern is used here to allow various Model implementations,
- * although it is expected that in most cases {@link DefaultModelFactory} will be
- * adequate.
+ * although it is expected that in most cases DefaultModelFactory in dragom-core
+ * will be adequate.
  * <p>
  * To provide a high degree of flexibility, initialization Properties are passed
  * to the getModel method. The caller (generally an {@link ExecContextFactory}
@@ -39,7 +39,7 @@ import org.azyva.dragom.execcontext.ExecContextFactory;
  * A typical strategy is to provide a cascade of Properties initialized from
  * various sources, such as a Properties file in the classpath, system Properties
  * and user properties specified at tool invocation time. Such a strategy is
- * implemented by {@link Util#setupExecContext} which many tools use. But
+ * implemented by Util.setupExecContext in dragom-core which many tools use. But
  * ModelFactory implementations should not care about such a strategy. They should
  * simply read properties from the provided initialization Properties.
  *
@@ -49,7 +49,7 @@ public interface ModelFactory {
 	/**
 	 * Returns a {@link Model}.
 	 *
-	 * @param Properties propertiesInit Initialization properties.
+	 * @param propertiesInit Initialization properties.
 	 * @return Model.
 	 */
 	Model getModel(Properties propertiesInit);

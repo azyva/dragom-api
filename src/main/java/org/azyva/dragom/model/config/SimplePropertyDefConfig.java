@@ -20,6 +20,7 @@
 package org.azyva.dragom.model.config;
 
 import org.azyva.dragom.model.Model;
+import org.azyva.dragom.model.Node;
 
 /**
  * Simple implementation for {@link PropertyDefConfig}.
@@ -28,9 +29,9 @@ import org.azyva.dragom.model.Model;
  * Can be used as a simple PropertyDefConfig within {@link Node},
  * {@link NodeConfig} and {@link NodeConfigTransferObject} implementations.
  * <p>
+ * See org.azyva.dragom.model.config.impl.simple from dragom-core.
  *
  * @author David Raymond
- * @see org.azyva.dragom.model.config.simple
  */
 public class SimplePropertyDefConfig implements PropertyDefConfig {
 	private String name;

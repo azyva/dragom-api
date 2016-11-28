@@ -33,9 +33,10 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * Represents a node at runtime.
  * <p>
  * Two type of Node's exist each represented by a different sub-interfaces:
- * <p>
+ * <ul>
  * <li>{@link ClassificationNode}</li>
  * <li>{@link Module}</li>
+ * </ul>
  *
  * @author David Raymond
  */
@@ -83,6 +84,7 @@ public interface Node {
 	 * The NodePlugin must exist. {@link #isNodePluginExists} can be used to verify if
 	 * a NodePlugin exists before getting it.
 	 *
+	 * @param <NodePluginInterface> NodePlugin interface.
 	 * @param classNodePlugin Class of the NodePlugin.
 	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
 	 *   NodePlugin.
@@ -91,7 +93,7 @@ public interface Node {
 	<NodePluginInterface extends NodePlugin> NodePluginInterface getNodePlugin(Class<NodePluginInterface> classNodePlugin, String pluginId);
 
 	/**
-	 * Verifies if a {@link NodePlugin exists for this Node, without instantiating it.
+	 * Verifies if a {@link NodePlugin} exists for this Node, without instantiating it.
 	 *
 	 * @param classNodePlugin Class of the NodePlugin.
 	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
@@ -116,6 +118,7 @@ public interface Node {
 	 * {@link Model}. It is also possible to register NodeEventListener's in the
 	 * {@link ExecContext}.
 	 *
+	 * @param <NodeEventClass> NodeEvent class.
 	 * @param nodeEventListener NodeEventListener.
 	 * @param indChildrenAlso Indicates if {@link NodeEvent} raised on children should
 	 *   be dispatched to the NodeEventListener.

@@ -26,7 +26,7 @@ import java.util.Properties;
  * <p>
  * The factory design pattern is used here to allow various ExecContext
  * implementations, although it is expected that in most cases
- * {@link DefaultExecContextFactory} will be adequate.
+ * DefaultExecContextFactory from dragom-core will be adequate.
  * <p>
  * To provide a high degree of flexibility, initialization Properties are passed
  * to the getExecContext method. The caller (the initialization code of a tool) is
@@ -36,7 +36,7 @@ import java.util.Properties;
  * A typical strategy is to provide a cascade of Properties initialized from
  * various sources, such as a Properties file in the classpath, system Properties
  * and user properties specified at tool invocation time. Such a strategy is
- * implemented by {@link Util#setupExecContext} which many tools use. But
+ * implemented by Util.setupExecContext from dragom-core which many tools use. But
  * ExecContextFactory implementations should not care about such a strategy. They
  * should simply read properties from the provided initialization Properties.
  * <p>
@@ -52,7 +52,7 @@ public interface ExecContextFactory {
 	/**
 	 * Returns an {@link ExecContext}.
 	 *
-	 * @param Properties propertiesInit Initialization properties.
+	 * @param propertiesInit Initialization properties.
 	 * @return ExecContext.
 	 */
 	ExecContext getExecContext(Properties propertiesInit);

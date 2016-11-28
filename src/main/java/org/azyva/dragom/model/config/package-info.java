@@ -18,7 +18,7 @@
  */
 
 /**
- * Contains {@link Model} configuration interfaces.
+ * Contains {@link org.azyva.dragom.model.Model} configuration interfaces.
  * <p>
  * Model configuration is represented by interfaces since different configuration
  * implementations can be used, to support different configuration stores

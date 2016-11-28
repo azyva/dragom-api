@@ -47,9 +47,8 @@ public interface MutableModel extends Model {
 	 * Creates a new uninitialized root {@link MutableClassificationNode}.
 	 * <p>
 	 * Creation is finalized and visible only once
-	 * {@link MutableClassificationNode#setClassificationNodeConfigValue} is
-	 * called, replacing any root MutableClassificationNode that may already be
-	 * set.
+	 * {@link MutableClassificationNode#setNodeConfigTransferObject} is called,
+	 * replacing any root MutableClassificationNode that may already be set.
 	 *
 	 * @return Root MutableClassificationNodeConfig.
 	 */

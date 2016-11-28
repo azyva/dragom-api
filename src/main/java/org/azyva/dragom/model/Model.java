@@ -71,7 +71,7 @@ public interface Model {
 	 * Returns the {@link Module} corresponding to a {@link NodePath}.
 	 * <p>
 	 * This methods gets the parent {@link ClassificationNode} as described for
-	 * {@link #getClassificationNode} ({@link NodePath#getPartialParentNodePath})
+	 * {@link #getClassificationNode} ({@link NodePath#getNodePathParent})
 	 * and looks up the requested Module.
 	 *
 	 * @param nodePath NodePath of the Module to return. Must not be partial.

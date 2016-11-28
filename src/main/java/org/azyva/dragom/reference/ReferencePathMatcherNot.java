@@ -31,6 +31,8 @@ public class ReferencePathMatcherNot implements ReferencePathMatcher {
 
 	/**
 	 * Constructor.
+	 *
+	 * @param referencePathMatcher ReferencePathMatcher.
 	 */
 	public ReferencePathMatcherNot(ReferencePathMatcher referencePathMatcher) {
 		this.referencePathMatcher = referencePathMatcher;

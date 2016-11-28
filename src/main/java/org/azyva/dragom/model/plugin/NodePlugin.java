@@ -31,7 +31,7 @@ import org.azyva.dragom.model.Node;
  * <p>
  * During its execution, a NodePlugin can access the {@link ExecContext} of the
  * tool on behalf of which it is executing. This includes accessing properties
- * ({@link ExecContext#getProperty, etc.) and transient data
+ * ({@link ExecContext#getProperty}, etc.) and transient data
  * ({@link ExecContext#getTransientData}, etc.). But this must be done in a way
  * that is coherent with the fact that a NodePlugin is part of the {@link Model}
  * and as such must be considered in Model scope (static). Specifically a

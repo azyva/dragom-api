@@ -87,13 +87,13 @@ public interface BuilderPlugin extends ModulePlugin {
 	 * The buildContext parameter allows callers to give some indication of the
 	 * context in which the build is performed. Here are examples of possible build
 	 * contexts:
-	 * <p>
+	 * <ul>
 	 * <li>new-static-version: When the Module is built before creating a new static
-	 *     version using {@link ReleaseTool};</li>
-	 * <li>build: When the Module is built by {@link Build}.</li>
-	 * <p>
+	 *     version using Release from dragom-core;</li>
+	 * <li>build: When the Module is built by Build from dragom-core.</li>
+	 * </ul>
 	 * It is up to the plugin implementation whether and how to take the context
-	 * into consideration. See {@link MavenBuilderPluginImpl} for an example.
+	 * into consideration. See MavenBuilderPluginImpl from dragom-core for an example.
 	 *
 	 * @param pathModuleWorkspace Path to the Module within the workspace.
 	 * @param buildContext Build context. Can be null.

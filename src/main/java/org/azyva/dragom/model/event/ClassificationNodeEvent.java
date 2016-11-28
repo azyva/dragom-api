@@ -20,7 +20,6 @@
 package org.azyva.dragom.model.event;
 
 import org.azyva.dragom.model.ClassificationNode;
-import org.azyva.dragom.model.Module;
 
 /**
  * Base class for all events that can be raised on {@link ClassificationNode}'s.
@@ -31,10 +30,10 @@ public abstract class ClassificationNodeEvent extends NodeEvent {
 	/**
 	 * Constructor.
 	 *
-	 * @param {@link Module} on which the event is raised.
+	 * @param classificationNode ClassificationNode on which the event is raised.
 	 */
-	public ClassificationNodeEvent(Module module) {
-		super(module);
+	public ClassificationNodeEvent(ClassificationNode classificationNode) {
+		super(classificationNode);
 	}
 
 	/**

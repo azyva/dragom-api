@@ -161,6 +161,7 @@ subtotal: 455.5
 2016-11-19: 14
 2016-11-20: 7
 2016-11-23: 3
+2016-11-27: 4
 
 
 To test
@@ -203,7 +204,14 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+Store mapping in Config... in transient storage so that at least they are reused in one tool exécution.
+
+At the end of switch should provide a report of what was not touched as these may be module which the user want to clean from workspace.
+
+
 Specify ReferencePathMatcher's in a file, with boolean logic
+Possibility to provide the ReferencePathMatchers in an external file instead or on top of command line.
+- GPSII could provide it more conveniently
 Support accessing properties in matcher, such as commit attributes and other (Expression language eventually).
 
 In tests, validate that exeception is thrown when one must be.
@@ -212,14 +220,10 @@ Could ServiceLocator be used to get instances of other services, such as ExecCon
 
 Have an external cache of modules (checkoutSystem)
 - Needs to be synchronized
+- Not sure since different tools can access different modules in different order. Deadlocks likely.
 
 Parallel checkouts
 - Maybe parallel everything managed by RootModuleVersion.... generic job
-
-Possibility to provide the ReferencePathMatchers in an external file instead or on top of command line.
-- GPSII could provide it more conveniently
-
-Store mapping in Config... in transient storage so that at least they are reused in one tool exécution.
 
 
 When referencing and checking out a version, Validate that the artifact version is OK since it was referenced
@@ -227,8 +231,6 @@ But do not always validate. Do not validate when checkout in order to create a n
 Have to think this trough.
 
 
-
-At the end of switch should provide a report of what was not touched as these may be module which the user want to clean from workspace.
 
 
 
