@@ -70,44 +70,44 @@ import org.azyva.dragom.model.Version;
  */
 
 public interface VersionClassifierPlugin extends ModulePlugin, Comparator<Version> {
-	/**
-	 * Compares two {@link Version}'s.
-	 *
-	 * 0 should be returned if and only if version1.equals(version2). That is,
-	 * Version equality should not be dependent on the classification strategy.
-	 *
-	 * @param version1 First Version.
-	 * @param version2 Second Version.
-	 * @return -1 if version1 &lt; version2, 1 if version1 &gt; versions2 and 0 if
-	 *   version1 = version2.
-	 */
-	@Override
-	int compare(Version version1, Version version2);
+  /**
+   * Compares two {@link Version}'s.
+   *
+   * 0 should be returned if and only if version1.equals(version2). That is,
+   * Version equality should not be dependent on the classification strategy.
+   *
+   * @param version1 First Version.
+   * @param version2 Second Version.
+   * @return -1 if version1 &lt; version2, 1 if version1 &gt; versions2 and 0 if
+   *   version1 = version2.
+   */
+  @Override
+  int compare(Version version1, Version version2);
 
-	/**
-	 * Returns the evolution path associated with a Version.
-	 * <p>
-	 * Currently Dragom does not manage evolution paths. But it is expected that
-	 * this information be eventually exploited by some new functionality.
-	 *
-	 * @param version Version.
-	 * @return Evolution path. null is an acceptable value if, for exemple,
-	 *   evolution paths are not supported.
-	 */
-	String getEvolutionPath(Version version);
+  /**
+   * Returns the evolution path associated with a Version.
+   * <p>
+   * Currently Dragom does not manage evolution paths. But it is expected that
+   * this information be eventually exploited by some new functionality.
+   *
+   * @param version Version.
+   * @return Evolution path. null is an acceptable value if, for exemple,
+   *   evolution paths are not supported.
+   */
+  String getEvolutionPath(Version version);
 
-	/**
-	 * Compares two evolution paths.
-	 * <p>
-	 * Currently Dragom does not manage evolution paths. But it is expected that
-	 * this information be eventually exploited by some new functionnality.
-	 *
-	 * @param evolutionPath1 First evolution path.
-	 * @param evolutionPath2 Second evolution path.
-	 * @return -1 if evolutionPath1 &lt; evolutionPath2,
-	 *   1 if evolutionPath1 &gt; evolution Path2 and 0 if
-	 *   evolutionPath1 = evolutionPath2. If evolution paths are not supported,
-	 *   java.lang.UnsupportedOperationException can be raised.
-	 */
-	int compareEvolutionPaths(String evolutionPath1, String evolutionPath2);
+  /**
+   * Compares two evolution paths.
+   * <p>
+   * Currently Dragom does not manage evolution paths. But it is expected that
+   * this information be eventually exploited by some new functionnality.
+   *
+   * @param evolutionPath1 First evolution path.
+   * @param evolutionPath2 Second evolution path.
+   * @return -1 if evolutionPath1 &lt; evolutionPath2,
+   *   1 if evolutionPath1 &gt; evolution Path2 and 0 if
+   *   evolutionPath1 = evolutionPath2. If evolution paths are not supported,
+   *   java.lang.UnsupportedOperationException can be raised.
+   */
+  int compareEvolutionPaths(String evolutionPath1, String evolutionPath2);
 }

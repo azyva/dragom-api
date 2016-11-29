@@ -39,62 +39,73 @@ import org.azyva.dragom.model.NodePath;
  */
 
 public class WorkspaceDirSystemModule implements WorkspaceDir {
-	private NodePath nodePath;
+  /**
+   * NodePath.
+   */
+  private NodePath nodePath;
 
-	//TODO: Maybe should have the repository URL to support version-specific forks.
+  //TODO: Maybe should have the repository URL to support version-specific forks.
 
-	public WorkspaceDirSystemModule(NodePath nodePath) {
-		this.nodePath = nodePath;
-	}
+  /**
+   * Constructor.
+   *
+   * @param nodePath NodePath.
+   */
+  public WorkspaceDirSystemModule(NodePath nodePath) {
+    this.nodePath = nodePath;
+  }
 
-	public NodePath getNodePath() {
-		return this.nodePath;
-	}
+  /**
+   * @return NodePath.
+   */
+  public NodePath getNodePath() {
+    return this.nodePath;
+  }
 
-	/**
-	 * @return String to help recognize the {@link WorkspaceDir} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "WorkspaceDirSystemModule [nodePath=" + this.nodePath +"]";
-	}
+  /**
+   * @return String to help recognize the {@link WorkspaceDir} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "WorkspaceDirSystemModule [nodePath=" + this.nodePath +"]";
+  }
 
-	/**
-	 * Override of hashCode to make instances of this class usable efficiently as
-	 * map keys. This implementation was generated automatically using Eclipse and then
-	 * simplified.
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  /**
+   * Override of hashCode to make instances of this class usable efficiently as
+   * map keys. This implementation was generated automatically using Eclipse and then
+   * simplified.
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.nodePath.hashCode();
+    result = 1;
+    result = (prime * result) + this.nodePath.hashCode();
 
-		return result;
-	}
+    return result;
+  }
 
-	/**
-	 * Override of equals to make to make instances of this class usable as map keys
-	 * and in other contexts where value equality semantics are required.
-	 */
-	@Override
-	public boolean equals(Object other) {
-		WorkspaceDirSystemModule workspaceDirSystemModuleOther;
+  /**
+   * Override of equals to make to make instances of this class usable as map keys
+   * and in other contexts where value equality semantics are required.
+   */
+  @Override
+  public boolean equals(Object other) {
+    WorkspaceDirSystemModule workspaceDirSystemModuleOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof WorkspaceDirSystemModule)) {
-			return false;
-		}
+    if (!(other instanceof WorkspaceDirSystemModule)) {
+      return false;
+    }
 
-		workspaceDirSystemModuleOther = (WorkspaceDirSystemModule)other;
+    workspaceDirSystemModuleOther = (WorkspaceDirSystemModule)other;
 
-		return this.nodePath.equals(workspaceDirSystemModuleOther.nodePath);
-	}
+    return this.nodePath.equals(workspaceDirSystemModuleOther.nodePath);
+  }
 
 }

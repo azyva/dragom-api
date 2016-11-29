@@ -80,65 +80,65 @@ import org.azyva.dragom.reference.Reference;
 //In the case of external, they cannot be identified with NodePath.
 //This will likely be useful for external library reference convergence.
 public interface ReferenceManagerPlugin extends ModulePlugin {
-	List<Reference> getListReference(Path pathModuleWorkspace);
-	//TODO: Probably have overloaded methods that can filter the returned references.
-	//But not too many overloads since they would need to be implemented by all plugins.
-	//Maybe better to have fields in references that would allow the caller to easily filter
-	//A path to the module workspace is required. It is the caller's responsibility to provide it.
+  List<Reference> getListReference(Path pathModuleWorkspace);
+  //TODO: Probably have overloaded methods that can filter the returned references.
+  //But not too many overloads since they would need to be implemented by all plugins.
+  //Maybe better to have fields in references that would allow the caller to easily filter
+  //A path to the module workspace is required. It is the caller's responsibility to provide it.
 
-	/**
-	 * Updates the version of a reference using a global version.
-	 *
-	 * The reference must have been returned by the getListReference method of the
-	 * same plugin instance (for the same module, obviously).
-	 *
-	 * The reference must match exactly a reference within the module, including the
-	 * version. This ensures that what the caller requests to modify is what will
-	 * really be modified. Said in another way, the module should generally not have
-	 * been modified between the call to getListReference that returned the reference
-	 * and the call to this method.
-	 *
-	 * The reference must be at the source level or must include a source-level
-	 * component.
-	 *
-	 * Note that if references are managed at the artifact level within the Module the
-	 * ArtifactVersionMapperPlugin may be used to map the specified Version to an
-	 * ArtifactVersion and it can happen that the ArtifactVersion is not changed even
-	 * though the source-level Version reference is different. In such a case, false
-	 * is returned.
-	 *
-	 * @param pathModuleWorkspace Path to the module within the workspace.
-	 * @param reference Reference to modify.
-	 * @param version New version.
-	 * @param byReferenceReference The new Reference as would be returned by
-	 *   {@link #getListReference} will be stored there. Can be null.
-	 * @return Indicates if the reference was really updated. false is returned if it
-	 *   already had the specified value.
-	 */
-	boolean updateReferenceVersion(Path pathModuleWorkspace, Reference reference, Version version, ByReference<Reference> byReferenceReference);
+  /**
+   * Updates the version of a reference using a global version.
+   *
+   * The reference must have been returned by the getListReference method of the
+   * same plugin instance (for the same module, obviously).
+   *
+   * The reference must match exactly a reference within the module, including the
+   * version. This ensures that what the caller requests to modify is what will
+   * really be modified. Said in another way, the module should generally not have
+   * been modified between the call to getListReference that returned the reference
+   * and the call to this method.
+   *
+   * The reference must be at the source level or must include a source-level
+   * component.
+   *
+   * Note that if references are managed at the artifact level within the Module the
+   * ArtifactVersionMapperPlugin may be used to map the specified Version to an
+   * ArtifactVersion and it can happen that the ArtifactVersion is not changed even
+   * though the source-level Version reference is different. In such a case, false
+   * is returned.
+   *
+   * @param pathModuleWorkspace Path to the module within the workspace.
+   * @param reference Reference to modify.
+   * @param version New version.
+   * @param byReferenceReference The new Reference as would be returned by
+   *   {@link #getListReference} will be stored there. Can be null.
+   * @return Indicates if the reference was really updated. false is returned if it
+   *   already had the specified value.
+   */
+  boolean updateReferenceVersion(Path pathModuleWorkspace, Reference reference, Version version, ByReference<Reference> byReferenceReference);
 
-	/**
-	 * Updates the version of a reference using an artifact version.
-	 *
-	 * The reference must have been returned by the getListReference method of the
-	 * same plugin instance (for the same module, obviously).
-	 *
-	 * The reference must match exactly a reference within the module, including the
-	 * version. This ensures that what the caller requests to modify is what will
-	 * really be modified. Said in another way, the module should generally not have
-	 * been modified between the call to getListReference that returned the reference
-	 * and the call to this method.
-	 *
-	 * The reference must be at the artifact level or must include an artifact level
-	 * component.
-	 *
-	 * @param pathModuleWorkspace Path to the module within the workspace.
-	 * @param reference Reference to modify.
-	 * @param artifactVersion New ArtifactVersion.
-	 * @param byReferenceReference The new Reference as would be returned by
-	 *   {@link #getListReference} will be stored there. Can be null.
-	 * @return Indicates if the reference was really updated. false is returned if it
-	 *   already had the specified value.
-	 */
-	boolean updateReferenceArtifactVersion(Path pathModuleWorkspace, Reference reference, ArtifactVersion artifactVersion, ByReference<Reference> byReferenceReference);
+  /**
+   * Updates the version of a reference using an artifact version.
+   *
+   * The reference must have been returned by the getListReference method of the
+   * same plugin instance (for the same module, obviously).
+   *
+   * The reference must match exactly a reference within the module, including the
+   * version. This ensures that what the caller requests to modify is what will
+   * really be modified. Said in another way, the module should generally not have
+   * been modified between the call to getListReference that returned the reference
+   * and the call to this method.
+   *
+   * The reference must be at the artifact level or must include an artifact level
+   * component.
+   *
+   * @param pathModuleWorkspace Path to the module within the workspace.
+   * @param reference Reference to modify.
+   * @param artifactVersion New ArtifactVersion.
+   * @param byReferenceReference The new Reference as would be returned by
+   *   {@link #getListReference} will be stored there. Can be null.
+   * @return Indicates if the reference was really updated. false is returned if it
+   *   already had the specified value.
+   */
+  boolean updateReferenceArtifactVersion(Path pathModuleWorkspace, Reference reference, ArtifactVersion artifactVersion, ByReference<Reference> byReferenceReference);
 }

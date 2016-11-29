@@ -64,19 +64,19 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public interface OptimisticLockHandle {
-	/**
-	 * Indicates if the OptimisticLockHandle is actually locked, meaning that it
-	 * represents some state.
-	 * <p>
-	 * An OptimisticLockHandle that is not locked is expected to get automatically
-	 * locked to the state of data that is obtained (using a "get" method).
-	 *
-	 * @return Indicates if the OptimisticLockHandle is locked.
-	 */
-	boolean isLocked();
+  /**
+   * Indicates if the OptimisticLockHandle is actually locked, meaning that it
+   * represents some state.
+   * <p>
+   * An OptimisticLockHandle that is not locked is expected to get automatically
+   * locked to the state of data that is obtained (using a "get" method).
+   *
+   * @return Indicates if the OptimisticLockHandle is locked.
+   */
+  boolean isLocked();
 
-	/**
-	 * Clears the lock.
-	 */
-	void clearLock();
+  /**
+   * Clears the lock.
+   */
+  void clearLock();
 }

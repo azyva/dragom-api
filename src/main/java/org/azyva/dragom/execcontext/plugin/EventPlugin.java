@@ -32,45 +32,45 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * @author David Raymond
  */
 public interface EventPlugin extends ExecContextPlugin {
-	/**
-	 * Registers a {@link NodeEventListener} for {@link NodeEvent}'s raised on a
-	 * {@link Node}.
-	 * <p>
-	 * The NodeEventListener is associated with the specified Node, but within the
-	 * ExecContext. It can be bound to workspace or tool scope depending on
-	 * indTransient.
-	 * <p>
-	 * It is also possible to register NodeEventListener's directly on a Node, and
-	 * thus within the {@link Model}.
-	 * <p>
-	 * Generally {@link NodeEvent}'s are raised (by {@link NodePlugin}'s, tools or
-	 * other) by calling {@link Node#raiseNodeEvent} which after having
-	 * dispatched the Event to EventListener's registered within Node's, calls the
-	 * {@link #raiseNodeEvent} method to dispatch the Event to EventListener's
-	 * registered within the ExecContext.
-	 *
-	 * @param <NodeEventClass> NodeEvent class.
-	 * @param node Node.
-	 * @param nodeEventListener NodeEventListener.
-	 * @param indChildrenAlso Indicates if
-	 *   {@link NodeEvent} raised on children should be dispatched to the
-	 *   NodeEventListener.
-	 * @param indTransient Indicates if the NodeEventListener is to be bound to tool
-	 *   scope, as opposed to workspace scope.
-	 */
-	public <NodeEventClass extends NodeEvent> void registerListener(Node node, NodeEventListener<NodeEventClass> nodeEventListener, boolean indChildrenAlso, boolean indTransient);
+  /**
+   * Registers a {@link NodeEventListener} for {@link NodeEvent}'s raised on a
+   * {@link Node}.
+   * <p>
+   * The NodeEventListener is associated with the specified Node, but within the
+   * ExecContext. It can be bound to workspace or tool scope depending on
+   * indTransient.
+   * <p>
+   * It is also possible to register NodeEventListener's directly on a Node, and
+   * thus within the {@link Model}.
+   * <p>
+   * Generally {@link NodeEvent}'s are raised (by {@link NodePlugin}'s, tools or
+   * other) by calling {@link Node#raiseNodeEvent} which after having
+   * dispatched the Event to EventListener's registered within Node's, calls the
+   * {@link #raiseNodeEvent} method to dispatch the Event to EventListener's
+   * registered within the ExecContext.
+   *
+   * @param <NodeEventClass> NodeEvent class.
+   * @param node Node.
+   * @param nodeEventListener NodeEventListener.
+   * @param indChildrenAlso Indicates if
+   *   {@link NodeEvent} raised on children should be dispatched to the
+   *   NodeEventListener.
+   * @param indTransient Indicates if the NodeEventListener is to be bound to tool
+   *   scope, as opposed to workspace scope.
+   */
+  public <NodeEventClass extends NodeEvent> void registerListener(Node node, NodeEventListener<NodeEventClass> nodeEventListener, boolean indChildrenAlso, boolean indTransient);
 
-	/**
-	 * Raises a {@link NodeEvent}.
-	 * <p>
-	 * The NodeEvent is dispatched to all
-	 * {@link NodeEventListener}'s interested in it which have been registered within
-	 * the {@link ExecContext} using {@link #registerListener}.
-	 * <p>
-	 * The NodeEvent sub-interface (ModuleEvent or ClassificationNodeEvent) must match
-	 * the type of Node.
-	 *
-	 * @param nodeEvent NodeEvent.
-	 */
-	public void raiseNodeEvent(NodeEvent nodeEvent);
+  /**
+   * Raises a {@link NodeEvent}.
+   * <p>
+   * The NodeEvent is dispatched to all
+   * {@link NodeEventListener}'s interested in it which have been registered within
+   * the {@link ExecContext} using {@link #registerListener}.
+   * <p>
+   * The NodeEvent sub-interface (ModuleEvent or ClassificationNodeEvent) must match
+   * the type of Node.
+   *
+   * @param nodeEvent NodeEvent.
+   */
+  public void raiseNodeEvent(NodeEvent nodeEvent);
 }

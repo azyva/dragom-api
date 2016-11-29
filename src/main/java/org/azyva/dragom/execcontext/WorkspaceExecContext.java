@@ -39,56 +39,56 @@ import org.azyva.dragom.execcontext.plugin.WorkspacePlugin;
  * @author David Raymond
  */
 public interface WorkspaceExecContext {
-	/**
-	 * Workspace format and version.
-	 */
-	public static class WorkspaceFormatVersion {
-		/**
-		 * Workspace format.
-		 */
-		public String format;
+  /**
+   * Workspace format and version.
+   */
+  public static class WorkspaceFormatVersion {
+    /**
+     * Workspace format.
+     */
+    public String format;
 
-		/**
-		 * Workspace version.
-		 */
-		public String version;
+    /**
+     * Workspace version.
+     */
+    public String version;
 
-		/**
-		 * Constructor.
-		 *
-		 * @param format Format.
-		 * @param version Version.
-		 */
-		public WorkspaceFormatVersion(String format, String version) {
-			this.format = format;
-			this.version = version;
-		}
+    /**
+     * Constructor.
+     *
+     * @param format Format.
+     * @param version Version.
+     */
+    public WorkspaceFormatVersion(String format, String version) {
+      this.format = format;
+      this.version = version;
+    }
 
-		@Override
-		public String toString() {
-			return this.format + ':' + this.version;
-		}
-	}
+    @Override
+    public String toString() {
+      return this.format + ':' + this.version;
+    }
+  }
 
-	/**
-	 * @return Path to the workspace directory associated with the ExecContext.
-	 */
-	Path getPathWorkspaceDir();
+  /**
+   * @return Path to the workspace directory associated with the ExecContext.
+   */
+  Path getPathWorkspaceDir();
 
-	/**
-	 * @return Path to a directory within the workspace directory that contains
-	 *   metadata about the workspace. Plugins and tools can use this directory to
-	 *   store metadata that should remain persisted with the workspace.
-	 */
-	Path getPathMetadataDir();
+  /**
+   * @return Path to a directory within the workspace directory that contains
+   *   metadata about the workspace. Plugins and tools can use this directory to
+   *   store metadata that should remain persisted with the workspace.
+   */
+  Path getPathMetadataDir();
 
-	/**
-	 * @return WorkspaceFormatVersion. null if workspace has not been initialized.
-	 */
-	WorkspaceFormatVersion getWorkspaceFormatVersion();
+  /**
+   * @return WorkspaceFormatVersion. null if workspace has not been initialized.
+   */
+  WorkspaceFormatVersion getWorkspaceFormatVersion();
 
-	/**
-	 * @param workspaceFormatVersion WorkspaceFormatVersion.
-	 */
-	void setWorkspaceFormatVersion(WorkspaceFormatVersion workspaceFormatVersion);
+  /**
+   * @param workspaceFormatVersion WorkspaceFormatVersion.
+   */
+  void setWorkspaceFormatVersion(WorkspaceFormatVersion workspaceFormatVersion);
 }

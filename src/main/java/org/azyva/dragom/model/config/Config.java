@@ -35,8 +35,8 @@ import org.azyva.dragom.model.Model;
  * @author David Raymond
  */
 public interface Config {
-	/**
-	 * @return Root {@link ClassificationNodeConfig}.
-	 */
-	ClassificationNodeConfig getClassificationNodeConfigRoot();
+  /**
+   * @return Root {@link ClassificationNodeConfig}.
+   */
+  ClassificationNodeConfig getClassificationNodeConfigRoot();
 }

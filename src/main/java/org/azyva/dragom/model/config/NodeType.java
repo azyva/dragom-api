@@ -28,15 +28,15 @@ import org.azyva.dragom.model.Node;
  * @see Config
  */
 public enum NodeType {
-	/**
-	 * {@link ClassificationNodeConfig}.
-	 */
-	CLASSIFICATION,
+  /**
+   * {@link ClassificationNodeConfig}.
+   */
+  CLASSIFICATION,
 
-	/**
-	 * {@link ModuleConfig}.
-	 *
-	 * This type of {@link NodeConfig} cannot have children.
-	 */
-	MODULE;
+  /**
+   * {@link ModuleConfig}.
+   *
+   * This type of {@link NodeConfig} cannot have children.
+   */
+  MODULE;
 }

@@ -32,26 +32,26 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public class DynamicVersionCreatedEvent extends VersionCreatedEvent {
-	/**
-	 * Constructor.
-	 *
-	 * @param module {@link Module} on which this {@link ModuleEvent} is raised.
-	 * @param versionDynamic Dynamic {@link Version} that was created.
-	 */
-	public DynamicVersionCreatedEvent(Module module, Version versionDynamic) {
-		super(module, versionDynamic);
+  /**
+   * Constructor.
+   *
+   * @param module {@link Module} on which this {@link ModuleEvent} is raised.
+   * @param versionDynamic Dynamic {@link Version} that was created.
+   */
+  public DynamicVersionCreatedEvent(Module module, Version versionDynamic) {
+    super(module, versionDynamic);
 
-		if (versionDynamic.getVersionType() != VersionType.DYNAMIC) {
-			throw new RuntimeException("Invalid version type.");
-		}
-	}
+    if (versionDynamic.getVersionType() != VersionType.DYNAMIC) {
+      throw new RuntimeException("Invalid version type.");
+    }
+  }
 
-	/**
-	 * @return String to help recognize the {@link ModuleEvent} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "DynamicVersionCreatedEvent [module=" + this.getModule() + ", version=" + this.getVersion() + "]";
-	}
+  /**
+   * @return String to help recognize the {@link ModuleEvent} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "DynamicVersionCreatedEvent [module=" + this.getModule() + ", version=" + this.getVersion() + "]";
+  }
 }

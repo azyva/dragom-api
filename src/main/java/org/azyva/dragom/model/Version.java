@@ -33,7 +33,7 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * <p>
  * Implements value semantics. Instances are immutable.
  * <p>
- * Implements {@link hashCode} and {@link equals} so that instances can be used as
+ * Implements {@link #hashCode} and {@link #equals} so that instances can be used as
  * Map keys.
  * </p>
  * Two types of Version's are recognized:
@@ -53,168 +53,171 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public final class Version {
-	/**
-	 * See description in ResourceBundle.
-	 */
-	private static final String MSG_PATTERN_KEY_VERSION_PARSING_ERROR = "VERSION_PARSING_ERROR";
+  /**
+   * See description in ResourceBundle.
+   */
+  private static final String MSG_PATTERN_KEY_VERSION_PARSING_ERROR = "VERSION_PARSING_ERROR";
 
-	/**
-	 * ResourceBundle specific to this class.
-	 */
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(Version.class.getName() + "ResourceBundle");
+  /**
+   * ResourceBundle specific to this class.
+   */
+  private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(Version.class.getName() + "ResourceBundle");
 
-	/**
-	 * Pattern for parsing a Version literal.
-	 */
-	private static final Pattern patternVersionLiteral = Pattern.compile("(D|S)/([a-zA-Z0-9\\.\\-_]+)");
+  /**
+   * Pattern for parsing a Version literal.
+   */
+  private static final Pattern patternVersionLiteral = Pattern.compile("(D|S)/([a-zA-Z0-9\\.\\-_]+)");
 
-	/**
-	 * VersionType.
-	 */
-	private VersionType versionType;
+  /**
+   * VersionType.
+   */
+  private VersionType versionType;
 
-	/**
-	 * Version string.
-	 */
-	private String version;
+  /**
+   * Version string.
+   */
+  private String version;
 
-	/**
-	 * Constructor using the individual fields.
-	 *
-	 * @param versionType VersionType.
-	 * @param version String part of the Version.
-	 */
-	public Version(VersionType versionType, String version) {
-		if ((versionType == null) || (version == null)) {
-			throw new RuntimeException("Version type or version cannot be null.");
-		}
+  /**
+   * Constructor using the individual fields.
+   *
+   * @param versionType VersionType.
+   * @param version String part of the Version.
+   */
+  public Version(VersionType versionType, String version) {
+    if ((versionType == null) || (version == null)) {
+      throw new RuntimeException("Version type or version cannot be null.");
+    }
 
-		if (version.length() == 0) {
-			throw new RuntimeException("Version cannot be the empty string.");
-		}
+    if (version.length() == 0) {
+      throw new RuntimeException("Version cannot be the empty string.");
+    }
 
-		this.versionType = versionType;
-		this.version = version;
-	}
+    this.versionType = versionType;
+    this.version = version;
+  }
 
-	/**
-	 * Constructor using a Version literal.
-	 * <p>
-	 * Throws RuntimeException if parsing fails.
-	 *
-	 * @param stringVersion Version literal.
-	 */
-	public Version(String stringVersion) {
-		Matcher matcher;
+  /**
+   * Constructor using a Version literal.
+   * <p>
+   * Throws RuntimeException if parsing fails.
+   *
+   * @param stringVersion Version literal.
+   */
+  public Version(String stringVersion) {
+    Matcher matcher;
 
-		matcher = Version.patternVersionLiteral.matcher(stringVersion);
+    matcher = Version.patternVersionLiteral.matcher(stringVersion);
 
-		try {
-			if (!matcher.matches()) {
-				throw new ParseException(MessageFormat.format(Version.resourceBundle.getString(Version.MSG_PATTERN_KEY_VERSION_PARSING_ERROR), stringVersion, Version.patternVersionLiteral), 0);
-			}
+    try {
+      if (!matcher.matches()) {
+        throw new ParseException(MessageFormat.format(Version.resourceBundle.getString(Version.MSG_PATTERN_KEY_VERSION_PARSING_ERROR), stringVersion, Version.patternVersionLiteral), 0);
+      }
 
-			if (matcher.group(1).charAt(0) == 'D') {
-				this.versionType = VersionType.DYNAMIC;
-			} else {
-				this.versionType = VersionType.STATIC;
-			}
+      if (matcher.group(1).charAt(0) == 'D') {
+        this.versionType = VersionType.DYNAMIC;
+      } else {
+        this.versionType = VersionType.STATIC;
+      }
 
-			this.version = matcher.group(2);
-		} catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
+      this.version = matcher.group(2);
+    } catch (ParseException pe) {
+      throw new RuntimeException(pe);
+    }
+  }
 
-	/**
-	 * Parses a Version literal.
-	 *
-	 * @param stringVersion Version literal.
-	 * @return Version.
-	 * @throws ParseException If parsing fails.
-	 */
-	public static Version parse(String stringVersion)
-	throws ParseException {
-		try {
-			return new Version(stringVersion);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof ParseException) {
-				throw (ParseException)re.getCause();
-			} else {
-				throw re;
-			}
-		}
-	}
+  /**
+   * Parses a Version literal.
+   *
+   * @param stringVersion Version literal.
+   * @return Version.
+   * @throws ParseException If parsing fails.
+   */
+  public static Version parse(String stringVersion)
+  throws ParseException {
+    try {
+      return new Version(stringVersion);
+    } catch (RuntimeException re) {
+      if (re.getCause() instanceof ParseException) {
+        throw (ParseException)re.getCause();
+      } else {
+        throw re;
+      }
+    }
+  }
 
-	public VersionType getVersionType() {
-		return this.versionType;
-	}
+  /**
+   * @return VersionType.
+   */
+  public VersionType getVersionType() {
+    return this.versionType;
+  }
 
-	/**
-	 * @return String part of the Version, without the {@link VersionType}
-	 *   information.
-	 */
-	public String getVersion() {
-		return this.version;
-	}
+  /**
+   * @return String part of the Version, without the {@link VersionType}
+   *   information.
+   */
+  public String getVersion() {
+    return this.version;
+  }
 
-	/**
-	 * Returns an {@link ArtifactVersion} corresponding to this Version assuming a
-	 * direct equivalence between the two.
-	 * <p>
-	 * Note that the mapping between Version and ArtifactVersion during tool
-	 * execution is generally handled by {@link ArtifactVersionMapperPlugin}. This
-	 * method implements a very simple mapping which is only one possible mapping.
-	 * ArtifactVersionMapperPlugin must generally be used so that module-specific
-	 * mapping algorithms can be honored.
-	 *
-	 * @return ArtifactVersion.
-	 */
-	public ArtifactVersion getCorrespondingArtifactVersion() {
-		return new ArtifactVersion(this.versionType, this.version);
-	}
+  /**
+   * Returns an {@link ArtifactVersion} corresponding to this Version assuming a
+   * direct equivalence between the two.
+   * <p>
+   * Note that the mapping between Version and ArtifactVersion during tool
+   * execution is generally handled by {@link ArtifactVersionMapperPlugin}. This
+   * method implements a very simple mapping which is only one possible mapping.
+   * ArtifactVersionMapperPlugin must generally be used so that module-specific
+   * mapping algorithms can be honored.
+   *
+   * @return ArtifactVersion.
+   */
+  public ArtifactVersion getCorrespondingArtifactVersion() {
+    return new ArtifactVersion(this.versionType, this.version);
+  }
 
-	/**
-	 * @return Version literal.
-	 */
-	@Override
-	public String toString() {
-		switch (this.versionType) {
-		case DYNAMIC:
-			return "D/" + this.version;
-		case STATIC:
-			return "S/" + this.version;
-		default:
-			throw new RuntimeException("Invalid version type " + this.versionType + '.');
-		}
-	}
+  /**
+   * @return Version literal.
+   */
+  @Override
+  public String toString() {
+    switch (this.versionType) {
+    case DYNAMIC:
+      return "D/" + this.version;
+    case STATIC:
+      return "S/" + this.version;
+    default:
+      throw new RuntimeException("Invalid version type " + this.versionType + '.');
+    }
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.versionType.hashCode();
-		result = (prime * result) + this.version.hashCode();
+    result = 1;
+    result = (prime * result) + this.versionType.hashCode();
+    result = (prime * result) + this.version.hashCode();
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object other) {
-		Version versionOther;
+  @Override
+  public boolean equals(Object other) {
+    Version versionOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof Version)) {
-			return false;
-		}
+    if (!(other instanceof Version)) {
+      return false;
+    }
 
-		versionOther = (Version)other;
+    versionOther = (Version)other;
 
-		return (this.versionType == versionOther.versionType) && (this.version.equals(versionOther.version));
-	}
+    return (this.versionType == versionOther.versionType) && (this.version.equals(versionOther.version));
+  }
 }

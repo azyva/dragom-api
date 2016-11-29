@@ -31,26 +31,26 @@ import org.azyva.dragom.model.config.MutableConfig;
  * @see MutableConfig
  */
 public interface MutableClassificationNode extends ClassificationNode, MutableNode {
-	/**
-	 * Creates a new uninitialized {@link MutableClassificationNode}.
-	 * <p>
-	 * Creation is finalized and visible only once
-	 * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is
-	 * called, replacing any MutableClassificationNodeConfig with the same name
-	 * that may already be set.
-	 *
-	 * @return MutableClassificationNode.
-	 */
-	MutableClassificationNode createChildMutableClassificationNode();
+  /**
+   * Creates a new uninitialized {@link MutableClassificationNode}.
+   * <p>
+   * Creation is finalized and visible only once
+   * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is
+   * called, replacing any MutableClassificationNodeConfig with the same name
+   * that may already be set.
+   *
+   * @return MutableClassificationNode.
+   */
+  MutableClassificationNode createChildMutableClassificationNode();
 
-	/**
-	 * Creates a new uninitialized {@link MutableModule}.
-	 * <p>
-	 * Creation is finalized and visible only once
-	 * {@link MutableModule#setNodeConfigTransferObject} is called, replacing any
-	 * MutableModuleConfig with the same name that may already be set.
-	 *
-	 * @return MutableModule.
-	 */
-	MutableModule createChildMutableModule();
+  /**
+   * Creates a new uninitialized {@link MutableModule}.
+   * <p>
+   * Creation is finalized and visible only once
+   * {@link MutableModule#setNodeConfigTransferObject} is called, replacing any
+   * MutableModuleConfig with the same name that may already be set.
+   *
+   * @return MutableModule.
+   */
+  MutableModule createChildMutableModule();
 }

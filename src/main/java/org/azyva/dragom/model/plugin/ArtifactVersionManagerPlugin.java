@@ -25,8 +25,8 @@ import org.azyva.dragom.model.ArtifactVersion;
 
 // TODO: Implies that the artifact version is coded in the source.
 public interface ArtifactVersionManagerPlugin extends ModulePlugin {
-	ArtifactVersion getArtifactVersion(Path pathModuleWorkspace);
+  ArtifactVersion getArtifactVersion(Path pathModuleWorkspace);
 
-	// TODO: Returns false if same version.
-	boolean setArtifactVersion(Path pathModuleWorkspace, ArtifactVersion artifactVersion);
+  // TODO: Returns false if same version.
+  boolean setArtifactVersion(Path pathModuleWorkspace, ArtifactVersion artifactVersion);
 }

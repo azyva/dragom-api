@@ -25,6 +25,13 @@ package org.azyva.dragom.model;
  * @author David Raymond
  */
 public enum VersionType {
-	DYNAMIC,
-	STATIC
+  /**
+   * Dynamic {@link Version}.
+   */
+  DYNAMIC,
+
+  /**
+   * Static {@link Version}.
+   */
+  STATIC
 }

@@ -27,8 +27,8 @@ package org.azyva.dragom.model.plugin;
  */
 
 public interface NodeInitPlugin extends NodePlugin {
-	/**
-	 * Initializes the Node.
-	 */
-	void init();
+  /**
+   * Initializes the Node.
+   */
+  void init();
 }

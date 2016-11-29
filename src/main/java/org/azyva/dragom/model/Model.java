@@ -49,43 +49,43 @@ import org.azyva.dragom.model.config.Config;
  * @author David Raymond
  */
 public interface Model {
-	/**
-	 * @return Root ClassificationNode.
-	 */
-	ClassificationNode getClassificationNodeRoot();
+  /**
+   * @return Root ClassificationNode.
+   */
+  ClassificationNode getClassificationNodeRoot();
 
-	/**
-	 * Returns the {@link ClassificationNode} corresponding to a {@link NodePath}.
-	 * <p>
-	 * This method follows the path of ClassificationNode's given the specified
-	 * NodePath until the leaf ClassificationNode of the NodePath is reached. If any
-	 * ClassificationNode along the path does not exist, null is returned.
-	 *
-	 * @param nodePath NodePath of the ClassificationNode to return. Must be partial.
-	 * @return ClassificationNode. null if no ClassificationNode corresponding to the
-	 *   specified NodePath exist.
-	 */
-	ClassificationNode getClassificationNode(NodePath nodePath);
+  /**
+   * Returns the {@link ClassificationNode} corresponding to a {@link NodePath}.
+   * <p>
+   * This method follows the path of ClassificationNode's given the specified
+   * NodePath until the leaf ClassificationNode of the NodePath is reached. If any
+   * ClassificationNode along the path does not exist, null is returned.
+   *
+   * @param nodePath NodePath of the ClassificationNode to return. Must be partial.
+   * @return ClassificationNode. null if no ClassificationNode corresponding to the
+   *   specified NodePath exist.
+   */
+  ClassificationNode getClassificationNode(NodePath nodePath);
 
-	/**
-	 * Returns the {@link Module} corresponding to a {@link NodePath}.
-	 * <p>
-	 * This methods gets the parent {@link ClassificationNode} as described for
-	 * {@link #getClassificationNode} ({@link NodePath#getNodePathParent})
-	 * and looks up the requested Module.
-	 *
-	 * @param nodePath NodePath of the Module to return. Must not be partial.
-	 * @return Module. null if no Module corresponding to the specified NodePath
-	 *   exist.
-	 */
-	Module getModule(NodePath nodePath);
+  /**
+   * Returns the {@link Module} corresponding to a {@link NodePath}.
+   * <p>
+   * This methods gets the parent {@link ClassificationNode} as described for
+   * {@link #getClassificationNode} ({@link NodePath#getNodePathParent})
+   * and looks up the requested Module.
+   *
+   * @param nodePath NodePath of the Module to return. Must not be partial.
+   * @return Module. null if no Module corresponding to the specified NodePath
+   *   exist.
+   */
+  Module getModule(NodePath nodePath);
 
-	/**
-	 * Finds and returns the {@link Module} whose build produces an
-	 * {@link ArtifactGroupId}.
-	 *
-	 * @param artifactGroupId ArtifactGroupId for which to find a {@link Module}.
-	 * @return Module. null if no Module found.
-	 */
-	Module findModuleByArtifactGroupId(ArtifactGroupId artifactGroupId);
+  /**
+   * Finds and returns the {@link Module} whose build produces an
+   * {@link ArtifactGroupId}.
+   *
+   * @param artifactGroupId ArtifactGroupId for which to find a {@link Module}.
+   * @return Module. null if no Module found.
+   */
+  Module findModuleByArtifactGroupId(ArtifactGroupId artifactGroupId);
 }

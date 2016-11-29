@@ -37,12 +37,49 @@ package org.azyva.dragom.model;
  * Maybe these two functionalities could eventually be supported with only one set
  * of interfaces. But for now, they are kept separate.
  *
+ * @param <NodeSubType> {@link Node} subclass.
  * @author David Raymond
  */
 public interface NodeBuilder<NodeSubType extends Node> {
-	NodeBuilder<NodeSubType> setClassificationNodeParent(ClassificationNode classificationNodeParent);
-	NodeBuilder<NodeSubType> setName(String name);
-	NodeBuilder<NodeSubType> setProperty(String name, String value, boolean indOnlyThisNode);
-	NodeSubType getPartial();
-	NodeSubType create();
+  /**
+   * Sets the parent {@link ClassificationNode} of the {@link Node}.
+   *
+   * @param classificationNodeParent Parent ClassificationNode.
+   * @return This NodeBuilder.
+   */
+  NodeBuilder<NodeSubType> setClassificationNodeParent(ClassificationNode classificationNodeParent);
+
+  /**
+   * Sets the name of the {@link Node}.
+   *
+   * @param name Name.
+   * @return This NodeBuilder.
+   */
+  NodeBuilder<NodeSubType> setName(String name);
+
+  /**
+   * Sets a property of the {@link Node}.
+   *
+   * @param name Property name.
+   * @param value Property value.
+   * @param indOnlyThisNode Indicates if the property applies only to this Node, as
+   *   opposed to descendent Node's as well.
+   * @return This NodeBuilder.
+   */
+  NodeBuilder<NodeSubType> setProperty(String name, String value, boolean indOnlyThisNode);
+
+
+  /**
+   * Returns the {@link Node}, but partially created.
+   *
+   * <p>Useful to validate the NodeBuilder before officially creating the Node.
+   *
+   * @return Partial {@link Node}.
+   */
+  NodeSubType getPartial();
+
+  /**
+   * @return Created Node.
+   */
+  NodeSubType create();
 }

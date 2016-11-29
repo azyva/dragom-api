@@ -27,55 +27,55 @@ package org.azyva.dragom.reference;
  * @author David Raymond
  */
 public class ReferencePathMatcherNot implements ReferencePathMatcher {
-	private ReferencePathMatcher referencePathMatcher;
+  private ReferencePathMatcher referencePathMatcher;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param referencePathMatcher ReferencePathMatcher.
-	 */
-	public ReferencePathMatcherNot(ReferencePathMatcher referencePathMatcher) {
-		this.referencePathMatcher = referencePathMatcher;
-	}
+  /**
+   * Constructor.
+   *
+   * @param referencePathMatcher ReferencePathMatcher.
+   */
+  public ReferencePathMatcherNot(ReferencePathMatcher referencePathMatcher) {
+    this.referencePathMatcher = referencePathMatcher;
+  }
 
-	/**
-	 * @return Inner ReferencePathMatcher.
-	 */
-	public ReferencePathMatcher getReferencePathMatcher() {
-		return this.referencePathMatcher;
-	}
+  /**
+   * @return Inner ReferencePathMatcher.
+   */
+  public ReferencePathMatcher getReferencePathMatcher() {
+    return this.referencePathMatcher;
+  }
 
-	public void setReferencePathMatcher(ReferencePathMatcher referencePathMatcher) {
-		this.referencePathMatcher = referencePathMatcher;
-	}
+  public void setReferencePathMatcher(ReferencePathMatcher referencePathMatcher) {
+    this.referencePathMatcher = referencePathMatcher;
+  }
 
-	/**
-	 * Verifies if the ReferencePathMatcherNot matches a ReferencePath.
-	 *
-	 * A ReferencePathMatcherNot matches a ReferencePath its inner
-	 * ReferencePathMatcher does not.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if the ReferencePathMatcherNot matches the ReferencePath.
-	 */
-	@Override
-	public boolean matches(ReferencePath referencePath) {
-		return !this.referencePathMatcher.matches(referencePath);
-	}
+  /**
+   * Verifies if the ReferencePathMatcherNot matches a ReferencePath.
+   *
+   * A ReferencePathMatcherNot matches a ReferencePath its inner
+   * ReferencePathMatcher does not.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcherNot matches the ReferencePath.
+   */
+  @Override
+  public boolean matches(ReferencePath referencePath) {
+    return !this.referencePathMatcher.matches(referencePath);
+  }
 
-	/**
-	 * Verifies if the ReferencePathMatcherNot can potentially match children of a
-	 * ReferencePath.
-	 *
-	 * A ReferencePathMatcherNot can match children of a ReferencePath if its inner
-	 * ReferencePathMatcher cannot.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if children of the ReferencePath can be matched by the
-	 *   ReferencePathMatcheNot.
-	 */
-	@Override
-	public boolean canMatchChildren(ReferencePath referencePath) {
-		return !this.referencePathMatcher.canMatchChildren(referencePath);
-	}
+  /**
+   * Verifies if the ReferencePathMatcherNot can potentially match children of a
+   * ReferencePath.
+   *
+   * A ReferencePathMatcherNot can match children of a ReferencePath if its inner
+   * ReferencePathMatcher cannot.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if children of the ReferencePath can be matched by the
+   *   ReferencePathMatcheNot.
+   */
+  @Override
+  public boolean canMatchChildren(ReferencePath referencePath) {
+    return !this.referencePathMatcher.canMatchChildren(referencePath);
+  }
 }

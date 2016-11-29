@@ -77,28 +77,28 @@ import org.azyva.dragom.execcontext.ExecContext;
  */
 
 public interface ToolLifeCycleExecContextPlugin {
-	/**
-	 * @return Indicates that the {@link ExecContextPlugin} must not be reused across
-	 *   tool executions, implying tool binding. If false, the ExecContextPlugin may
-	 *   be reused across tool executions, implying workspace binding.
-	 */
-	boolean isTransient();
+  /**
+   * @return Indicates that the {@link ExecContextPlugin} must not be reused across
+   *   tool executions, implying tool binding. If false, the ExecContextPlugin may
+   *   be reused across tool executions, implying workspace binding.
+   */
+  boolean isTransient();
 
-	/**
-	 * Informs the {@link ExecContextPlugin} that a tool is started with the
-	 * {@link ExecContext} holding it.
-	 * <p>
-	 * This gives an opportunity to the ExecContextPlugin to perform per-tool
-	 * initialization.
-	 */
-	void startTool();
+  /**
+   * Informs the {@link ExecContextPlugin} that a tool is started with the
+   * {@link ExecContext} holding it.
+   * <p>
+   * This gives an opportunity to the ExecContextPlugin to perform per-tool
+   * initialization.
+   */
+  void startTool();
 
-	/**
-	 * Informs the {@link ExecContextPlugin} that a tool is terminated with the
-	 * {@link ExecContext} holding it.
-	 * <p>
-	 * This gives an opportunity to the ExecContextPlugin to perform per-tool
-	 * cleanup.
-	 */
-	void endTool();
+  /**
+   * Informs the {@link ExecContextPlugin} that a tool is terminated with the
+   * {@link ExecContext} holding it.
+   * <p>
+   * This gives an opportunity to the ExecContextPlugin to perform per-tool
+   * cleanup.
+   */
+  void endTool();
 }

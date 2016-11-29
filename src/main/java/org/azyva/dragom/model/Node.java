@@ -41,112 +41,112 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * @author David Raymond
  */
 public interface Node {
-//TODO:	review comments. For raiseEvent, should it really be specified that ExecContext listeners are considered?
-//			For properties, should we mention that inheritance should be considered by implementations?
-	/**
-	 * @return Parent {@link ClassificationNode}. null in the case of the root
-	 *   ClassificationNode.
-	 */
-	ClassificationNode getClassificationNodeParent();
+//TODO:  review comments. For raiseEvent, should it really be specified that ExecContext listeners are considered?
+//      For properties, should we mention that inheritance should be considered by implementations?
+  /**
+   * @return Parent {@link ClassificationNode}. null in the case of the root
+   *   ClassificationNode.
+   */
+  ClassificationNode getClassificationNodeParent();
 
-	/**
-	 * @return Name. This is essentially equivalent to getNodeConfig().getName() when
-	 *   a {@link NodeConfig} is available.
-	 */
-	String getName();
+  /**
+   * @return Name. This is essentially equivalent to getNodeConfig().getName() when
+   *   a {@link NodeConfig} is available.
+   */
+  String getName();
 
-	/**
-	 * @return Model.
-	 */
-	Model getModel();
+  /**
+   * @return Model.
+   */
+  Model getModel();
 
-	/**
-	 * @return NodeType.
-	 */
-	NodeType getNodeType();
+  /**
+   * @return NodeType.
+   */
+  NodeType getNodeType();
 
-	/**
-	 * @return NodePath. null for the root {@link ClassificationNode}.
-	 */
-	public NodePath getNodePath();
+  /**
+   * @return NodePath. null for the root {@link ClassificationNode}.
+   */
+  public NodePath getNodePath();
 
-	/**
-	 * Returns the value of a property.
-	 *
-	 * @param name Name of the property.
-	 * @return Value of the property.
-	 */
-	public String getProperty(String name);
+  /**
+   * Returns the value of a property.
+   *
+   * @param name Name of the property.
+   * @return Value of the property.
+   */
+  public String getProperty(String name);
 
-	/**
-	 * Gets the specified {@link NodePlugin} for this Node.
-	 * <p>
-	 * The NodePlugin must exist. {@link #isNodePluginExists} can be used to verify if
-	 * a NodePlugin exists before getting it.
-	 *
-	 * @param <NodePluginInterface> NodePlugin interface.
-	 * @param classNodePlugin Class of the NodePlugin.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   NodePlugin.
-	 * @return NodePlugin. The type is as specified by classNodePlugin.
-	 */
-	<NodePluginInterface extends NodePlugin> NodePluginInterface getNodePlugin(Class<NodePluginInterface> classNodePlugin, String pluginId);
+  /**
+   * Gets the specified {@link NodePlugin} for this Node.
+   * <p>
+   * The NodePlugin must exist. {@link #isNodePluginExists} can be used to verify if
+   * a NodePlugin exists before getting it.
+   *
+   * @param <NodePluginInterface> NodePlugin interface.
+   * @param classNodePlugin Class of the NodePlugin.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   NodePlugin.
+   * @return NodePlugin. The type is as specified by classNodePlugin.
+   */
+  <NodePluginInterface extends NodePlugin> NodePluginInterface getNodePlugin(Class<NodePluginInterface> classNodePlugin, String pluginId);
 
-	/**
-	 * Verifies if a {@link NodePlugin} exists for this Node, without instantiating it.
-	 *
-	 * @param classNodePlugin Class of the NodePlugin.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   NodePlugin.
-	 * @return Indicates if the NodePlugin exists.
-	 */
-	boolean isNodePluginExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Verifies if a {@link NodePlugin} exists for this Node, without instantiating it.
+   *
+   * @param classNodePlugin Class of the NodePlugin.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   NodePlugin.
+   * @return Indicates if the NodePlugin exists.
+   */
+  boolean isNodePluginExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Returns the List of plugin IDs of all NodePlugin's of the specified class
-	 * available.
-	 *
-	 * @param classNodePlugin Class of the NodePlugin.
-	 * @return List of plugin IDs.
-	 */
-	public List<String> getListPluginId(Class<? extends NodePlugin> classNodePlugin);
+  /**
+   * Returns the List of plugin IDs of all NodePlugin's of the specified class
+   * available.
+   *
+   * @param classNodePlugin Class of the NodePlugin.
+   * @return List of plugin IDs.
+   */
+  public List<String> getListPluginId(Class<? extends NodePlugin> classNodePlugin);
 
-	/**
-	 * Registers a {@link NodeEventListener}.
-	 * <p>
-	 * The NodeEventListener is registered within the Node, and thus within the
-	 * {@link Model}. It is also possible to register NodeEventListener's in the
-	 * {@link ExecContext}.
-	 *
-	 * @param <NodeEventClass> NodeEvent class.
-	 * @param nodeEventListener NodeEventListener.
-	 * @param indChildrenAlso Indicates if {@link NodeEvent} raised on children should
-	 *   be dispatched to the NodeEventListener.
-	 */
-	<NodeEventClass extends NodeEvent> void registerListener(NodeEventListener<NodeEventClass> nodeEventListener, boolean indChildrenAlso);
+  /**
+   * Registers a {@link NodeEventListener}.
+   * <p>
+   * The NodeEventListener is registered within the Node, and thus within the
+   * {@link Model}. It is also possible to register NodeEventListener's in the
+   * {@link ExecContext}.
+   *
+   * @param <NodeEventClass> NodeEvent class.
+   * @param nodeEventListener NodeEventListener.
+   * @param indChildrenAlso Indicates if {@link NodeEvent} raised on children should
+   *   be dispatched to the NodeEventListener.
+   */
+  <NodeEventClass extends NodeEvent> void registerListener(NodeEventListener<NodeEventClass> nodeEventListener, boolean indChildrenAlso);
 
-	/**
-	 * Raises a {@link NodeEvent}.
-	 * <p>
-	 * The NodeEvent is dispatched to all registered {@link NodeEventListener}'s
-	 * interested in it.
-	 * <p>
-	 * NodeEventListener's registered in the {@link ExecContext} using
-	 * {@link EventPlugin#registerListener} are also considered.
-	 * <p>
-	 * The NodeEvent sub-interface (ModuleEvent or ClassificationNodeEvent) must match
-	 * the type of Node.
-	 * <p>
-	 * The NodeEvent must be dispatched on {@link NodeEvent#getNode}.
-	 *
-	 * @param nodeEvent NodeEvent.
-	 */
-	void raiseNodeEvent(NodeEvent nodeEvent);
+  /**
+   * Raises a {@link NodeEvent}.
+   * <p>
+   * The NodeEvent is dispatched to all registered {@link NodeEventListener}'s
+   * interested in it.
+   * <p>
+   * NodeEventListener's registered in the {@link ExecContext} using
+   * {@link EventPlugin#registerListener} are also considered.
+   * <p>
+   * The NodeEvent sub-interface (ModuleEvent or ClassificationNodeEvent) must match
+   * the type of Node.
+   * <p>
+   * The NodeEvent must be dispatched on {@link NodeEvent#getNode}.
+   *
+   * @param nodeEvent NodeEvent.
+   */
+  void raiseNodeEvent(NodeEvent nodeEvent);
 
-	/**
-	 * @return Indicates if the Node was created dynamically. This generally means
-	 *   that it is not based on a {@link NodeConfig} and is inferred from some
-	 *   external system.
-	 */
-	boolean isCreatedDynamically();
+  /**
+   * @return Indicates if the Node was created dynamically. This generally means
+   *   that it is not based on a {@link NodeConfig} and is inferred from some
+   *   external system.
+   */
+  boolean isCreatedDynamically();
 }

@@ -30,61 +30,61 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * It is used internally and not expected to be useful to external callers.
  */
 public class PluginKey {
-	Class<? extends NodePlugin> classNodePlugin;
-	String pluginId;
+  Class<? extends NodePlugin> classNodePlugin;
+  String pluginId;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param classNodePlugin {@link NodePlugin} Class.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   NodePlugin.
-	 */
-	public PluginKey(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
-		this.classNodePlugin = classNodePlugin;
-		this.pluginId = pluginId;
-	}
+  /**
+   * Constructor.
+   *
+   * @param classNodePlugin {@link NodePlugin} Class.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   NodePlugin.
+   */
+  public PluginKey(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
+    this.classNodePlugin = classNodePlugin;
+    this.pluginId = pluginId;
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.classNodePlugin.hashCode();
-		result = (prime * result) + ((this.pluginId == null) ? 0 : this.pluginId.hashCode());
+    result = 1;
+    result = (prime * result) + this.classNodePlugin.hashCode();
+    result = (prime * result) + ((this.pluginId == null) ? 0 : this.pluginId.hashCode());
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
 
-		if (other == null) {
-			return false;
-		}
+    if (other == null) {
+      return false;
+    }
 
-		if (!(other instanceof PluginKey)) {
-			return false;
-		}
+    if (!(other instanceof PluginKey)) {
+      return false;
+    }
 
-		PluginKey pluginKeyOther = (PluginKey)other;
+    PluginKey pluginKeyOther = (PluginKey)other;
 
-		if (this.classNodePlugin != pluginKeyOther.classNodePlugin) {
-			return false;
-		}
+    if (this.classNodePlugin != pluginKeyOther.classNodePlugin) {
+      return false;
+    }
 
-		if (this.pluginId == null) {
-			if (pluginKeyOther.pluginId != null) {
-				return false;
-			}
-		} else if (!this.pluginId.equals(pluginKeyOther.pluginId)) {
-			return false;
-		}
+    if (this.pluginId == null) {
+      if (pluginKeyOther.pluginId != null) {
+        return false;
+      }
+    } else if (!this.pluginId.equals(pluginKeyOther.pluginId)) {
+      return false;
+    }
 
-		return true;
-	}
+    return true;
+  }
 };

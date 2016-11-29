@@ -53,146 +53,146 @@ package org.azyva.dragom.execcontext.plugin;
  * @author David Raymond
  */
 public interface CredentialStorePlugin extends ExecContextPlugin {
-	/**
-	 * Validates credentials.
-	 * <p>
-	 * The caller can implement this interface to allow the implementation (of
-	 * CredentialStorePlugin) to validate the credentials before returning them. This
-	 * is particularly useful if the implementation interacts with the user to obtain
-	 * missing credentials which may be entered incorrectly.
-	 */
-	public interface CredentialValidator {
-		/**
-		 * Indicates if the credentials are valid for the given resource.
-		 *
-		 * @param resource Resource.
-		 * @param user User.
-		 * @param password Password.
-		 * @return See description.
-		 */
-		boolean validateCredentials(String resource, String user, String password);
-	}
+  /**
+   * Validates credentials.
+   * <p>
+   * The caller can implement this interface to allow the implementation (of
+   * CredentialStorePlugin) to validate the credentials before returning them. This
+   * is particularly useful if the implementation interacts with the user to obtain
+   * missing credentials which may be entered incorrectly.
+   */
+  public interface CredentialValidator {
+    /**
+     * Indicates if the credentials are valid for the given resource.
+     *
+     * @param resource Resource.
+     * @param user User.
+     * @param password Password.
+     * @return See description.
+     */
+    boolean validateCredentials(String resource, String user, String password);
+  }
 
-	/**
-	 * Holds credentials.
-	 */
-	public class Credentials {
-		/**
-		 * Resource for which the credentials apply.
-		 */
-		public String resource;
+  /**
+   * Holds credentials.
+   */
+  public class Credentials {
+    /**
+     * Resource for which the credentials apply.
+     */
+    public String resource;
 
-		/**
-		 * User.
-		 */
-		public String user;
+    /**
+     * User.
+     */
+    public String user;
 
-		/**
-		 * Password.
-		 */
-		public String password;
+    /**
+     * Password.
+     */
+    public String password;
 
-		/**
-		 * Indicates if the user is specific to the resource, embedded in the resource, as
-		 * is often the case in URL (e.g., {@code https://<user>@<server>/...}).
-		 */
-		public boolean indUserSpecificResource;
-	}
+    /**
+     * Indicates if the user is specific to the resource, embedded in the resource, as
+     * is often the case in URL (e.g., {@code https://<user>@<server>/...}).
+     */
+    public boolean indUserSpecificResource;
+  }
 
-	/**
-	 * Indicates if the credentials are available for the specified resource and user.
-	 * <p>
-	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
-	 * to the implementation to support extracting the user from the resource (e.g.,
-	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
-	 * potentially interacting with the user to obtain that information.
-	 * <p>
-	 * If user is not null and the implementation supports extracting the user from
-	 * the resource, it should validate that the user is the same as that specified
-	 * by the resource, if any. If they do not match, an exception should be raised
-	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to be overridden.
-	 * <p>
-	 * If there is no credentials stored for the specified resource and user, and the
-	 * implementation supports interacting with the user to obtain missing
-	 * credentials, this method should perform that interaction since although not
-	 * stored, credentials are conceptually available since they can be obtained from
-	 * the user. If true is returned, {@link #getCredentials} is expected to be called
-	 * next to get them which should not cause any interaction since already performed
-	 * by this method.
-	 * <p>
-	 * If credentialValidator is not null, the method should validate the credentials
-	 * before returning them. This includes both the cases where the credentials are
-	 * already available (since they may be invalid) and when the method interacts with
-	 * the user to obtain them.
-	 *
-	 * @param resource Resource.
-	 * @param user User. Can be null (see above).
-	 * @param credentialValidator CredentialValidator. Can be null (see above).
-	 * @return See description.
-	 */
-	boolean isCredentialsExist(String resource, String user, CredentialValidator credentialValidator);
+  /**
+   * Indicates if the credentials are available for the specified resource and user.
+   * <p>
+   * If user is null it means the caller does not know the user and expects the
+   * CredentialStorePlugin to provide it or extract it from the resource. It is up
+   * to the implementation to support extracting the user from the resource (e.g.,
+   * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
+   * potentially interacting with the user to obtain that information.
+   * <p>
+   * If user is not null and the implementation supports extracting the user from
+   * the resource, it should validate that the user is the same as that specified
+   * by the resource, if any. If they do not match, an exception should be raised
+   * since if the caller specified the user it presumably comes from some
+   * configuration and is not designed to be overridden.
+   * <p>
+   * If there is no credentials stored for the specified resource and user, and the
+   * implementation supports interacting with the user to obtain missing
+   * credentials, this method should perform that interaction since although not
+   * stored, credentials are conceptually available since they can be obtained from
+   * the user. If true is returned, {@link #getCredentials} is expected to be called
+   * next to get them which should not cause any interaction since already performed
+   * by this method.
+   * <p>
+   * If credentialValidator is not null, the method should validate the credentials
+   * before returning them. This includes both the cases where the credentials are
+   * already available (since they may be invalid) and when the method interacts with
+   * the user to obtain them.
+   *
+   * @param resource Resource.
+   * @param user User. Can be null (see above).
+   * @param credentialValidator CredentialValidator. Can be null (see above).
+   * @return See description.
+   */
+  boolean isCredentialsExist(String resource, String user, CredentialValidator credentialValidator);
 
-	/**
-	 * Returns the credentials for the specified resource and user. If requested
-	 * credentials are not available (even following interaction with the user, if
-	 * appropriate), an exception should be raised. If the caller handles unavailable
-	 * credentials, {@link #isCredentialsExist} should be used before calling this
-	 * method.
-	 * <p>
-	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
-	 * to the implementation to support extracting the user from the resource (e.g.,
-	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
-	 * potentially interacting with the user to obtain that information.
-	 * <p>
-	 * If user is not null and the implementation supports extracting the user from
-	 * the resource, it should validate that the user is the same as that specified
-	 * by the resource, if any. If they do not match, an exception should be raised
-	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to be overridden.
-	 * <p>
-	 * If there is no credentials stored for the specified resource and user, the
-	 * implementation can interact with the user to obtain the missing credentials.
-	 * <p>
-	 * If credentialValidator is not null, the method should validate the credentials
-	 * before returning them. This includes both the cases where the credentials are
-	 * already available (since they may be invalid) and when the method interacts with
-	 * the user to obtain them.
-	 *
-	 * @param resource Resource.
-	 * @param user User. Can be null (see above).
-	 * @param credentialValidator CredentialValidator. Can be null (see above).
-	 * @return Credentials. Cannot be null.
-	 */
-	Credentials getCredentials(String resource, String user, CredentialValidator credentialValidator);
+  /**
+   * Returns the credentials for the specified resource and user. If requested
+   * credentials are not available (even following interaction with the user, if
+   * appropriate), an exception should be raised. If the caller handles unavailable
+   * credentials, {@link #isCredentialsExist} should be used before calling this
+   * method.
+   * <p>
+   * If user is null it means the caller does not know the user and expects the
+   * CredentialStorePlugin to provide it or extract it from the resource. It is up
+   * to the implementation to support extracting the user from the resource (e.g.,
+   * {@code https://<user>@<server>/...}) and/or mapping default users to resources,
+   * potentially interacting with the user to obtain that information.
+   * <p>
+   * If user is not null and the implementation supports extracting the user from
+   * the resource, it should validate that the user is the same as that specified
+   * by the resource, if any. If they do not match, an exception should be raised
+   * since if the caller specified the user it presumably comes from some
+   * configuration and is not designed to be overridden.
+   * <p>
+   * If there is no credentials stored for the specified resource and user, the
+   * implementation can interact with the user to obtain the missing credentials.
+   * <p>
+   * If credentialValidator is not null, the method should validate the credentials
+   * before returning them. This includes both the cases where the credentials are
+   * already available (since they may be invalid) and when the method interacts with
+   * the user to obtain them.
+   *
+   * @param resource Resource.
+   * @param user User. Can be null (see above).
+   * @param credentialValidator CredentialValidator. Can be null (see above).
+   * @return Credentials. Cannot be null.
+   */
+  Credentials getCredentials(String resource, String user, CredentialValidator credentialValidator);
 
-	/**
-	 * Resets the credentials for the specified resource and user.
-	 * <p>
-	 * This method allows the caller to implement credential validation logic without
-	 * using {@link CredentialStorePlugin.CredentialValidator}. The caller would call
-	 * {@link #getCredentials} (which could cause interaction with the user) and
-	 * validate the obtained (non validated) credentials. If invalid, the caller would
-	 * call this method and loop.
-	 * <p>
-	 * If user is null it means the caller does not know the user and expects the
-	 * CredentialStorePlugin to provide it or extract it from the resource. It is up
-	 * to the implementation to support extracting the user from the resource (e.g.,
-	 * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
-	 * If no user can be determined, the method should do nothing. It should not
-	 * attempt to interact with the user.
-	 * <p>
-	 * If user is not null and the implementation supports extracting the user from
-	 * the resource, it should validate that the user is the same as that specified
-	 * by the resource, if any. If they do not match, an exception should be raised
-	 * since if the caller specified the user it presumably comes from some
-	 * configuration and is not designed to be overridden.
-	 * <p>
-	 *
-	 * @param resource Resource.
-	 * @param user User. Can be null (see above).
-	 */
-	void resetCredentials(String resource, String user);
+  /**
+   * Resets the credentials for the specified resource and user.
+   * <p>
+   * This method allows the caller to implement credential validation logic without
+   * using {@link CredentialStorePlugin.CredentialValidator}. The caller would call
+   * {@link #getCredentials} (which could cause interaction with the user) and
+   * validate the obtained (non validated) credentials. If invalid, the caller would
+   * call this method and loop.
+   * <p>
+   * If user is null it means the caller does not know the user and expects the
+   * CredentialStorePlugin to provide it or extract it from the resource. It is up
+   * to the implementation to support extracting the user from the resource (e.g.,
+   * {@code https://<user>@<server>/...}) and/or mapping default users to resources.
+   * If no user can be determined, the method should do nothing. It should not
+   * attempt to interact with the user.
+   * <p>
+   * If user is not null and the implementation supports extracting the user from
+   * the resource, it should validate that the user is the same as that specified
+   * by the resource, if any. If they do not match, an exception should be raised
+   * since if the caller specified the user it presumably comes from some
+   * configuration and is not designed to be overridden.
+   * <p>
+   *
+   * @param resource Resource.
+   * @param user User. Can be null (see above).
+   */
+  void resetCredentials(String resource, String user);
 }

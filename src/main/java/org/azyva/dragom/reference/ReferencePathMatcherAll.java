@@ -29,30 +29,30 @@ package org.azyva.dragom.reference;
  * @author David Raymond
  */
 public class ReferencePathMatcherAll implements ReferencePathMatcher {
-	/**
-	 * Verifies if the ReferencePathMatcherAll matches a ReferencePath.
-	 *
-	 * Always returns true.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true.
-	 */
-	@Override
-	public boolean matches(ReferencePath referencePath) {
-		return true;
-	}
+  /**
+   * Verifies if the ReferencePathMatcherAll matches a ReferencePath.
+   *
+   * Always returns true.
+   *
+   * @param referencePath ReferencePath.
+   * @return true.
+   */
+  @Override
+  public boolean matches(ReferencePath referencePath) {
+    return true;
+  }
 
-	/**
-	 * Verifies if the ReferencePathMatcherAll can potentially match children of a
-	 * ReferencePath.
-	 *
-	 * Always returns true.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true.
-	 */
-	@Override
-	public boolean canMatchChildren(ReferencePath referencePath) {
-		return true;
-	}
+  /**
+   * Verifies if the ReferencePathMatcherAll can potentially match children of a
+   * ReferencePath.
+   *
+   * Always returns true.
+   *
+   * @param referencePath ReferencePath.
+   * @return true.
+   */
+  @Override
+  public boolean canMatchChildren(ReferencePath referencePath) {
+    return true;
+  }
 }

@@ -27,28 +27,28 @@ import org.azyva.dragom.model.ClassificationNode;
  * @author David Raymond
  */
 public abstract class ClassificationNodeEvent extends NodeEvent {
-	/**
-	 * Constructor.
-	 *
-	 * @param classificationNode ClassificationNode on which the event is raised.
-	 */
-	public ClassificationNodeEvent(ClassificationNode classificationNode) {
-		super(classificationNode);
-	}
+  /**
+   * Constructor.
+   *
+   * @param classificationNode ClassificationNode on which the event is raised.
+   */
+  public ClassificationNodeEvent(ClassificationNode classificationNode) {
+    super(classificationNode);
+  }
 
-	/**
-	 * @return Module on which this ModuleEvent is raised.
-	 */
-	public ClassificationNode getClassificationNode() {
-		return (ClassificationNode)this.getNode();
-	}
+  /**
+   * @return Module on which this ModuleEvent is raised.
+   */
+  public ClassificationNode getClassificationNode() {
+    return (ClassificationNode)this.getNode();
+  }
 
-	/**
-	 * @return String to help recognize the {@link ClassificationNodeEvent} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "ClassificationNodeEvent [classificationNode=" + this.getNode() + "]";
-	}
+  /**
+   * @return String to help recognize the {@link ClassificationNodeEvent} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "ClassificationNodeEvent [classificationNode=" + this.getNode() + "]";
+  }
 }

@@ -27,13 +27,13 @@ import org.azyva.dragom.model.Module;
  * @author David Raymond
  */
 public interface ModulePlugin extends NodePlugin {
-	/**
-	 * Returns the {@link Module} to which this ModulePlugin is attached.
-	 * <p>
-	 * The object returned should be the same as that returned by {NodePlugin#getNode}
-	 * but cast as a Module.
-	 *
-	 * @return See description.
-	 */
-	Module getModule();
+  /**
+   * Returns the {@link Module} to which this ModulePlugin is attached.
+   * <p>
+   * The object returned should be the same as that returned by {NodePlugin#getNode}
+   * but cast as a Module.
+   *
+   * @return See description.
+   */
+  Module getModule();
 }

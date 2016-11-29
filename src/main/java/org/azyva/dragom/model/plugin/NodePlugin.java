@@ -41,8 +41,8 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public interface NodePlugin {
-	/**
-	 * @return Node to which this NodePlugin is attached.
-	 */
-	Node getNode();
+  /**
+   * @return Node to which this NodePlugin is attached.
+   */
+  Node getNode();
 }

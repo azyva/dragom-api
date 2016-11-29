@@ -45,54 +45,64 @@ import org.azyva.dragom.model.ModuleVersion;
  * @author David Raymond
  */
 public class WorkspaceDirUserModuleVersion implements WorkspaceDir {
-	private ModuleVersion moduleVersion;
+  /**
+   * ModuleVersion.
+   */
+  private ModuleVersion moduleVersion;
 
-	// TODO: The fields cannot be null.
-	public WorkspaceDirUserModuleVersion(ModuleVersion moduleVersion) {
-		this.moduleVersion = moduleVersion;
-	}
+  /**
+   * Constructor.
+   *
+   * @param moduleVersion ModuleVersion.
+   */
+  public WorkspaceDirUserModuleVersion(ModuleVersion moduleVersion) {
+    this.moduleVersion = moduleVersion;
+  }
 
-	public ModuleVersion getModuleVersion() {
-		return this.moduleVersion;
-	}
+  /**
+   * @return ModuleVersion.
+   */
+  public ModuleVersion getModuleVersion() {
+    return this.moduleVersion;
+  }
 
-	/**
-	 * @return String to help recognize the {@link WorkspaceDir} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "WorkspaceDirUserModuleVersion [moduleVersion=" + this.moduleVersion + "]";
-	}
+  /**
+   * @return String to help recognize the {@link WorkspaceDir} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "WorkspaceDirUserModuleVersion [moduleVersion=" + this.moduleVersion + "]";
+  }
 
-	/**
-	 * Override of hashCode to make instances of this class usable efficiently as
-	 * map keys. This implementation was generated automatically using Eclipse and then
-	 * simplified.
-	 */
-	@Override
-	public int hashCode() {
-		return this.moduleVersion.hashCode();
-	}
+  /**
+   * Override of hashCode to make instances of this class usable efficiently as
+   * map keys. This implementation was generated automatically using Eclipse and then
+   * simplified.
+   */
+  @Override
+  public int hashCode() {
+    return this.moduleVersion.hashCode();
+  }
 
-	/**
-	 * Override of equals to make to make instances of this class usable as map keys
-	 * and in other contexts where value equality semantics are required.
-	 */
-	@Override
-	public boolean equals(Object other) {
-		WorkspaceDirUserModuleVersion workspaceDirUserModuleVersionOther;
+  /**
+   * Override of equals to make to make instances of this class usable as map keys
+   * and in other contexts where value equality semantics are required.
+   */
+  @Override
+  public boolean equals(Object other) {
+    WorkspaceDirUserModuleVersion workspaceDirUserModuleVersionOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof WorkspaceDirUserModuleVersion)) {
-			return false;
-		}
+    if (!(other instanceof WorkspaceDirUserModuleVersion)) {
+      return false;
+    }
 
-		workspaceDirUserModuleVersionOther = (WorkspaceDirUserModuleVersion)other;
+    workspaceDirUserModuleVersionOther = (WorkspaceDirUserModuleVersion)other;
 
-		return this.moduleVersion.equals(workspaceDirUserModuleVersionOther.moduleVersion);
-	}
+    return this.moduleVersion.equals(workspaceDirUserModuleVersionOther.moduleVersion);
+  }
 }

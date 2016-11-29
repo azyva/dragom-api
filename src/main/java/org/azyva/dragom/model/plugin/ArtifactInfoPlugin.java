@@ -43,41 +43,41 @@ import org.azyva.dragom.model.ArtifactGroupId;
  */
 
 public interface ArtifactInfoPlugin extends ModulePlugin {
-	/**
-	 * Indicates if builds of this module produce artifacts with a given
-	 * ArtifactGroupId.
-	 *
-	 * @param artifactGroupId See description.
-	 * @return See description.
-	 */
-	boolean isArtifactGroupIdProduced(ArtifactGroupId artifactGroupId);
+  /**
+   * Indicates if builds of this module produce artifacts with a given
+   * ArtifactGroupId.
+   *
+   * @param artifactGroupId See description.
+   * @return See description.
+   */
+  boolean isArtifactGroupIdProduced(ArtifactGroupId artifactGroupId);
 
-	/**
-	 * Indicates if builds of this module possibly produce artifacts with a given
-	 * ArtifactGroupId.
-	 *
-	 * This method returns true when isArtifactGroupIdProduced returns true for
-	 * the same ArtifactGroupId.
-	 *
-	 * @param artifactGroupId See description.
-	 * @return See description.
-	 */
-	boolean isArtifactGroupIdPossiblyProduced(ArtifactGroupId artifactGroupId);
+  /**
+   * Indicates if builds of this module possibly produce artifacts with a given
+   * ArtifactGroupId.
+   *
+   * This method returns true when isArtifactGroupIdProduced returns true for
+   * the same ArtifactGroupId.
+   *
+   * @param artifactGroupId See description.
+   * @return See description.
+   */
+  boolean isArtifactGroupIdPossiblyProduced(ArtifactGroupId artifactGroupId);
 
-	/**
-	 * Gets the set of all ArtifactGroupId produced by builds of this module.
-	 *
-	 * Only ArtifactGroupId that are definitively produced are returned.
-	 * isArtifactGroupIdProduced returned true for these ArtifactGroupId and all
-	 * ArtifactGroupId for which isArtifactGroupIdProduced returned true are returned
-	 * by this method.
-	 *
-	 * Builds of the module can produce artifacts as defined within its build script
-	 * and that cannot be known statically. Such ArtifactGroupId are not returned.
-	 * However the method isArtifactGroupIdPossiblyProduced returned true for such
-	 * potentially produced ArtifactGroupId.
-	 *
-	 * @return See description.
-	 */
-	Set<ArtifactGroupId> getSetDefiniteArtifactGroupIdProduced();
+  /**
+   * Gets the set of all ArtifactGroupId produced by builds of this module.
+   *
+   * Only ArtifactGroupId that are definitively produced are returned.
+   * isArtifactGroupIdProduced returned true for these ArtifactGroupId and all
+   * ArtifactGroupId for which isArtifactGroupIdProduced returned true are returned
+   * by this method.
+   *
+   * Builds of the module can produce artifacts as defined within its build script
+   * and that cannot be known statically. Such ArtifactGroupId are not returned.
+   * However the method isArtifactGroupIdPossiblyProduced returned true for such
+   * potentially produced ArtifactGroupId.
+   *
+   * @return See description.
+   */
+  Set<ArtifactGroupId> getSetDefiniteArtifactGroupIdProduced();
 }

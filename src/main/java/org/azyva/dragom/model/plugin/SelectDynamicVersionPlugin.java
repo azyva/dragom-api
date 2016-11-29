@@ -45,28 +45,28 @@ import org.azyva.dragom.reference.ReferencePath;
  * @author David Raymond
  */
 public interface SelectDynamicVersionPlugin extends ModulePlugin {
-	/**
-	 * Selects a dynamic Version based on an existing Version which can be static
-	 * (e.g., hotfix Version based on a release Version) or dynamic (e.g., feature
-	 * Version based on a project Version).
-	 *
-	 * The caller is responsible for verifying if the selected dynamic Version exists.
-	 * If it does the Version returned in byReferenceVersionBase (if any) must be
-	 * ignored. But the caller must not infer whether the dynamic Version exists or
-	 * not based on whether a base Version was returned.
-	 *
-	 * It may be the case that the existing Version is already dynamic and that no new
-	 * Version needs to be created. In that version must be returned.
-	 *
-	 * @param version Base version.
-	 * @param byReferenceVersionBase The base Version to use for creating the new
-	 *   dynamic Version will be stored there.
-	 * @param referencePath ReferencePath of the {@link ModuleVersion}.
-	 *   Implementations can use this information to, for example, validate that the
-	 *   ModuleVersion exists within a ReferencePath that contains only static
-	 *   Versions (for hotfixes).
-	 * @return Dynamic Version. May be the same as the original version. Can be null
-	 *   to indicate to the caller that the existing Version should not be changed.
-	 */
-	Version selectDynamicVersion(Version version, ByReference<Version> byReferenceVersionBase, ReferencePath referencePath);
+  /**
+   * Selects a dynamic Version based on an existing Version which can be static
+   * (e.g., hotfix Version based on a release Version) or dynamic (e.g., feature
+   * Version based on a project Version).
+   *
+   * The caller is responsible for verifying if the selected dynamic Version exists.
+   * If it does the Version returned in byReferenceVersionBase (if any) must be
+   * ignored. But the caller must not infer whether the dynamic Version exists or
+   * not based on whether a base Version was returned.
+   *
+   * It may be the case that the existing Version is already dynamic and that no new
+   * Version needs to be created. In that version must be returned.
+   *
+   * @param version Base version.
+   * @param byReferenceVersionBase The base Version to use for creating the new
+   *   dynamic Version will be stored there.
+   * @param referencePath ReferencePath of the {@link ModuleVersion}.
+   *   Implementations can use this information to, for example, validate that the
+   *   ModuleVersion exists within a ReferencePath that contains only static
+   *   Versions (for hotfixes).
+   * @return Dynamic Version. May be the same as the original version. Can be null
+   *   to indicate to the caller that the existing Version should not be changed.
+   */
+  Version selectDynamicVersion(Version version, ByReference<Version> byReferenceVersionBase, ReferencePath referencePath);
 }

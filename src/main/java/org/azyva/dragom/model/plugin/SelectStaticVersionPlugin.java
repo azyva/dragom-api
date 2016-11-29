@@ -42,13 +42,13 @@ import org.azyva.dragom.model.Version;
  * @author David Raymond
  */
 public interface SelectStaticVersionPlugin extends ModulePlugin {
-	/**
-	 * Selected a static Version based on an existing dynamic Version.
-	 * <p>
-	 * The static Version may or may not exist.
-	 *
-	 * @param versionDynamic Base dynamic Version.
-	 * @return Static Version.
-	 */
-	Version selectStaticVersion(Version versionDynamic);
+  /**
+   * Selected a static Version based on an existing dynamic Version.
+   * <p>
+   * The static Version may or may not exist.
+   *
+   * @param versionDynamic Base dynamic Version.
+   * @return Static Version.
+   */
+  Version selectStaticVersion(Version versionDynamic);
 }

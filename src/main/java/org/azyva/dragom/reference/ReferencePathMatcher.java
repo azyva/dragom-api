@@ -33,20 +33,20 @@ package org.azyva.dragom.reference;
  * @author David Raymond
  */
 public interface ReferencePathMatcher {
-	/**
-	 * Verifies if a ReferencePathMatcher matches a ReferencePath.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if the ReferencePath is matched by the ReferencePathMatcher.
-	 */
-	public boolean matches(ReferencePath referencePath);
+  /**
+   * Verifies if a ReferencePathMatcher matches a ReferencePath.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePath is matched by the ReferencePathMatcher.
+   */
+  public boolean matches(ReferencePath referencePath);
 
-	/**
-	 * Verifies if a ReferencePathMatcher can potentially match children of a
-	 * ReferencePath.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if the ReferencePath is matched by the ReferencePathMatcher.
-	 */
-	public boolean canMatchChildren(ReferencePath referencePath);
+  /**
+   * Verifies if a ReferencePathMatcher can potentially match children of a
+   * ReferencePath.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePath is matched by the ReferencePathMatcher.
+   */
+  public boolean canMatchChildren(ReferencePath referencePath);
 }

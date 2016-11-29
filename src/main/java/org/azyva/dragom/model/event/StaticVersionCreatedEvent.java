@@ -31,26 +31,26 @@ import org.azyva.dragom.model.VersionType;
  * @author David Raymond
  */
 public class StaticVersionCreatedEvent extends VersionCreatedEvent {
-	/**
-	 * Constructor.
-	 *
-	 * @param module {@link Module} on which the {@link ModuleEvent} is raised.
-	 * @param versionStatic Static {@link Version} that was created.
-	 */
-	public StaticVersionCreatedEvent(Module module, Version versionStatic) {
-		super(module, versionStatic);
+  /**
+   * Constructor.
+   *
+   * @param module {@link Module} on which the {@link ModuleEvent} is raised.
+   * @param versionStatic Static {@link Version} that was created.
+   */
+  public StaticVersionCreatedEvent(Module module, Version versionStatic) {
+    super(module, versionStatic);
 
-		if (versionStatic.getVersionType() != VersionType.STATIC) {
-			throw new RuntimeException("Invalid version type.");
-		}
-	}
+    if (versionStatic.getVersionType() != VersionType.STATIC) {
+      throw new RuntimeException("Invalid version type.");
+    }
+  }
 
-	/**
-	 * @return String to help recognize the {@link ModuleEvent} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "StaticVersionCreatedEvent [module=" + this.getModule() + ", version=" + this.getVersion() + "]";
-	}
+  /**
+   * @return String to help recognize the {@link ModuleEvent} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "StaticVersionCreatedEvent [module=" + this.getModule() + ", version=" + this.getVersion() + "]";
+  }
 }

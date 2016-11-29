@@ -29,16 +29,17 @@ package org.azyva.dragom.apiutil;
  *
  * One case where this is used in Dragom is for returning Version.
  *
+ * @param <Type> Reference type.
  * @author David Raymond
  */
 public class ByReference<Type> {
-	/**
-	 * The referenced object.
-	 */
-	public Type object;
+  /**
+   * The referenced object.
+   */
+  public Type object;
 
-	@Override
-	public String toString() {
-		return "Reference: " + ((this.object == null) ? "null" : this.object.toString());
-	}
+  @Override
+  public String toString() {
+    return "Reference: " + ((this.object == null) ? "null" : this.object.toString());
+  }
 }

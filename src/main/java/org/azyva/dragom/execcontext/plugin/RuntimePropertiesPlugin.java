@@ -33,34 +33,34 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public interface RuntimePropertiesPlugin extends ExecContextPlugin {
-	/**
-	 * Gets the value of a property associated with a node.
-	 * <p>
-	 * It is up to the plugin implementation to use the appropriate property
-	 * resolution algorithm. Such an algorithm can involve:
-	 * <ul>
-	 * <li>Evaluating the property as an expression</li>
-	 * <li>Using the properties of the Node as default values for RuntimeProperties
-	 *     that may not be explicitly defined</li>
-	 * <li>Implementing property inheritance</li>
-	 * </ul>
-	 *
-	 * @param node Node in the context of which the property is requested. May be
-	 *   null as equivalent to specifying the Model root Node.
-	 * @param name Name of the property.
-	 * @return Value of the property. null if no such property.
-	 */
-	String getProperty(Node node, String name);
+  /**
+   * Gets the value of a property associated with a node.
+   * <p>
+   * It is up to the plugin implementation to use the appropriate property
+   * resolution algorithm. Such an algorithm can involve:
+   * <ul>
+   * <li>Evaluating the property as an expression</li>
+   * <li>Using the properties of the Node as default values for RuntimeProperties
+   *     that may not be explicitly defined</li>
+   * <li>Implementing property inheritance</li>
+   * </ul>
+   *
+   * @param node Node in the context of which the property is requested. May be
+   *   null as equivalent to specifying the Model root Node.
+   * @param name Name of the property.
+   * @return Value of the property. null if no such property.
+   */
+  String getProperty(Node node, String name);
 
-	/**
-	 * Sets the value of a property associated with a node.
-	 * <p>
-	 * Properties sets in this way are expected to take precedence.
-	 *
-	 * @param node Node in the context of which the property is set. May be null as
-	 *   equivalent to specifying the Model root Node.
-	 * @param name Name of the property.
-	 * @param value Value of the property.
-	 */
-	void setProperty(Node node, String name, String value);
+  /**
+   * Sets the value of a property associated with a node.
+   * <p>
+   * Properties sets in this way are expected to take precedence.
+   *
+   * @param node Node in the context of which the property is set. May be null as
+   *   equivalent to specifying the Model root Node.
+   * @param name Name of the property.
+   * @param value Value of the property.
+   */
+  void setProperty(Node node, String name, String value);
 }

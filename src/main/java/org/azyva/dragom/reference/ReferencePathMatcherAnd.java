@@ -30,80 +30,80 @@ import java.util.List;
  * @author David Raymond
  */
 public class ReferencePathMatcherAnd implements ReferencePathMatcher {
-	/**
-	 * List of the ReferencePathMatcher.
-	 */
-	private List<ReferencePathMatcher> listReferencePathMatcher;
+  /**
+   * List of the ReferencePathMatcher.
+   */
+  private List<ReferencePathMatcher> listReferencePathMatcher;
 
-	/**
-	 * Default constructor.
-	 */
-	public ReferencePathMatcherAnd() {
-		this.listReferencePathMatcher = new ArrayList<ReferencePathMatcher>();
-	}
+  /**
+   * Default constructor.
+   */
+  public ReferencePathMatcherAnd() {
+    this.listReferencePathMatcher = new ArrayList<ReferencePathMatcher>();
+  }
 
-	/**
-	 * Returns the List of ReferencePathMatcher's.
-	 *
-	 * Currently this class does not provide a safe encapsulation of the List of
-	 * ReferencePathMatcher's. Manipulation of the List other than adding a new
-	 * ReferencePathMatcher needs to be done by modifying the List returned by this
-	 * method.
-	 *
-	 * @return See description.
-	 */
-	public List<ReferencePathMatcher> getListReferencePathMatcher() {
-		return this.listReferencePathMatcher;
-	}
+  /**
+   * Returns the List of ReferencePathMatcher's.
+   *
+   * Currently this class does not provide a safe encapsulation of the List of
+   * ReferencePathMatcher's. Manipulation of the List other than adding a new
+   * ReferencePathMatcher needs to be done by modifying the List returned by this
+   * method.
+   *
+   * @return See description.
+   */
+  public List<ReferencePathMatcher> getListReferencePathMatcher() {
+    return this.listReferencePathMatcher;
+  }
 
-	/**
-	 * Adds a ReferencePathMatcher to the List.
-	 *
-	 * @param referencePathMatcher ReferencePathMatcher.
-	 */
-	public void addReferencePathMatcher(ReferencePathMatcher referencePathMatcher) {
-		this.listReferencePathMatcher.add(referencePathMatcher);
-	}
+  /**
+   * Adds a ReferencePathMatcher to the List.
+   *
+   * @param referencePathMatcher ReferencePathMatcher.
+   */
+  public void addReferencePathMatcher(ReferencePathMatcher referencePathMatcher) {
+    this.listReferencePathMatcher.add(referencePathMatcher);
+  }
 
-	/**
-	 * Verifies if a ReferencePathMatcherAnd matches a ReferencePath.
-	 *
-	 * A ReferencePathMatcherAnd matches a ReferencePath if all ReferencePathMatcher's
-	 * within the List match the ReferencePath.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if the ReferencePathMatcherAnd matches the ReferencePath.
-	 */
-	@Override
-	public boolean matches(ReferencePath referencePath) {
-		for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
-			if (!referencePathMatcher.matches(referencePath)) {
-				return false;
-			}
-		}
+  /**
+   * Verifies if a ReferencePathMatcherAnd matches a ReferencePath.
+   *
+   * A ReferencePathMatcherAnd matches a ReferencePath if all ReferencePathMatcher's
+   * within the List match the ReferencePath.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcherAnd matches the ReferencePath.
+   */
+  @Override
+  public boolean matches(ReferencePath referencePath) {
+    for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
+      if (!referencePathMatcher.matches(referencePath)) {
+        return false;
+      }
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	/**
-	 * Verifies if the ReferencePathMatcherAnd can potentially match children of a
-	 * ReferencePath.
-	 *
-	 * A ReferencePathMatcherAnd can match children of a ReferencePath if all
-	 * ReferencePathMatcher's within the List can match children of the ReferencePath.
-	 *
-	 * @param referencePath ReferencePath.
-	 * @return true if children of the ReferencePath can be matched by the
-	 *   ReferencePathMatcherAnd.
-	 */
-	@Override
-	public boolean canMatchChildren(ReferencePath referencePath) {
-		for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
-			if (!referencePathMatcher.canMatchChildren(referencePath)) {
-				return false;
-			}
-		}
+  /**
+   * Verifies if the ReferencePathMatcherAnd can potentially match children of a
+   * ReferencePath.
+   *
+   * A ReferencePathMatcherAnd can match children of a ReferencePath if all
+   * ReferencePathMatcher's within the List can match children of the ReferencePath.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if children of the ReferencePath can be matched by the
+   *   ReferencePathMatcherAnd.
+   */
+  @Override
+  public boolean canMatchChildren(ReferencePath referencePath) {
+    for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
+      if (!referencePathMatcher.canMatchChildren(referencePath)) {
+        return false;
+      }
+    }
 
-		return true;
-	}
+    return true;
+  }
 }

@@ -26,16 +26,16 @@ package org.azyva.dragom.execcontext;
  * @author David Raymond
  */
 public interface WorkspaceExecContextFactory {
-	/**
-	 * Initialization property that specifies the path of the root workspace
-	 * directory.
-	 * <p>
-	 * Such an initialization property is expected to be provided to
-	 * {@link ExecContextFactory#getExecContext} in order to specify where the
-	 * workspace directory is. If not, the {@link ExecContextFactory} is expected to
-	 * use the current working directory as the workspace directory.
-	 *
-	 * @return See description.
-	 */
-	String getWorkspaceDirInitProperty();
+  /**
+   * Initialization property that specifies the path of the root workspace
+   * directory.
+   * <p>
+   * Such an initialization property is expected to be provided to
+   * {@link ExecContextFactory#getExecContext} in order to specify where the
+   * workspace directory is. If not, the {@link ExecContextFactory} is expected to
+   * use the current working directory as the workspace directory.
+   *
+   * @return See description.
+   */
+  String getWorkspaceDirInitProperty();
 }

@@ -38,105 +38,105 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * @see Config
  */
 public interface NodeConfig {
-	/**
-	 * @return Name.
-	 */
-	String getName();
+  /**
+   * @return Name.
+   */
+  String getName();
 
-	/**
-	 * @return NodeType.
-	 */
-	NodeType getNodeType();
+  /**
+   * @return NodeType.
+   */
+  NodeType getNodeType();
 
-	/**
-	 * Returns a {@link PropertyDefConfig}.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, a PropertyDefConfig is returned (instead of returning null).
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
-	 */
-	PropertyDefConfig getPropertyDefConfig(String name);
+  /**
+   * Returns a {@link PropertyDefConfig}.
+   * <p>
+   * If the PropertyDefConfig exists but is defined with the value field set to
+   * null, a PropertyDefConfig is returned (instead of returning null).
+   *
+   * @param name Name of the PropertyDefConfig.
+   * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
+   */
+  PropertyDefConfig getPropertyDefConfig(String name);
 
-	/**
-	 * Verifies if a {@link PropertyDefConfig} exists.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPropertyDefConfig} does not return null.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return Indicates if the PropertyDefConfig exists.
-	 */
-	boolean isPropertyExists(String name);
+  /**
+   * Verifies if a {@link PropertyDefConfig} exists.
+   * <p>
+   * If the PropertyDefConfig exists but is defined with the value field set to
+   * null, true is returned.
+   * <p>
+   * Returns true if an only if {@link #getPropertyDefConfig} does not return null.
+   *
+   * @param name Name of the PropertyDefConfig.
+   * @return Indicates if the PropertyDefConfig exists.
+   */
+  boolean isPropertyExists(String name);
 
-	/**
-	 * Returns a List of all the {@link PropertyDefConfig}'s.
-	 * <p>
-	 * If no PropertyDefConfig is defined for the NodeConfig, an empty List is
-	 * returned (as opposed to null).
-	 * <p>
-	 * The order of the PropertyDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 * <p>
-	 * An implementations should not return a List that could allow the caller to
-	 * modify its internal data structures. Either a copy or an unmodifiable List view
-	 * should be returned. Caller should not expect the returned List to be
-	 * modifiable, even if the intent is not modify the internal structure of the
-	 * implementation.
-	 *
-	 * @return See description.
-	 */
-	List<PropertyDefConfig> getListPropertyDefConfig();
+  /**
+   * Returns a List of all the {@link PropertyDefConfig}'s.
+   * <p>
+   * If no PropertyDefConfig is defined for the NodeConfig, an empty List is
+   * returned (as opposed to null).
+   * <p>
+   * The order of the PropertyDefConfig is generally expected to be as defined
+   * in the underlying storage for the configuration, hence the List return type.
+   * But no particular order is actually guaranteed.
+   * <p>
+   * An implementations should not return a List that could allow the caller to
+   * modify its internal data structures. Either a copy or an unmodifiable List view
+   * should be returned. Caller should not expect the returned List to be
+   * modifiable, even if the intent is not modify the internal structure of the
+   * implementation.
+   *
+   * @return See description.
+   */
+  List<PropertyDefConfig> getListPropertyDefConfig();
 
-	/**
-	 * Returns a {@link PluginDefConfig}.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, a PluginDefConfig is returned (instead of returning null).
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 * @return PluginDefConfig. null if the PluginDefConfig does not exist.
-	 */
-	PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Returns a {@link PluginDefConfig}.
+   * <p>
+   * If the PluginDefConfig exists but is defined with the pluginClass field set to
+   * null, a PluginDefConfig is returned (instead of returning null).
+   *
+   * @param classNodePlugin Class of the {@link NodePlugin} interface.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
+   * @return PluginDefConfig. null if the PluginDefConfig does not exist.
+   */
+  PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Verifies if a {@link PluginDefConfig} exists.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPluginDefConfig} does not return null.
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 * @return Indicates if the PluginDefConfig exists.
-	 */
-	boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Verifies if a {@link PluginDefConfig} exists.
+   * <p>
+   * If the PluginDefConfig exists but is defined with the pluginClass field set to
+   * null, true is returned.
+   * <p>
+   * Returns true if an only if {@link #getPluginDefConfig} does not return null.
+   *
+   * @param classNodePlugin Class of the {@link NodePlugin} interface.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
+   * @return Indicates if the PluginDefConfig exists.
+   */
+  boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Returns a List of all the {@link PluginDefConfig}'s.
-	 * <p>
-	 * If no PluginDefConfig is defined for the NodeConfig, an empty Set is returned
-	 * (as opposed to null).
-	 * <p>
-	 * The order of the PluginDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 * <p>
-	 * An implementations should not return a List that could allow the caller to
-	 * modify its internal data structures. Either a copy or an unmodifiable List view
-	 * should be returned. Caller should not expect the returned List to be
-	 * modifiable, even if the intent is not modify the internal structure of the
-	 * implementation.
-	 *
-	 * @return See description.
-	 */
-	List<PluginDefConfig> getListPluginDefConfig();
+  /**
+   * Returns a List of all the {@link PluginDefConfig}'s.
+   * <p>
+   * If no PluginDefConfig is defined for the NodeConfig, an empty Set is returned
+   * (as opposed to null).
+   * <p>
+   * The order of the PluginDefConfig is generally expected to be as defined
+   * in the underlying storage for the configuration, hence the List return type.
+   * But no particular order is actually guaranteed.
+   * <p>
+   * An implementations should not return a List that could allow the caller to
+   * modify its internal data structures. Either a copy or an unmodifiable List view
+   * should be returned. Caller should not expect the returned List to be
+   * modifiable, even if the intent is not modify the internal structure of the
+   * implementation.
+   *
+   * @return See description.
+   */
+  List<PluginDefConfig> getListPluginDefConfig();
 }

@@ -49,93 +49,93 @@ import org.azyva.dragom.model.config.OptimisticLockHandle;
  * @see MutableModel
  */
 public interface MutableNode extends Node {
-	/**
-	 * See {@link MutableNodeConfig#isNew}.
-	 *
-	 * @return Indicates that the MutableNode has just been created and that
-	 *   {@link #setNodeConfigTransferObject} has not been called yet.
-	 */
-	boolean isNew();
+  /**
+   * See {@link MutableNodeConfig#isNew}.
+   *
+   * @return Indicates that the MutableNode has just been created and that
+   *   {@link #setNodeConfigTransferObject} has not been called yet.
+   */
+  boolean isNew();
 
-	/**
-	 * Creates an {@link OptimisticLockHandle}.
-	 * <p>
-	 * See {@link MutableNodeConfig#createOptimisticLockHandle}.
-	 *
-	 * @param indLock Indicates if the OptimisticLockHandle must be initially locked.
-	 * @return OptimisticLockHandle.
-	 */
-	OptimisticLockHandle createOptimisticLockHandle(boolean indLock);
+  /**
+   * Creates an {@link OptimisticLockHandle}.
+   * <p>
+   * See {@link MutableNodeConfig#createOptimisticLockHandle}.
+   *
+   * @param indLock Indicates if the OptimisticLockHandle must be initially locked.
+   * @return OptimisticLockHandle.
+   */
+  OptimisticLockHandle createOptimisticLockHandle(boolean indLock);
 
-	/**
-	 * Verifies if the lock held by the an {@link OptimisticLockHandle} is valid,
-	 * meaning that its state corresponds to the state of the data it represents.
-	 * <p>
-	 * See {@link MutableNodeConfig#isOptimisticLockValid}.
-	 *
-	 * @param optimisticLockHandle OptimisticLockHandle.
-	 * @return Indicates if the lock is valid.
-	 */
-	boolean isOptimisticLockValid(OptimisticLockHandle optimisticLockHandle);
+  /**
+   * Verifies if the lock held by the an {@link OptimisticLockHandle} is valid,
+   * meaning that its state corresponds to the state of the data it represents.
+   * <p>
+   * See {@link MutableNodeConfig#isOptimisticLockValid}.
+   *
+   * @param optimisticLockHandle OptimisticLockHandle.
+   * @return Indicates if the lock is valid.
+   */
+  boolean isOptimisticLockValid(OptimisticLockHandle optimisticLockHandle);
 
-	/**
-	 * Returns the {@link NodeConfigTransferObject}.
-	 * <p>
-	 * See {@link MutableNodeConfig#getNodeConfigTransferObject}.
-	 *
-	 * @param optimisticLockHandle OptimisticLockHandle. Can be null.
-	 * @return NodeConfigTransferObject.
-	 * @throws OptimisticLockException This is a RuntimeException that may be of
-	 *   interest to the caller.
-	 */
-	NodeConfigTransferObject getNodeConfigTransferObject(OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException;
+  /**
+   * Returns the {@link NodeConfigTransferObject}.
+   * <p>
+   * See {@link MutableNodeConfig#getNodeConfigTransferObject}.
+   *
+   * @param optimisticLockHandle OptimisticLockHandle. Can be null.
+   * @return NodeConfigTransferObject.
+   * @throws OptimisticLockException This is a RuntimeException that may be of
+   *   interest to the caller.
+   */
+  NodeConfigTransferObject getNodeConfigTransferObject(OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException;
 
-	/**
-	 * Sets the {@link NodeConfigTransferObject}.
-	 * <p>
-	 * See {@link MutableNodeConfig#setNodeConfigTransferObject}.
-	 *
-	 * @param nodeConfigTransferObject NodeConfigTransferObject.
-	 * @param optimisticLockHandle OptimisticLockHandle. Can be null.
-	 * @throws OptimisticLockException This is a RuntimeException that may be of
-	 *   interest to the caller.
-	 * @throws DuplicateNodeException This is a RuntimeException that may be of
-	 *   interest to the caller.
-	 */
-	void setNodeConfigTransferObject(NodeConfigTransferObject nodeConfigTransferObject, OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException, DuplicateNodeException;
+  /**
+   * Sets the {@link NodeConfigTransferObject}.
+   * <p>
+   * See {@link MutableNodeConfig#setNodeConfigTransferObject}.
+   *
+   * @param nodeConfigTransferObject NodeConfigTransferObject.
+   * @param optimisticLockHandle OptimisticLockHandle. Can be null.
+   * @throws OptimisticLockException This is a RuntimeException that may be of
+   *   interest to the caller.
+   * @throws DuplicateNodeException This is a RuntimeException that may be of
+   *   interest to the caller.
+   */
+  void setNodeConfigTransferObject(NodeConfigTransferObject nodeConfigTransferObject, OptimisticLockHandle optimisticLockHandle) throws OptimisticLockException, DuplicateNodeException;
 
-	/**
-	 * Deletes the MutableNode.
-	 * <p>
-	 * See {@link MutableNodeConfig#delete}.
-	 */
-	void delete();
+  /**
+   * Deletes the MutableNode.
+   * <p>
+   * See {@link MutableNodeConfig#delete}.
+   */
+  void delete();
 
-	/**
-	 * Indicates if the MutableNode has been deleted.
-	 * <p>
-	 * A MutableNode can be deleted only if {@link #delete} is called. Specifically an
-	 * implementation must not rely on removing MutableNode's from internal caches to
-	 * force their recreation when changes to configuration data could affect their
-	 * state. Instead, the implementation must ensure that created MutableNode's
-	 * remain valid, but can reset their internal state if required.
-	 * <p>
-	 * delete could be called, followed by the recreation of the MutableNode. But
-	 * delete is an interface method and is intended to be called by an external
-	 * caller, not by the implementation itself.
-	 * <p>
-	 * A special case exists. If the MutableNode has been created dynamically using
-	 * {@link NodeBuilder} and is converted into one based on
-	 * {@link MutableNodeConfig}, the former can be deleted. This is getting close to
-	 * a hack since this case is hard to handle cleanly. In general, it is expected
-	 * that an application allowing to manage persistent {@link MutableConfig} data
-	 * will not include tasks that would cause the dynamic creation of MutableNode's,
-	 * so this case would not occur. And tasks which can benefit from the dynamic
-	 * creation of {@link Node}'s are expected to be tools that consume the
-	 * {@link Config} data to perform jobs on reference graphs and in turn, these do
-	 * not modify the Config, so this case would not occur either.
-	 *
-	 * @return Indicates if the MutableNode has been deleted.
-	 */
-	boolean isDeleted();
+  /**
+   * Indicates if the MutableNode has been deleted.
+   * <p>
+   * A MutableNode can be deleted only if {@link #delete} is called. Specifically an
+   * implementation must not rely on removing MutableNode's from internal caches to
+   * force their recreation when changes to configuration data could affect their
+   * state. Instead, the implementation must ensure that created MutableNode's
+   * remain valid, but can reset their internal state if required.
+   * <p>
+   * delete could be called, followed by the recreation of the MutableNode. But
+   * delete is an interface method and is intended to be called by an external
+   * caller, not by the implementation itself.
+   * <p>
+   * A special case exists. If the MutableNode has been created dynamically using
+   * {@link NodeBuilder} and is converted into one based on
+   * {@link MutableNodeConfig}, the former can be deleted. This is getting close to
+   * a hack since this case is hard to handle cleanly. In general, it is expected
+   * that an application allowing to manage persistent {@link MutableConfig} data
+   * will not include tasks that would cause the dynamic creation of MutableNode's,
+   * so this case would not occur. And tasks which can benefit from the dynamic
+   * creation of {@link Node}'s are expected to be tools that consume the
+   * {@link Config} data to perform jobs on reference graphs and in turn, these do
+   * not modify the Config, so this case would not occur either.
+   *
+   * @return Indicates if the MutableNode has been deleted.
+   */
+  boolean isDeleted();
 }

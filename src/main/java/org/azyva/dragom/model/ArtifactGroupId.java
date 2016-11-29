@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * <p>
  * Implements value semantics. Instances are immutable.
  * <p>
- * Implements {@link hashCode} and {@link equals} so that instances can be used as
+ * Implements {@link #hashCode} and {@link #equals} so that instances can be used as
  * Map keys.
  * </p>
  * ArtifactGroupId supports the literal form &lt;groupId&gt;:&lt;artifactId&gt;.
@@ -40,132 +40,138 @@ import java.util.regex.Pattern;
  * @author David Raymond
  */
 public final class ArtifactGroupId {
-	/**
-	 * See description in ResourceBundle.
-	 */
-	private static final String MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR = "ARTIFACT_GROUP_ID_PARSING_ERROR";
+  /**
+   * See description in ResourceBundle.
+   */
+  private static final String MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR = "ARTIFACT_GROUP_ID_PARSING_ERROR";
 
-	/**
-	 * ResourceBundle specific to this class.
-	 */
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactGroupId.class.getName() + "ResourceBundle");
+  /**
+   * ResourceBundle specific to this class.
+   */
+  private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactGroupId.class.getName() + "ResourceBundle");
 
-	/**
-	 * Pattern for parsing an ArtifactGroupId literal.
-	 */
-	private static final Pattern patternArtifactGroupIdLiteral = Pattern.compile("([a-zA-Z][a-zA-Z0-9\\.\\-_]*):([a-zA-Z][a-zA-Z0-9\\.\\-_]*)");
+  /**
+   * Pattern for parsing an ArtifactGroupId literal.
+   */
+  private static final Pattern patternArtifactGroupIdLiteral = Pattern.compile("([a-zA-Z][a-zA-Z0-9\\.\\-_]*):([a-zA-Z][a-zA-Z0-9\\.\\-_]*)");
 
-	/**
-	 * GroupId.
-	 */
-	private String groupId;
+  /**
+   * GroupId.
+   */
+  private String groupId;
 
-	/**
-	 * ArtifactId.
-	 */
-	private String artifactId;
+  /**
+   * ArtifactId.
+   */
+  private String artifactId;
 
-	/**
-	 * Constructor using the individual fields.
-	 *
-	 * @param groupId GroupId.
-	 * @param artifactId ArtifactId.
-	 */
-	public ArtifactGroupId(String groupId, String artifactId) {
-		if ((groupId == null) || (artifactId == null)) {
-			throw new RuntimeException("The groupId and artifactId cannot be null.");
-		}
+  /**
+   * Constructor using the individual fields.
+   *
+   * @param groupId GroupId.
+   * @param artifactId ArtifactId.
+   */
+  public ArtifactGroupId(String groupId, String artifactId) {
+    if ((groupId == null) || (artifactId == null)) {
+      throw new RuntimeException("The groupId and artifactId cannot be null.");
+    }
 
-		this.groupId = groupId;
-		this.artifactId = artifactId;
-	}
+    this.groupId = groupId;
+    this.artifactId = artifactId;
+  }
 
-	/**
-	 * Constructor using an ArtifactGroupId literal.
-	 * <p>
-	 * Throws RuntimeException if parsing fails.
-	 *
-	 * @param stringArtifactGroupId ArtifactGroupId literal.
-	 */
-	public ArtifactGroupId(String stringArtifactGroupId) {
-		Matcher matcher;
+  /**
+   * Constructor using an ArtifactGroupId literal.
+   * <p>
+   * Throws RuntimeException if parsing fails.
+   *
+   * @param stringArtifactGroupId ArtifactGroupId literal.
+   */
+  public ArtifactGroupId(String stringArtifactGroupId) {
+    Matcher matcher;
 
-		matcher = ArtifactGroupId.patternArtifactGroupIdLiteral.matcher(stringArtifactGroupId);
+    matcher = ArtifactGroupId.patternArtifactGroupIdLiteral.matcher(stringArtifactGroupId);
 
-		try {
-			if (!matcher.matches()) {
-				throw new ParseException(MessageFormat.format(ArtifactGroupId.resourceBundle.getString(ArtifactGroupId.MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR), stringArtifactGroupId, ArtifactGroupId.patternArtifactGroupIdLiteral), 0);
-			}
+    try {
+      if (!matcher.matches()) {
+        throw new ParseException(MessageFormat.format(ArtifactGroupId.resourceBundle.getString(ArtifactGroupId.MSG_PATTERN_KEY_ARTIFACT_GROUP_ID_PARSING_ERROR), stringArtifactGroupId, ArtifactGroupId.patternArtifactGroupIdLiteral), 0);
+      }
 
-			this.groupId = matcher.group(1);
-			this.artifactId = matcher.group(2);
-		} catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
+      this.groupId = matcher.group(1);
+      this.artifactId = matcher.group(2);
+    } catch (ParseException pe) {
+      throw new RuntimeException(pe);
+    }
+  }
 
-	/**
-	 * Parses an ArtifactGroupId literal.
-	 *
-	 * @param stringArtifactGroupId ArtifactVersion literal.
-	 * @return Version.
-	 * @throws ParseException If parsing fails.
-	 */
-	public static ArtifactGroupId parse(String stringArtifactGroupId)
-	throws ParseException {
-		try {
-			return new ArtifactGroupId(stringArtifactGroupId);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof ParseException) {
-				throw (ParseException)re.getCause();
-			} else {
-				throw re;
-			}
-		}
-	}
+  /**
+   * Parses an ArtifactGroupId literal.
+   *
+   * @param stringArtifactGroupId ArtifactVersion literal.
+   * @return Version.
+   * @throws ParseException If parsing fails.
+   */
+  public static ArtifactGroupId parse(String stringArtifactGroupId)
+  throws ParseException {
+    try {
+      return new ArtifactGroupId(stringArtifactGroupId);
+    } catch (RuntimeException re) {
+      if (re.getCause() instanceof ParseException) {
+        throw (ParseException)re.getCause();
+      } else {
+        throw re;
+      }
+    }
+  }
 
-	public String getGroupId() {
-		return this.groupId;
-	}
+  /**
+   * @return GroupId.
+   */
+  public String getGroupId() {
+    return this.groupId;
+  }
 
-	public String getArtifactId() {
-		return this.artifactId;
-	}
+  /**
+   * @return ArtifactId.
+   */
+  public String getArtifactId() {
+    return this.artifactId;
+  }
 
-	/**
-	 * @return ArtifactGroupId literal.
-	 */
-	@Override
-	public String toString() {
-		return this.groupId + ":" + this.artifactId;
-	}
+  /**
+   * @return ArtifactGroupId literal.
+   */
+  @Override
+  public String toString() {
+    return this.groupId + ":" + this.artifactId;
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.artifactId.hashCode();
-		result = (prime * result) + this.groupId.hashCode();
+    result = 1;
+    result = (prime * result) + this.artifactId.hashCode();
+    result = (prime * result) + this.groupId.hashCode();
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object other) {
-		ArtifactGroupId artifactGroupIdOther;
+  @Override
+  public boolean equals(Object other) {
+    ArtifactGroupId artifactGroupIdOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof ArtifactGroupId)) {
-			return false;
-		}
+    if (!(other instanceof ArtifactGroupId)) {
+      return false;
+    }
 
-		artifactGroupIdOther = (ArtifactGroupId)other;
+    artifactGroupIdOther = (ArtifactGroupId)other;
 
-		return this.groupId.equals(artifactGroupIdOther.groupId) && this.artifactId.equals(artifactGroupIdOther.artifactId);
-	}
+    return this.groupId.equals(artifactGroupIdOther.groupId) && this.artifactId.equals(artifactGroupIdOther.artifactId);
+  }
 }

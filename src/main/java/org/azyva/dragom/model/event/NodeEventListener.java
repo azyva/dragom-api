@@ -26,5 +26,5 @@ package org.azyva.dragom.model.event;
  * @author David Raymond
  */
 public interface NodeEventListener<NodeEventClass extends NodeEvent> {
-	void onEvent(NodeEventClass nodeEvent);
+  void onEvent(NodeEventClass nodeEvent);
 }

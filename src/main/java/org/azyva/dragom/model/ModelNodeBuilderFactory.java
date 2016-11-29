@@ -25,17 +25,17 @@ package org.azyva.dragom.model;
  * @author David Raymond
  */
 public interface ModelNodeBuilderFactory {
-	/**
-	 * Creates a {@link ClassificationNodeBuilder}.
-	 *
-	 * @return ClassificationNodeBuilder.
-	 */
-	ClassificationNodeBuilder createClassificationNodeBuilder();
+  /**
+   * Creates a {@link ClassificationNodeBuilder}.
+   *
+   * @return ClassificationNodeBuilder.
+   */
+  ClassificationNodeBuilder createClassificationNodeBuilder();
 
-	/**
-	 * Creates a {@link ModuleBuilder}.
-	 *
-	 * @return ModuleBuilder.
-	 */
-	ModuleBuilder createModuleBuilder();
+  /**
+   * Creates a {@link ModuleBuilder}.
+   *
+   * @return ModuleBuilder.
+   */
+  ModuleBuilder createModuleBuilder();
 }

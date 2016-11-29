@@ -29,28 +29,28 @@ import org.azyva.dragom.model.config.NodeType;
  * @author David Raymond
  */
 public interface ClassificationNode extends Node {
-	/**
-	 * @return List of all the child {@link Node}'s.
-	 */
-	List<Node> getListChildNode();
+  /**
+   * @return List of all the child {@link Node}'s.
+   */
+  List<Node> getListChildNode();
 
-	/**
-	 * Returns a child {@link Node}.
-	 *
-	 * @param name Name of the child Node.
-	 * @return Child Node. null if no child of the specified name is currently
-	 *   defined.
-	 */
-	Node getNodeChild(String name);
+  /**
+   * Returns a child {@link Node}.
+   *
+   * @param name Name of the child Node.
+   * @return Child Node. null if no child of the specified name is currently
+   *   defined.
+   */
+  Node getNodeChild(String name);
 
-	/**
-	 * Traverses the Node hierarchy rooted at this ClassificationNode depth first.
-	 *
-	 * @param nodeTypeFilter NodeType to visit. If null, all NodeType are visited.
-	 * @param nodeVisitor {@link NodeVisitor#visitNode} is called for each Node
-	 *   visited.
-	 * @return Indicates if the traversal has been aborted by NodeVisitor.visitNode
-	 *   returning true.
-	 */
-	boolean traverseNodeHierarchyDepthFirst(NodeType nodeTypeFilter, NodeVisitor nodeVisitor);
+  /**
+   * Traverses the Node hierarchy rooted at this ClassificationNode depth first.
+   *
+   * @param nodeTypeFilter NodeType to visit. If null, all NodeType are visited.
+   * @param nodeVisitor {@link NodeVisitor#visitNode} is called for each Node
+   *   visited.
+   * @return Indicates if the traversal has been aborted by NodeVisitor.visitNode
+   *   returning true.
+   */
+  boolean traverseNodeHierarchyDepthFirst(NodeType nodeTypeFilter, NodeVisitor nodeVisitor);
 }

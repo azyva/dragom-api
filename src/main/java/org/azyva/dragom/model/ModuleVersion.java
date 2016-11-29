@@ -33,7 +33,7 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * <p>
  * Implements value semantics. Instances are immutable.
  * <p>
- * Implements {@link hashCode} and {@link equals} so that instances can be used as
+ * Implements {@link #hashCode} and {@link #equals} so that instances can be used as
  * Map keys.
  * <p>
  * ModuleVersion support the literal form
@@ -46,187 +46,190 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public final class ModuleVersion {
-	/**
-	 * See description in ResourceBundle.
-	 */
-	private static final String MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
+  /**
+   * See description in ResourceBundle.
+   */
+  private static final String MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR = "MODULE_VERSION_PARSING_ERROR";
 
-	/**
-	 * ResourceBundle specific to this class.
-	 */
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ModuleVersion.class.getName() + "ResourceBundle");
+  /**
+   * ResourceBundle specific to this class.
+   */
+  private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ModuleVersion.class.getName() + "ResourceBundle");
 
-	/**
-	 * Pattern for parsing an ModuleVersion literal.
-	 */
-	private static final Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
+  /**
+   * Pattern for parsing an ModuleVersion literal.
+   */
+  private static final Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
 
-	/**
-	 * NodePath.
-	 */
-	private NodePath nodePath;
+  /**
+   * NodePath.
+   */
+  private NodePath nodePath;
 
-	/**
-	 * Verseion.
-	 */
-	private Version version;
+  /**
+   * Verseion.
+   */
+  private Version version;
 
-	/**
-	 * Constructor using the individual fields.
-	 *
-	 * @param nodePath NodePath. Cannot be partial.
-	 * @param version Version. Can be null to represent the default Version of a
-	 *   {@link Module}, or simply not include a Version.
-	 */
-	public ModuleVersion(NodePath nodePath, Version version) {
-		if (nodePath == null) {
-			throw new RuntimeException("NodePath cannot be null.");
-		}
+  /**
+   * Constructor using the individual fields.
+   *
+   * @param nodePath NodePath. Cannot be partial.
+   * @param version Version. Can be null to represent the default Version of a
+   *   {@link Module}, or simply not include a Version.
+   */
+  public ModuleVersion(NodePath nodePath, Version version) {
+    if (nodePath == null) {
+      throw new RuntimeException("NodePath cannot be null.");
+    }
 
-		if (nodePath.isPartial()) {
-			throw new RuntimeException("The NodePath " + nodePath + " must not be partial.");
-		}
+    if (nodePath.isPartial()) {
+      throw new RuntimeException("The NodePath " + nodePath + " must not be partial.");
+    }
 
-		this.nodePath = nodePath;
-		this.version = version;
-	}
+    this.nodePath = nodePath;
+    this.version = version;
+  }
 
-	/**
-	 * Constructor using only a {@link NodePath}, with a null {@link Version} to
-	 * represent the default Version of a {@link Module}, or simply not include a
-	 * Version.
-	 *
-	 * @param nodePath NodePath. Cannot be partial.
-	 */
-	public ModuleVersion(NodePath nodePath) {
-		if (nodePath == null) {
-			throw new RuntimeException("NodePath cannot be null.");
-		}
+  /**
+   * Constructor using only a {@link NodePath}, with a null {@link Version} to
+   * represent the default Version of a {@link Module}, or simply not include a
+   * Version.
+   *
+   * @param nodePath NodePath. Cannot be partial.
+   */
+  public ModuleVersion(NodePath nodePath) {
+    if (nodePath == null) {
+      throw new RuntimeException("NodePath cannot be null.");
+    }
 
-		if (nodePath.isPartial()) {
-			throw new RuntimeException("The NodsePath " + nodePath + " must not be partial.");
-		}
+    if (nodePath.isPartial()) {
+      throw new RuntimeException("The NodsePath " + nodePath + " must not be partial.");
+    }
 
-		this.nodePath = nodePath;
-	}
+    this.nodePath = nodePath;
+  }
 
-	/**
-	 * Constructor using a ModuleVersion literal.
-	 * <p>
-	 * Throws RuntimeException if parsing fails.
-	 *
-	 * @param stringModuleVersion ModuleVersion literal.
-	 */
-	public ModuleVersion(String stringModuleVersion) {
-		Matcher matcher;
+  /**
+   * Constructor using a ModuleVersion literal.
+   * <p>
+   * Throws RuntimeException if parsing fails.
+   *
+   * @param stringModuleVersion ModuleVersion literal.
+   */
+  public ModuleVersion(String stringModuleVersion) {
+    Matcher matcher;
 
-		matcher = ModuleVersion.patternModuleVersionLiteral.matcher(stringModuleVersion);
+    matcher = ModuleVersion.patternModuleVersionLiteral.matcher(stringModuleVersion);
 
-		try {
-			if (!matcher.matches()) {
-				throw new ParseException(MessageFormat.format(ModuleVersion.resourceBundle.getString(ModuleVersion.MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR), stringModuleVersion, ModuleVersion.patternModuleVersionLiteral), 0);
-			}
+    try {
+      if (!matcher.matches()) {
+        throw new ParseException(MessageFormat.format(ModuleVersion.resourceBundle.getString(ModuleVersion.MSG_PATTERN_KEY_MODULE_VERSION_PARSING_ERROR), stringModuleVersion, ModuleVersion.patternModuleVersionLiteral), 0);
+      }
 
-			this.nodePath = NodePath.parse(matcher.group(1));
+      this.nodePath = NodePath.parse(matcher.group(1));
 
-			if (matcher.group(2) != null) {
-				try {
-					this.version = Version.parse(matcher.group(2));
-				} catch (ParseException pe) {
-					throw new ParseException(pe.getMessage(), pe.getErrorOffset() + matcher.start(2));
-				}
-			}
-		} catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
+      if (matcher.group(2) != null) {
+        try {
+          this.version = Version.parse(matcher.group(2));
+        } catch (ParseException pe) {
+          throw new ParseException(pe.getMessage(), pe.getErrorOffset() + matcher.start(2));
+        }
+      }
+    } catch (ParseException pe) {
+      throw new RuntimeException(pe);
+    }
+  }
 
-	/**
-	 * Parses a ModuleVersion literal.
-	 *
-	 * @param stringModuleVersion Version literal.
-	 * @return Version.
-	 * @throws ParseException If parsing fails.
-	 */
-	public static ModuleVersion parse(String stringModuleVersion)
-	throws ParseException {
-		try {
-			return new ModuleVersion(stringModuleVersion);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof ParseException) {
-				throw (ParseException)re.getCause();
-			} else {
-				throw re;
-			}
-		}
-	}
+  /**
+   * Parses a ModuleVersion literal.
+   *
+   * @param stringModuleVersion Version literal.
+   * @return Version.
+   * @throws ParseException If parsing fails.
+   */
+  public static ModuleVersion parse(String stringModuleVersion)
+  throws ParseException {
+    try {
+      return new ModuleVersion(stringModuleVersion);
+    } catch (RuntimeException re) {
+      if (re.getCause() instanceof ParseException) {
+        throw (ParseException)re.getCause();
+      } else {
+        throw re;
+      }
+    }
+  }
 
-	public NodePath getNodePath() {
-		return this.nodePath;
-	}
+  /**
+   * @return NodePath.
+   */
+  public NodePath getNodePath() {
+    return this.nodePath;
+  }
 
-	/**
-	 * Returns the {@link Version}.
-	 * <p>
-	 * Can be null in some cases to represent the default Version of a Module as
-	 * defined by the {@link ScmPlugin}.
-	 *
-	 * @return See description.
-	 */
-	public Version getVersion() {
-		return this.version;
-	}
+  /**
+   * Returns the {@link Version}.
+   * <p>
+   * Can be null in some cases to represent the default Version of a Module as
+   * defined by the {@link ScmPlugin}.
+   *
+   * @return See description.
+   */
+  public Version getVersion() {
+    return this.version;
+  }
 
-	/**
-	 * @return ModuleVersion literal.
-	 */
-	@Override
-	public String toString() {
-		if (this.version == null) {
-			return this.nodePath.toString();
-		} else {
-			return this.nodePath.toString() +  ':' + this.version;
-		}
-	}
+  /**
+   * @return ModuleVersion literal.
+   */
+  @Override
+  public String toString() {
+    if (this.version == null) {
+      return this.nodePath.toString();
+    } else {
+      return this.nodePath.toString() +  ':' + this.version;
+    }
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.nodePath.hashCode();
-		result = (prime * result) + (this.version == null ? 0 : this.version.hashCode());
+    result = 1;
+    result = (prime * result) + this.nodePath.hashCode();
+    result = (prime * result) + (this.version == null ? 0 : this.version.hashCode());
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object other) {
-		ModuleVersion moduleVersionOther;
+  @Override
+  public boolean equals(Object other) {
+    ModuleVersion moduleVersionOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof ModuleVersion)) {
-			return false;
-		}
+    if (!(other instanceof ModuleVersion)) {
+      return false;
+    }
 
-		moduleVersionOther = (ModuleVersion)other;
+    moduleVersionOther = (ModuleVersion)other;
 
-		if (!this.nodePath.equals(moduleVersionOther.nodePath)) {
-			return false;
-		}
+    if (!this.nodePath.equals(moduleVersionOther.nodePath)) {
+      return false;
+    }
 
-		if (this.version == null) {
-			if (moduleVersionOther.version != null) {
-				return false;
-			}
-		} else if (!this.version.equals(moduleVersionOther.version)) {
-			return false;
-		}
+    if (this.version == null) {
+      if (moduleVersionOther.version != null) {
+        return false;
+      }
+    } else if (!this.version.equals(moduleVersionOther.version)) {
+      return false;
+    }
 
-		return true;
-	}
+    return true;
+  }
 }

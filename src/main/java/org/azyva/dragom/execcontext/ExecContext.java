@@ -126,121 +126,121 @@ import org.azyva.dragom.model.Model;
  * @author David Raymond
  */
 public interface ExecContext {
-	/**
-	 * Returns the {@link Model} Model.
-	 * <p>
-	 * The Model is at global scope. During the configuration of the ExecContext
-	 * during a tool initialization, a shared instance Model can be set (if
-	 * tool executions share a single JVM instance).
-	 *
-	 * @return See description.
-	 */
-	Model getModel();
+  /**
+   * Returns the {@link Model} Model.
+   * <p>
+   * The Model is at global scope. During the configuration of the ExecContext
+   * during a tool initialization, a shared instance Model can be set (if
+   * tool executions share a single JVM instance).
+   *
+   * @return See description.
+   */
+  Model getModel();
 
-	/**
-	 * Returns an {@link ExecContextPlugin}.
-	 * <p>
-	 * ExecContextPlugin's are identified by their (interface) class.
-	 *
-	 * @param <ExecContextPluginInterface> Interface of the ExecContextPlugin.
-	 * @param classExecContextPluginInterface Class of the ExecContextPlugin.
-	 * @return ExecContextPlugin. null if not found.
-	 */
-	<ExecContextPluginInterface extends ExecContextPlugin> ExecContextPluginInterface getExecContextPlugin(Class<ExecContextPluginInterface> classExecContextPluginInterface);
+  /**
+   * Returns an {@link ExecContextPlugin}.
+   * <p>
+   * ExecContextPlugin's are identified by their (interface) class.
+   *
+   * @param <ExecContextPluginInterface> Interface of the ExecContextPlugin.
+   * @param classExecContextPluginInterface Class of the ExecContextPlugin.
+   * @return ExecContextPlugin. null if not found.
+   */
+  <ExecContextPluginInterface extends ExecContextPlugin> ExecContextPluginInterface getExecContextPlugin(Class<ExecContextPluginInterface> classExecContextPluginInterface);
 
-	/**
-	 * @return Set of all initialization properties.
-	 */
-	Set<String> getSetInitProperty();
+  /**
+   * @return Set of all initialization properties.
+   */
+  Set<String> getSetInitProperty();
 
-	/**
-	 * Returns an initialization property.
-	 *
-	 * @param name Name of the property.
-	 * @return Value of the property.
-	 */
-	String getInitProperty(String name);
+  /**
+   * Returns an initialization property.
+   *
+   * @param name Name of the property.
+   * @return Value of the property.
+   */
+  String getInitProperty(String name);
 
-	/**
-	 * Returns a workspace property.
-	 *
-	 * @param name Name of the property.
-	 * @return Value of the property.
-	 */
-	String getProperty(String name);
+  /**
+   * Returns a workspace property.
+   *
+   * @param name Name of the property.
+   * @return Value of the property.
+   */
+  String getProperty(String name);
 
-	/**
-	 * Sets a workspace property.
-	 *
-	 * @param name Name of the property.
-	 * @param value Value of the property. Can be null, in which case the behavior is
-	 *   expected to be identical to {@link #removeProperty}.
-	 */
-	void setProperty(String name, String value);
+  /**
+   * Sets a workspace property.
+   *
+   * @param name Name of the property.
+   * @param value Value of the property. Can be null, in which case the behavior is
+   *   expected to be identical to {@link #removeProperty}.
+   */
+  void setProperty(String name, String value);
 
-	/**
-	 * Returns a Set of all workspace property names having a given prefix.
-	 *
-	 * @param prefix Prefix of the properties. Can be null in which case all
-	 *   properties are returned.
-	 * @return See description.
-	 */
-	Set<String> getSetProperty(String prefix);
+  /**
+   * Returns a Set of all workspace property names having a given prefix.
+   *
+   * @param prefix Prefix of the properties. Can be null in which case all
+   *   properties are returned.
+   * @return See description.
+   */
+  Set<String> getSetProperty(String prefix);
 
-	/**
-	 * Removes a workspace property.
-	 *
-	 * @param name Name of the property.
-	 */
-	void removeProperty(String name);
+  /**
+   * Removes a workspace property.
+   *
+   * @param name Name of the property.
+   */
+  void removeProperty(String name);
 
-	/**
-	 * Removes all properties having a given prefix.
-	 *
-	 * @param prefix Prefix of the properties.
-	 */
-	void removeProperties(String prefix);
+  /**
+   * Removes all properties having a given prefix.
+   *
+   * @param prefix Prefix of the properties.
+   */
+  void removeProperties(String prefix);
 
-	/**
-	 * Returns a transient data.
-	 *
-	 * @param name Name of the data.
-	 * @return Value of the data.
-	 */
-	Object getTransientData(String name);
+  /**
+   * Returns a transient data.
+   *
+   * @param name Name of the data.
+   * @return Value of the data.
+   */
+  Object getTransientData(String name);
 
-	/**
-	 * Sets a transient data.
-	 * <p>
-	 * Transient data are generally very specific to and implementation details of the
-	 * class that sets them. The name of a transient data should therefore be prefixed
-	 * with the name of the caller class in order to avoid name clashes.
-	 *
-	 * @param name Name of the data.
-	 * @param value Value of the data. Can be null, in which case the data is
-	 *   effectively removed.
-	 */
-	void setTransientData(String name, Object value);
+  /**
+   * Sets a transient data.
+   * <p>
+   * Transient data are generally very specific to and implementation details of the
+   * class that sets them. The name of a transient data should therefore be prefixed
+   * with the name of the caller class in order to avoid name clashes.
+   *
+   * @param name Name of the data.
+   * @param value Value of the data. Can be null, in which case the data is
+   *   effectively removed.
+   */
+  void setTransientData(String name, Object value);
 
-	/**
-	 * @return Name given to the ExecContext so that it can be identified by users.
-	 *   Typically if the ExecContext is based on a workspace directory the name
-	 *   could include a reference to that directory.
-	 */
-	String getName();
+  /**
+   * @return Name given to the ExecContext so that it can be identified by users.
+   *   Typically if the ExecContext is based on a workspace directory the name
+   *   could include a reference to that directory.
+   */
+  String getName();
 
-	/**
-	 * If the ExecContext is cached, releases it so that a subsequent request for the
-	 * same ExecContext (for instance an ExecContext based on the same workspace) will
-	 * recreate it.
-	 * <p>
-	 * This method is not a regular release method that is meant to be called whenever
-	 * a tool is done with the ExecContext. It is a special method meant to be called
-	 * in exceptional situations when the user wants to do as if the ExecContext had
-	 * never been created, such as if data on disk has changed outside of the control
-	 * of the ExecContext.
-	 * <p>
-	 * If the ExecContext is not cached, this should be a noop operation.
-	 */
-	void release();
+  /**
+   * If the ExecContext is cached, releases it so that a subsequent request for the
+   * same ExecContext (for instance an ExecContext based on the same workspace) will
+   * recreate it.
+   * <p>
+   * This method is not a regular release method that is meant to be called whenever
+   * a tool is done with the ExecContext. It is a special method meant to be called
+   * in exceptional situations when the user wants to do as if the ExecContext had
+   * never been created, such as if data on disk has changed outside of the control
+   * of the ExecContext.
+   * <p>
+   * If the ExecContext is not cached, this should be a noop operation.
+   */
+  void release();
 }

@@ -30,16 +30,16 @@ import org.azyva.dragom.model.ClassificationNode;
  * @see Config
  */
 public interface ClassificationNodeConfig extends NodeConfig {
-	/**
-	 * @return List containing the child {@link NodeConfig}.
-	 */
-	List<NodeConfig> getListChildNodeConfig();
+  /**
+   * @return List containing the child {@link NodeConfig}.
+   */
+  List<NodeConfig> getListChildNodeConfig();
 
-	/**
-	 * Returns a child NodeConfig.
-	 *
-	 * @param name Name of the child NodeConfig.
-	 * @return Child NodeConfig. null if no child NodeConfig of the specified name.
-	 */
-	NodeConfig getNodeConfigChild(String name);
+  /**
+   * Returns a child NodeConfig.
+   *
+   * @param name Name of the child NodeConfig.
+   * @return Child NodeConfig. null if no child NodeConfig of the specified name.
+   */
+  NodeConfig getNodeConfigChild(String name);
 }

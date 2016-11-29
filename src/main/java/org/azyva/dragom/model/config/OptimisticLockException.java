@@ -39,12 +39,14 @@ import org.azyva.dragom.model.MutableNode;
  * @author David Raymond
  */
 public class OptimisticLockException extends RuntimeException {
-	// To keep the compiler from complaining.
-	static final long serialVersionUID = 0;
+  /**
+   * To keep the compiler from complaining.
+   */
+  static final long serialVersionUID = 0;
 
-	/**
-	 * Constructor.
-	 */
-	public OptimisticLockException() {
-	}
+  /**
+   * Constructor.
+   */
+  public OptimisticLockException() {
+  }
 }

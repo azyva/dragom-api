@@ -29,7 +29,7 @@ import org.azyva.dragom.model.Version;
  * @author David Raymond
  */
 public interface ArtifactVersionMapperPlugin extends ModulePlugin {
-	Version mapArtifactVersionToVersion(ArtifactVersion artifactVersion);
+  Version mapArtifactVersionToVersion(ArtifactVersion artifactVersion);
 
-	ArtifactVersion mapVersionToArtifactVersion(Version version);
+  ArtifactVersion mapVersionToArtifactVersion(Version version);
 }

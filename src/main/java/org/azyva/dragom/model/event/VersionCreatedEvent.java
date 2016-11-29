@@ -33,32 +33,32 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public abstract class VersionCreatedEvent extends ModuleEvent {
-	private Version version;
+  private Version version;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param module {@link Module} on which this {@link ModuleEvent} is raised.
-	 * @param version {@link Version} that was created.
-	 */
-	public VersionCreatedEvent(Module module, Version version) {
-		super(module);
-		this.version = version;
-	}
+  /**
+   * Constructor.
+   *
+   * @param module {@link Module} on which this {@link ModuleEvent} is raised.
+   * @param version {@link Version} that was created.
+   */
+  public VersionCreatedEvent(Module module, Version version) {
+    super(module);
+    this.version = version;
+  }
 
-	/**
-	 * @return Version that was created.
-	 */
-	public Version getVersion() {
-		return this.version;
-	}
+  /**
+   * @return Version that was created.
+   */
+  public Version getVersion() {
+    return this.version;
+  }
 
-	/**
-	 * @return String to help recognize the {@link ModuleEvent} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "VersionCreatedEvent [module=" + this.getModule() + ", version=" + this.version + "]";
-	}
+  /**
+   * @return String to help recognize the {@link ModuleEvent} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "VersionCreatedEvent [module=" + this.getModule() + ", version=" + this.version + "]";
+  }
 }

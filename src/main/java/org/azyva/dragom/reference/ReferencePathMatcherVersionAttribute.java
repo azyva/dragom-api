@@ -34,57 +34,57 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public class ReferencePathMatcherVersionAttribute implements ReferencePathMatcher {
-	/**
-	 * Name of the {@link Version} attribute.
-	 */
-	private String versionAttributeName;
+  /**
+   * Name of the {@link Version} attribute.
+   */
+  private String versionAttributeName;
 
-	/**
-	 * Value of the {@link Version} attribute to be matched.
-	 */
-	private String versionAttributeValue;
+  /**
+   * Value of the {@link Version} attribute to be matched.
+   */
+  private String versionAttributeValue;
 
-	/**
-	 * Model. Needed to access version attributes.
-	 */
-	private Model model;
+  /**
+   * Model. Needed to access version attributes.
+   */
+  private Model model;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param versionAttributeName Version attribute name.
-	 * @param versionAttributeValue Version attribute value.
-	 * @param model Model.
-	 */
-	public ReferencePathMatcherVersionAttribute(String versionAttributeName, String versionAttributeValue, Model model) {
-		this.versionAttributeName = versionAttributeName;
-		this.versionAttributeValue = versionAttributeValue;
-		this.model = model;
-	}
+  /**
+   * Constructor.
+   *
+   * @param versionAttributeName Version attribute name.
+   * @param versionAttributeValue Version attribute value.
+   * @param model Model.
+   */
+  public ReferencePathMatcherVersionAttribute(String versionAttributeName, String versionAttributeValue, Model model) {
+    this.versionAttributeName = versionAttributeName;
+    this.versionAttributeValue = versionAttributeValue;
+    this.model = model;
+  }
 
-	@Override
-	public boolean matches(ReferencePath referencePath) {
-		ModuleVersion moduleVersion;
-		Module module;
-		ScmPlugin scmPlugin;
-		Map<String, String> mapVersionAttr;
-		String versionAttributeValueFound;
+  @Override
+  public boolean matches(ReferencePath referencePath) {
+    ModuleVersion moduleVersion;
+    Module module;
+    ScmPlugin scmPlugin;
+    Map<String, String> mapVersionAttr;
+    String versionAttributeValueFound;
 
-		moduleVersion = referencePath.getLeafModuleVersion();
-		module = this.model.getModule(moduleVersion.getNodePath());
-		scmPlugin = module.getNodePlugin(ScmPlugin.class, null);
-		mapVersionAttr = scmPlugin.getMapVersionAttr(moduleVersion.getVersion());
-		versionAttributeValueFound = mapVersionAttr.get(this.versionAttributeName);
+    moduleVersion = referencePath.getLeafModuleVersion();
+    module = this.model.getModule(moduleVersion.getNodePath());
+    scmPlugin = module.getNodePlugin(ScmPlugin.class, null);
+    mapVersionAttr = scmPlugin.getMapVersionAttr(moduleVersion.getVersion());
+    versionAttributeValueFound = mapVersionAttr.get(this.versionAttributeName);
 
-		if (versionAttributeValueFound == null) {
-			return false;
-		}
+    if (versionAttributeValueFound == null) {
+      return false;
+    }
 
-		return versionAttributeValueFound.equals(this.versionAttributeValue);
-	}
+    return versionAttributeValueFound.equals(this.versionAttributeValue);
+  }
 
-	@Override
-	public boolean canMatchChildren(ReferencePath referencePath) {
-		return true;
-	}
+  @Override
+  public boolean canMatchChildren(ReferencePath referencePath) {
+    return true;
+  }
 }

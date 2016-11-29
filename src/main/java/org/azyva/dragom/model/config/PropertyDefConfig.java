@@ -28,22 +28,22 @@ import org.azyva.dragom.model.Model;
  * @see Config
  */
 public interface PropertyDefConfig {
-	/**
-	 * Returns the
-	 *
-	 * @return Name.
-	 */
-	String getName();
+  /**
+   * Returns the
+   *
+   * @return Name.
+   */
+  String getName();
 
-	/**
-	 * @return Value. null to avoid inheritance.
-	 */
-	String getValue();
+  /**
+   * @return Value. null to avoid inheritance.
+   */
+  String getValue();
 
-	/**
-	 * @return Indicates that this PropertyDefConfig applies specifically to the
-	 *   {@link NodeConfig} on which it is defined, as opposed to being inherited by
-	 *   child NodeConfig when interpreted by the {@link Model}.
-	 */
-	boolean isOnlyThisNode();
+  /**
+   * @return Indicates that this PropertyDefConfig applies specifically to the
+   *   {@link NodeConfig} on which it is defined, as opposed to being inherited by
+   *   child NodeConfig when interpreted by the {@link Model}.
+   */
+  boolean isOnlyThisNode();
 }

@@ -48,53 +48,89 @@ import java.io.Writer;
  */
 
 public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
-	public static interface BracketHandle extends Closeable {
-		/**
-		 * Closeable.close throws checked IOException which is useless and bothersome
-		 * in this context. We therefore redefine it without any exceptions.
-		 */
-		@Override
-		void close();
-	}
+  /**
+   * Represents a handle to an opened bracket or indentation in the output.
+   */
+  public static interface BracketHandle extends Closeable {
+    /**
+     * Closeable.close throws checked IOException which is useless and bothersome
+     * in this context. We therefore redefine it without any exceptions.
+     */
+    @Override
+    void close();
+  }
 
-	BracketHandle startBracket(String info);
+  /**
+   * Provides information information to the user at a new indentation level.
+   *
+   * @param info Information.
+   * @return BracketHandle.
+   */
+  BracketHandle startBracket(String info);
 
-	void provideInfo(String info);
+  /**
+   * Provides information information to the user at a new indentation level.
+   *
+   * @param info Information.
+   */
+  void provideInfo(String info);
 
-	/**
-	 * Provides information to the user in a way similar to {@link #provideInfo}, but
-	 * returns a Writer so that the caller can append additional information.
-	 * <p>
-	 * The caller is responsible for closing the Writer when done so that the plugin
-	 * is able to associate all of the additional information with the initial call to
-	 * this method. Calling close in this case should not close some underlying stream
-	 * in such a way that would render the system unstable. Specifically if the
-	 * Writer delegates to System.out, it must not delegate the close call. This use
-	 * of close is specific to the contract with this class and does not necessarily
-	 * respect the general contract of Writer.close.
-	 * <p>
-	 * No call to other methods of this plugin are allowed as long as the Writer is
-	 * not closed.
-	 *
-	 * @param info See similar parameter for provideInfo.
-	 * @return Writer.
-	 */
-	Writer provideInfoWithWriter(String info);
+  /**
+   * Provides information to the user in a way similar to {@link #provideInfo}, but
+   * returns a Writer so that the caller can append additional information.
+   * <p>
+   * The caller is responsible for closing the Writer when done so that the plugin
+   * is able to associate all of the additional information with the initial call to
+   * this method. Calling close in this case should not close some underlying stream
+   * in such a way that would render the system unstable. Specifically if the
+   * Writer delegates to System.out, it must not delegate the close call. This use
+   * of close is specific to the contract with this class and does not necessarily
+   * respect the general contract of Writer.close.
+   * <p>
+   * No call to other methods of this plugin are allowed as long as the Writer is
+   * not closed.
+   *
+   * @param info See similar parameter for provideInfo.
+   * @return Writer.
+   */
+  Writer provideInfoWithWriter(String info);
 
-	String getInfo(String prompt);
+  /**
+   * Obtains information from the user.
+   *
+   * <p>Only allowed if not {@link #isBatchMode}.
+   *
+   * @param prompt Prompt.
+   * @return Information.
+   */
+  String getInfo(String prompt);
 
-	String getInfoPassword(String prompt);
+  /**
+   * Similar to {@link #getInfo}, but if the user enters nothing, the provided
+   * default value is returned.
+   *
+   * @param prompt Prompt.
+   * @param defaultValue Default value.
+   * @return Information.
+   */
+  String getInfoWithDefault(String prompt, String defaultValue);
 
-	String getInfoWithDefault(String prompt, String defaultValue);
+  /**
+   * Obtains sensitive information from the user which should not be echoed back.
+   * Generally used for passwords.
+   *
+   * @param prompt Prompt.
+   * @return Information.
+   */
+  String getInfoPassword(String prompt);
 
-	/**
-	 * @return Indicates if the plugin, which essentially is the interaction point with
-	 *   the user, operates in batch mode, meaning that calls to {@link #getInfo} and
-	 *   {@link #getInfoWithDefault} are not allowed. Generally, caller should not
-	 *   worry about this and let these method fail if in batch mode. But some
-	 *   classes, such as DefaultCredetialStorePluginImpl, may need to know whether
-	 *   batch mode is enabled.
-
-	 */
-	boolean isBatchMode();
+  /**
+   * @return Indicates if the plugin, which essentially is the interaction point with
+   *   the user, operates in batch mode, meaning that calls to {@link #getInfo} and
+   *   {@link #getInfoWithDefault} are not allowed. Generally, caller should not
+   *   worry about this and let these method fail if in batch mode. But some
+   *   classes, such as DefaultCredetialStorePluginImpl, may need to know whether
+   *   batch mode is enabled.
+   */
+  boolean isBatchMode();
 }

@@ -28,11 +28,11 @@ package org.azyva.dragom.model;
  */
 
 public interface NodeVisitor {
-	/**
-	 * Called for each {@link Node} during traversal.
-	 *
-	 * @param node Node visited.
-	 * @return Indicates that the traversal must be aborted.
-	 */
-	boolean visitNode(Node node);
+  /**
+   * Called for each {@link Node} during traversal.
+   *
+   * @param node Node visited.
+   * @return Indicates that the traversal must be aborted.
+   */
+  boolean visitNode(Node node);
 }

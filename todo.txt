@@ -161,7 +161,7 @@ subtotal: 455.5
 2016-11-19: 14
 2016-11-20: 7
 2016-11-23: 3
-2016-11-27: 4
+2016-11-27: 6
 
 
 To test
@@ -318,6 +318,8 @@ It is easy enough to create a Maven submodule within a module in Eclipse (RC -> 
 - Also, need to rename artifactId after creating submodule since by default, artifactId is the module name (need to add the prefix artifactId of parent)
 
 Installed releng tools plugin, but limited since cannot control the format of the comment (I do not want a javadoc style comment).
+
+Installed CheckStyle plugin (eclipse-cs)
 
 
 

@@ -32,12 +32,14 @@ import org.azyva.dragom.model.MutableNode;
  * context in which it is thrown.
  */
 public class DuplicateNodeException extends RuntimeException {
-	// To keep the compiler from complaining.
-	static final long serialVersionUID = 0;
+  /**
+   * To keep the compiler from complaining.
+   */
+  static final long serialVersionUID = 0;
 
-	/**
-	 * Constructor.
-	 */
-	public DuplicateNodeException() {
-	}
+  /**
+   * Constructor.
+   */
+  public DuplicateNodeException() {
+  }
 }

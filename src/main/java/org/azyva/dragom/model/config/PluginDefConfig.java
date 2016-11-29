@@ -89,33 +89,33 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * @see Config
  */
 public interface PluginDefConfig {
-	/**
-	 * @return Class of the NodePlugin.
-	 */
-	Class<? extends NodePlugin> getClassNodePlugin();
+  /**
+   * @return Class of the NodePlugin.
+   */
+  Class<? extends NodePlugin> getClassNodePlugin();
 
-	/**
-	 * @return Plugin ID. Can be null.
-	 */
-	String getPluginId();
+  /**
+   * @return Plugin ID. Can be null.
+   */
+  String getPluginId();
 
-	/**
-	 * Returns the plugin implementation class name.
-	 * <p>
-	 * null to avoid inheritance.
-	 * <p>
-	 * This class must either implement {@link PluginFactory} or have a constructor
-	 * and implement the {@link NodePlugin} and the appropriate sub-interface
-	 * identified by {@link #getClassNodePlugin}.
-	 *
-	 * @return See description.
-	 */
-	String getPluginClass();
+  /**
+   * Returns the plugin implementation class name.
+   * <p>
+   * null to avoid inheritance.
+   * <p>
+   * This class must either implement {@link PluginFactory} or have a constructor
+   * and implement the {@link NodePlugin} and the appropriate sub-interface
+   * identified by {@link #getClassNodePlugin}.
+   *
+   * @return See description.
+   */
+  String getPluginClass();
 
-	/**
-	 * @return Indicates that this PluginDefConfig applies specifically to the
-	 *   {@link NodeConfig} on which it is defined, as opposed to being inherited by
-	 *   child NodeConfig when interpreted by the {@link Model}.
-	 */
-	boolean isOnlyThisNode();
+  /**
+   * @return Indicates that this PluginDefConfig applies specifically to the
+   *   {@link NodeConfig} on which it is defined, as opposed to being inherited by
+   *   child NodeConfig when interpreted by the {@link Model}.
+   */
+  boolean isOnlyThisNode();
 }

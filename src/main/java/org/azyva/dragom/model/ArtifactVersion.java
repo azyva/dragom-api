@@ -32,7 +32,7 @@ import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
  * <p>
  * Implements value semantics. Instances are immutable.
  * <p>
- * Implements {@link hashCode} and {@link equals} so that instances can be used as
+ * Implements {@link #hashCode} and {@link #equals} so that instances can be used as
  * Map keys.
  * </p>
  * This class is essentially the artifact counterpart of the source-level
@@ -66,173 +66,176 @@ import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
  * @author David Raymond
  */
 public final class ArtifactVersion {
-	/**
-	 * Suffix for dynamic ArtifactVersion.
-	 */
-	public static final String DYNAMIC_VERSION_SUFFIX = "-SNAPSHOT";
+  /**
+   * Suffix for dynamic ArtifactVersion.
+   */
+  public static final String DYNAMIC_VERSION_SUFFIX = "-SNAPSHOT";
 
-	/**
-	 * See description in ResourceBundle.
-	 */
-	private static final String MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR = "ARTIFACT_VERSION_PARSING_ERROR";
+  /**
+   * See description in ResourceBundle.
+   */
+  private static final String MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR = "ARTIFACT_VERSION_PARSING_ERROR";
 
-	/**
-	 * ResourceBundle specific to this class.
-	 */
-	private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactVersion.class.getName() + "ResourceBundle");
+  /**
+   * ResourceBundle specific to this class.
+   */
+  private static final ResourceBundle resourceBundle = ResourceBundle.getBundle(ArtifactVersion.class.getName() + "ResourceBundle");
 
-	/**
-	 * Pattern for parsing an ArtifactVersion literal.
-	 */
-	private static final Pattern patternArtifactVersionLiteral = Pattern.compile("([a-zA-Z0-9\\.\\-_]+)(-SNAPSHOT)?+");
+  /**
+   * Pattern for parsing an ArtifactVersion literal.
+   */
+  private static final Pattern patternArtifactVersionLiteral = Pattern.compile("([a-zA-Z0-9\\.\\-_]+)(-SNAPSHOT)?+");
 
-	/**
-	 * VersionType.
-	 */
-	private VersionType versionType;
+  /**
+   * VersionType.
+   */
+  private VersionType versionType;
 
-	/**
-	 * Version string, without the -SNAPSHOT suffix, if any.
-	 */
-	private String version;
+  /**
+   * Version string, without the -SNAPSHOT suffix, if any.
+   */
+  private String version;
 
-	/**
-	 * Constructor using the individual fields.
-	 *
-	 * @param versionType VersionType.
-	 * @param version String part of the Version.
-	 */
-	public ArtifactVersion(VersionType versionType, String version) {
-		if ((versionType == null) || (version == null)) {
-			throw new RuntimeException("Version type or version cannot be null.");
-		}
+  /**
+   * Constructor using the individual fields.
+   *
+   * @param versionType VersionType.
+   * @param version String part of the Version.
+   */
+  public ArtifactVersion(VersionType versionType, String version) {
+    if ((versionType == null) || (version == null)) {
+      throw new RuntimeException("Version type or version cannot be null.");
+    }
 
-		if (version.length() == 0) {
-			throw new RuntimeException("Version cannot be the empty string.");
-		}
+    if (version.length() == 0) {
+      throw new RuntimeException("Version cannot be the empty string.");
+    }
 
-		this.versionType = versionType;
-		this.version = version;
-	}
+    this.versionType = versionType;
+    this.version = version;
+  }
 
-	/**
-	 * Constructor using an ArtifactVersion literal.
-	 * <p>
-	 * Throws RuntimeException if parsing fails.
-	 *
-	 * @param stringArtifactVersion ArtifactVersion literal.
-	 */
-	public ArtifactVersion(String stringArtifactVersion) {
-		Matcher matcher;
+  /**
+   * Constructor using an ArtifactVersion literal.
+   * <p>
+   * Throws RuntimeException if parsing fails.
+   *
+   * @param stringArtifactVersion ArtifactVersion literal.
+   */
+  public ArtifactVersion(String stringArtifactVersion) {
+    Matcher matcher;
 
-		matcher = ArtifactVersion.patternArtifactVersionLiteral.matcher(stringArtifactVersion);
+    matcher = ArtifactVersion.patternArtifactVersionLiteral.matcher(stringArtifactVersion);
 
-		try {
-			if (!matcher.matches()) {
-				throw new ParseException(MessageFormat.format(ArtifactVersion.resourceBundle.getString(ArtifactVersion.MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR), stringArtifactVersion, ArtifactVersion.patternArtifactVersionLiteral), 0);
-			}
+    try {
+      if (!matcher.matches()) {
+        throw new ParseException(MessageFormat.format(ArtifactVersion.resourceBundle.getString(ArtifactVersion.MSG_PATTERN_KEY_ARTIFACT_VERSION_PARSING_ERROR), stringArtifactVersion, ArtifactVersion.patternArtifactVersionLiteral), 0);
+      }
 
-			this.version = matcher.group(1);
+      this.version = matcher.group(1);
 
-			if (matcher.group(2) != null) {
-				this.versionType = VersionType.DYNAMIC;
-			} else {
-				this.versionType = VersionType.STATIC;
-			}
-		} catch (ParseException pe) {
-			throw new RuntimeException(pe);
-		}
-	}
+      if (matcher.group(2) != null) {
+        this.versionType = VersionType.DYNAMIC;
+      } else {
+        this.versionType = VersionType.STATIC;
+      }
+    } catch (ParseException pe) {
+      throw new RuntimeException(pe);
+    }
+  }
 
-	/**
-	 * Parses an ArtifactVersion literal.
-	 *
-	 * @param stringArtifactVersion ArtifactVersion literal.
-	 * @return ArtifactVersion.
-	 * @throws ParseException If parsing fails.
-	 */
-	public static ArtifactVersion parse(String stringArtifactVersion)
-	throws ParseException {
-		try {
-			return new ArtifactVersion(stringArtifactVersion);
-		} catch (RuntimeException re) {
-			if (re.getCause() instanceof ParseException) {
-				throw (ParseException)re.getCause();
-			} else {
-				throw re;
-			}
-		}
-	}
+  /**
+   * Parses an ArtifactVersion literal.
+   *
+   * @param stringArtifactVersion ArtifactVersion literal.
+   * @return ArtifactVersion.
+   * @throws ParseException If parsing fails.
+   */
+  public static ArtifactVersion parse(String stringArtifactVersion)
+  throws ParseException {
+    try {
+      return new ArtifactVersion(stringArtifactVersion);
+    } catch (RuntimeException re) {
+      if (re.getCause() instanceof ParseException) {
+        throw (ParseException)re.getCause();
+      } else {
+        throw re;
+      }
+    }
+  }
 
-	public VersionType getVersionType() {
-		return this.versionType;
-	}
+  /**
+   * @return VersionType.
+   */
+  public VersionType getVersionType() {
+    return this.versionType;
+  }
 
-	/**
-	 * @return String part of the ArtifactVersion, without the {@link VersionType}
-	 *   information.
-	 */
-	public String getVersion() {
-		return this.version;
-	}
+  /**
+   * @return String part of the ArtifactVersion, without the {@link VersionType}
+   *   information.
+   */
+  public String getVersion() {
+    return this.version;
+  }
 
-	/**
-	 * Returns a {@link Version} corresponding to this ArtifactVersion assuming a
-	 * direct equivalence between the two.
-	 * <p>
-	 * Note that the mapping between ArtifactVersion and Version during tool
-	 * execution is generally handled by {@link ArtifactVersionMapperPlugin}. This
-	 * method implements a very simple mapping which is only one possible mapping.
-	 * ArtifactVersionMapperPlugin must generally be used so that module-specific
-	 * mapping algorithms can be honored.
-	 *
-	 * @return Version.
-	 */
-	public Version getCorrespondingVersion() {
-		return new Version(this.versionType, this.version);
-	}
+  /**
+   * Returns a {@link Version} corresponding to this ArtifactVersion assuming a
+   * direct equivalence between the two.
+   * <p>
+   * Note that the mapping between ArtifactVersion and Version during tool
+   * execution is generally handled by {@link ArtifactVersionMapperPlugin}. This
+   * method implements a very simple mapping which is only one possible mapping.
+   * ArtifactVersionMapperPlugin must generally be used so that module-specific
+   * mapping algorithms can be honored.
+   *
+   * @return Version.
+   */
+  public Version getCorrespondingVersion() {
+    return new Version(this.versionType, this.version);
+  }
 
-	/**
-	 * @return ArtifactVersion literal.
-	 */
-	@Override
-	public String toString() {
-		switch (this.versionType) {
-		case DYNAMIC:
-			return this.version + ArtifactVersion.DYNAMIC_VERSION_SUFFIX;
-		case STATIC:
-			return this.version;
-		default:
-			throw new RuntimeException("Invalid version type " + this.versionType + '.');
-		}
-	}
+  /**
+   * @return ArtifactVersion literal.
+   */
+  @Override
+  public String toString() {
+    switch (this.versionType) {
+    case DYNAMIC:
+      return this.version + ArtifactVersion.DYNAMIC_VERSION_SUFFIX;
+    case STATIC:
+      return this.version;
+    default:
+      throw new RuntimeException("Invalid version type " + this.versionType + '.');
+    }
+  }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result;
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result;
 
-		result = 1;
-		result = (prime * result) + this.versionType.hashCode();
-		result = (prime * result) + this.version.hashCode();
+    result = 1;
+    result = (prime * result) + this.versionType.hashCode();
+    result = (prime * result) + this.version.hashCode();
 
-		return result;
-	}
+    return result;
+  }
 
-	@Override
-	public boolean equals(Object other) {
-		ArtifactVersion versionOther;
+  @Override
+  public boolean equals(Object other) {
+    ArtifactVersion versionOther;
 
-		if (this == other) {
-			return true;
-		}
+    if (this == other) {
+      return true;
+    }
 
-		if (!(other instanceof ArtifactVersion)) {
-			return false;
-		}
+    if (!(other instanceof ArtifactVersion)) {
+      return false;
+    }
 
-		versionOther = (ArtifactVersion)other;
+    versionOther = (ArtifactVersion)other;
 
-		return (this.versionType == versionOther.versionType) && (this.version.equals(versionOther.version));
-	}
+    return (this.versionType == versionOther.versionType) && (this.version.equals(versionOther.version));
+  }
 }

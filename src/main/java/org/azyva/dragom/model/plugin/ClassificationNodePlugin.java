@@ -27,14 +27,14 @@ import org.azyva.dragom.model.ClassificationNode;
  * @author David Raymond
  */
 public interface ClassificationNodePlugin extends NodePlugin {
-	/**
-	 * Returns the {@link ClassificationNode} to which this ClassificationNodePlugin
-	 * is attached.
-	 * <p>
-	 * The object returned should be the same as that returned by {NodePlugin#getNode}
-	 * but cast as a ClassificationNode.
-	 *
-	 * @return See description.
-	 */
-	ClassificationNode getClassificationNode();
+  /**
+   * Returns the {@link ClassificationNode} to which this ClassificationNodePlugin
+   * is attached.
+   * <p>
+   * The object returned should be the same as that returned by {NodePlugin#getNode}
+   * but cast as a ClassificationNode.
+   *
+   * @return See description.
+   */
+  ClassificationNode getClassificationNode();
 }

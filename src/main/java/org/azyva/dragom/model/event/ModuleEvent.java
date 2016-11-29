@@ -27,28 +27,28 @@ import org.azyva.dragom.model.Module;
  * @author David Raymond
  */
 public abstract class ModuleEvent extends NodeEvent {
-	/**
-	 * Constructor.
-	 *
-	 * @param module on which the event is raised.
-	 */
-	public ModuleEvent(Module module) {
-		super(module);
-	}
+  /**
+   * Constructor.
+   *
+   * @param module on which the event is raised.
+   */
+  public ModuleEvent(Module module) {
+    super(module);
+  }
 
-	/**
-	 * @return Module on which this ModuleEvent is raised.
-	 */
-	public Module getModule() {
-		return (Module)this.getNode();
-	}
+  /**
+   * @return Module on which this ModuleEvent is raised.
+   */
+  public Module getModule() {
+    return (Module)this.getNode();
+  }
 
-	/**
-	 * @return String to help recognize the {@link ModuleEvent} instance, in logs for
-	 *   example.
-	 */
-	@Override
-	public String toString() {
-		return "ModuleEvent [module=" + this.getNode() + "]";
-	}
+  /**
+   * @return String to help recognize the {@link ModuleEvent} instance, in logs for
+   *   example.
+   */
+  @Override
+  public String toString() {
+    return "ModuleEvent [module=" + this.getNode() + "]";
+  }
 }

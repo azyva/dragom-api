@@ -46,28 +46,28 @@ import org.azyva.dragom.model.NodePath;
  * @author David Raymond
  */
 public interface FindModuleByArtifactGroupIdPlugin extends ClassificationNodePlugin {
-	/**
-	 * Returns the (NodePath of the) modules whose build possibly produce an
-	 * ArtifactGroupId.
-	 *
-	 * The reason for returning module NodePath's is that the modules may not be
-	 * created and it is the responsibility of the caller to attempt to create the
-	 * modules, which may not even exist (because they do not exist in the SCM).
-	 *
-	 * The build of the Module returned do not necessarily produce the given
-	 * ArtifactGroupId. This must be verified the ArtifactInfoPlugin of the Module.
-	 * The ClassificationNode cannot know for sure if the build of a Module produces a
-	 * given ArtifactGroupId.
-	 *
-	 * If the ClassificationNode does not know of any Module whose build may produce
-	 * the given ArtifactGroupId, either null or an empty List can be equivalently
-	 * returned.
-	 *
-	 * Generally the modules returned should be immediate children of the
-	 * classification node associated with the plugin. But this is not mandatory.
-	 *
-	 * @param artifactGroupId ArfactGroupId.
-	 * @return See description.
-	 */
-	List<NodePath> getListModulePossiblyProduceArtifactGroupId(ArtifactGroupId artifactGroupId);
+  /**
+   * Returns the (NodePath of the) modules whose build possibly produce an
+   * ArtifactGroupId.
+   *
+   * The reason for returning module NodePath's is that the modules may not be
+   * created and it is the responsibility of the caller to attempt to create the
+   * modules, which may not even exist (because they do not exist in the SCM).
+   *
+   * The build of the Module returned do not necessarily produce the given
+   * ArtifactGroupId. This must be verified the ArtifactInfoPlugin of the Module.
+   * The ClassificationNode cannot know for sure if the build of a Module produces a
+   * given ArtifactGroupId.
+   *
+   * If the ClassificationNode does not know of any Module whose build may produce
+   * the given ArtifactGroupId, either null or an empty List can be equivalently
+   * returned.
+   *
+   * Generally the modules returned should be immediate children of the
+   * classification node associated with the plugin. But this is not mandatory.
+   *
+   * @param artifactGroupId ArfactGroupId.
+   * @return See description.
+   */
+  List<NodePath> getListModulePossiblyProduceArtifactGroupId(ArtifactGroupId artifactGroupId);
 }

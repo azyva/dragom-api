@@ -57,41 +57,41 @@ import org.azyva.dragom.execcontext.plugin.ToolLifeCycleExecContextPlugin;
  * @author David Raymond
  */
 public interface ToolLifeCycleExecContext {
-	/**
-	 * Indicates that a tool execution is about to start.
-	 * <p>
-	 * Should be called by tools during initialization when the ExecContext
-	 * implementation implements this interface.
-	 *
-	 * @param propertiesInit Initialization properties specific to the tool.
-	 */
-	void startTool(Properties propertiesInit);
+  /**
+   * Indicates that a tool execution is about to start.
+   * <p>
+   * Should be called by tools during initialization when the ExecContext
+   * implementation implements this interface.
+   *
+   * @param propertiesInit Initialization properties specific to the tool.
+   */
+  void startTool(Properties propertiesInit);
 
-	/**
-	 * Indicates that a tool execution has ended.
-	 * <p>
-	 * Should be called by tools during termination when the ExecContext
-	 * implementation implements this interface.
-	 */
-	void endTool();
+  /**
+   * Indicates that a tool execution has ended.
+   * <p>
+   * Should be called by tools during termination when the ExecContext
+   * implementation implements this interface.
+   */
+  void endTool();
 
-	/**
-	 * Tool properties are those provided by a tool when calling
-	 * {@link #startTool}.
-	 *
-	 * @return Set of all tool properties.
-	 */
+  /**
+   * Tool properties are those provided by a tool when calling
+   * {@link #startTool}.
+   *
+   * @return Set of all tool properties.
+   */
 
-	Set<String> getSetToolProperty();
+  Set<String> getSetToolProperty();
 
-	/**
-	 * Returns the value of an tool property.
-	 * <p>
-	 * Tool properties are those provided by a tool when calling
-	 * {@link #startTool}.
-	 *
-	 * @param name Name of the property.
-	 * @return Value of the property.
-	 */
-	String getToolProperty(String name);
+  /**
+   * Returns the value of an tool property.
+   * <p>
+   * Tool properties are those provided by a tool when calling
+   * {@link #startTool}.
+   *
+   * @param name Name of the property.
+   * @return Value of the property.
+   */
+  String getToolProperty(String name);
 }

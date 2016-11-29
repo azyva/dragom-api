@@ -27,29 +27,29 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public abstract class NodeEvent {
-	private Node node;
+  private Node node;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param node Node on which the event is raised.
-	 */
-	public NodeEvent(Node node) {
-		this.node = node;
-	}
+  /**
+   * Constructor.
+   *
+   * @param node Node on which the event is raised.
+   */
+  public NodeEvent(Node node) {
+    this.node = node;
+  }
 
-	/**
-	 * @return Node on which this NodeEvent is raised.
-	 */
-	public Node getNode() {
-		return this.node;
-	}
+  /**
+   * @return Node on which this NodeEvent is raised.
+   */
+  public Node getNode() {
+    return this.node;
+  }
 
-	/**
-	 * @return String to help recognize the NodeEvent instance, in logs for example.
-	 */
-	@Override
-	public String toString() {
-		return "NodeEvent [node=" + this.node + "]";
-	}
+  /**
+   * @return String to help recognize the NodeEvent instance, in logs for example.
+   */
+  @Override
+  public String toString() {
+    return "NodeEvent [node=" + this.node + "]";
+  }
 }

@@ -46,11 +46,11 @@ import org.azyva.dragom.execcontext.ExecContextFactory;
  * @author David Raymond
  */
 public interface ModelFactory {
-	/**
-	 * Returns a {@link Model}.
-	 *
-	 * @param propertiesInit Initialization properties.
-	 * @return Model.
-	 */
-	Model getModel(Properties propertiesInit);
+  /**
+   * Returns a {@link Model}.
+   *
+   * @param propertiesInit Initialization properties.
+   * @return Model.
+   */
+  Model getModel(Properties propertiesInit);
 }

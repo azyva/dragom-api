@@ -47,141 +47,141 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * @author David Raymond
  */
 public interface NodeConfigTransferObject {
-	/**
-	 * @return Name.
-	 */
-	String getName();
+  /**
+   * @return Name.
+   */
+  String getName();
 
-	/**
-	 * Sets the name.
-	 *
-	 * @param name See description.
-	 */
-	void setName(String name);
+  /**
+   * Sets the name.
+   *
+   * @param name See description.
+   */
+  void setName(String name);
 
-	/**
-	 * Returns a {@link PropertyDefConfig}.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, a PropertyDefConfig is returned (instead of returning null).
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
-	 */
-	PropertyDefConfig getPropertyDefConfig(String name);
+  /**
+   * Returns a {@link PropertyDefConfig}.
+   * <p>
+   * If the PropertyDefConfig exists but is defined with the value field set to
+   * null, a PropertyDefConfig is returned (instead of returning null).
+   *
+   * @param name Name of the PropertyDefConfig.
+   * @return PropertyDefConfig. null if the PropertyDefConfig does not exist.
+   */
+  PropertyDefConfig getPropertyDefConfig(String name);
 
-	/**
-	 * Verifies if a {@link PropertyDefConfig} exists.
-	 * <p>
-	 * If the PropertyDefConfig exists but is defined with the value field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPropertyDefConfig} does not return null.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 * @return Indicates if the PropertyDefConfig exists.
-	 */
-	boolean isPropertyExists(String name);
+  /**
+   * Verifies if a {@link PropertyDefConfig} exists.
+   * <p>
+   * If the PropertyDefConfig exists but is defined with the value field set to
+   * null, true is returned.
+   * <p>
+   * Returns true if an only if {@link #getPropertyDefConfig} does not return null.
+   *
+   * @param name Name of the PropertyDefConfig.
+   * @return Indicates if the PropertyDefConfig exists.
+   */
+  boolean isPropertyExists(String name);
 
-	/**
-	 * Returns a List of all the {@link PropertyDefConfig}'s.
-	 * <p>
-	 * If no PropertyDefConfig is defined for the NodeConfig, an empty List is
-	 * returned (as opposed to null).
-	 * <p>
-	 * The order of the PropertyDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 *
-	 * @return See description.
-	 */
-	public List<PropertyDefConfig> getListPropertyDefConfig();
+  /**
+   * Returns a List of all the {@link PropertyDefConfig}'s.
+   * <p>
+   * If no PropertyDefConfig is defined for the NodeConfig, an empty List is
+   * returned (as opposed to null).
+   * <p>
+   * The order of the PropertyDefConfig is generally expected to be as defined
+   * in the underlying storage for the configuration, hence the List return type.
+   * But no particular order is actually guaranteed.
+   *
+   * @return See description.
+   */
+  public List<PropertyDefConfig> getListPropertyDefConfig();
 
-	/**
-	 * Removes a {@link PropertyDefConfig}.
-	 *
-	 * @param name Name of the PropertyDefConfig.
-	 */
-	public void removePropertyDefConfig(String name);
+  /**
+   * Removes a {@link PropertyDefConfig}.
+   *
+   * @param name Name of the PropertyDefConfig.
+   */
+  public void removePropertyDefConfig(String name);
 
-	/**
-	 * Sets a {@link PropertyDefConfig}.
-	 * <p>
-	 * If one already exists with the same name, it is overwritten. Otherwise it is
-	 * added.
-	 * <p>
-	 * Mostly any implementation of PropertyDefConfig can be used, although
-	 * {@link SimplePropertyDefConfig} is generally the better choice.
-	 *
-	 * @param propertyDefConfig PropertyDefConfig.
-	 * @return Indicates if a new PropertyDefConfig was added (as opposed to an
-	 *   existing one having been overwritten.
-	 */
-	public boolean setPropertyDefConfig(PropertyDefConfig propertyDefConfig);
+  /**
+   * Sets a {@link PropertyDefConfig}.
+   * <p>
+   * If one already exists with the same name, it is overwritten. Otherwise it is
+   * added.
+   * <p>
+   * Mostly any implementation of PropertyDefConfig can be used, although
+   * {@link SimplePropertyDefConfig} is generally the better choice.
+   *
+   * @param propertyDefConfig PropertyDefConfig.
+   * @return Indicates if a new PropertyDefConfig was added (as opposed to an
+   *   existing one having been overwritten.
+   */
+  public boolean setPropertyDefConfig(PropertyDefConfig propertyDefConfig);
 
-	/**
-	 * Returns a {@link PluginDefConfig}.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, a PluginDefConfig is returned (instead of returning null).
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 * @return PluginDefConfig. null if the PluginDefConfig does not exist.
-	 */
-	public PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Returns a {@link PluginDefConfig}.
+   * <p>
+   * If the PluginDefConfig exists but is defined with the pluginClass field set to
+   * null, a PluginDefConfig is returned (instead of returning null).
+   *
+   * @param classNodePlugin Class of the {@link NodePlugin} interface.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
+   * @return PluginDefConfig. null if the PluginDefConfig does not exist.
+   */
+  public PluginDefConfig getPluginDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Verifies if a {@link PluginDefConfig} exists.
-	 * <p>
-	 * If the PluginDefConfig exists but is defined with the pluginClass field set to
-	 * null, true is returned.
-	 * <p>
-	 * Returns true if an only if {@link #getPluginDefConfig} does not return null.
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 * @return Indicates if the PluginDefConfig exists.
-	 */
-	public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Verifies if a {@link PluginDefConfig} exists.
+   * <p>
+   * If the PluginDefConfig exists but is defined with the pluginClass field set to
+   * null, true is returned.
+   * <p>
+   * Returns true if an only if {@link #getPluginDefConfig} does not return null.
+   *
+   * @param classNodePlugin Class of the {@link NodePlugin} interface.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
+   * @return Indicates if the PluginDefConfig exists.
+   */
+  public boolean isPluginDefConfigExists(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Returns a List of all the {@link PluginDefConfig}'s.
-	 * <p>
-	 * If no PluginDefConfig is defined for the NodeConfig, an empty Set is returned
-	 * (as opposed to null).
-	 * <p>
-	 * The order of the PluginDefConfig is generally expected to be as defined
-	 * in the underlying storage for the configuration, hence the List return type.
-	 * But no particular order is actually guaranteed.
-	 *
-	 * @return See description.
-	 */
-	public List<PluginDefConfig> getListPluginDefConfig();
+  /**
+   * Returns a List of all the {@link PluginDefConfig}'s.
+   * <p>
+   * If no PluginDefConfig is defined for the NodeConfig, an empty Set is returned
+   * (as opposed to null).
+   * <p>
+   * The order of the PluginDefConfig is generally expected to be as defined
+   * in the underlying storage for the configuration, hence the List return type.
+   * But no particular order is actually guaranteed.
+   *
+   * @return See description.
+   */
+  public List<PluginDefConfig> getListPluginDefConfig();
 
-	/**
-	 * Removes a {@link PropertyDefConfig}.
-	 *
-	 * @param classNodePlugin Class of the {@link NodePlugin} interface.
-	 * @param pluginId Plugin ID to distinguish between multiple instances of the same
-	 *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
-	 */
-	public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
+  /**
+   * Removes a {@link PropertyDefConfig}.
+   *
+   * @param classNodePlugin Class of the {@link NodePlugin} interface.
+   * @param pluginId Plugin ID to distinguish between multiple instances of the same
+   *   plugin. Can be null to get a PluginDefConfig whose field pluginId is null.
+   */
+  public void removePlugingDefConfig(Class<? extends NodePlugin> classNodePlugin, String pluginId);
 
-	/**
-	 * Sets a {@link PluginDefConfig}.
-	 * <p>
-	 * If one already exists with the same {@link PluginKey}, it is overwritten.
-	 * Otherwise it is added.
-	 * <p>
-	 * Mostly any implementation of PluginDefConfig can be used, although
-	 * {@link SimplePluginDefConfig} is generally the better choice.
-	 *
-	 * @param pluginDefConfig PluginDefConfig.
-	 * @return Indicates if a new PluginDefConfig was added (as opposed to an existing
-	 *   one having been overwritten.
-	 */
-	public boolean setPluginDefConfig(PluginDefConfig pluginDefConfig);
+  /**
+   * Sets a {@link PluginDefConfig}.
+   * <p>
+   * If one already exists with the same {@link PluginKey}, it is overwritten.
+   * Otherwise it is added.
+   * <p>
+   * Mostly any implementation of PluginDefConfig can be used, although
+   * {@link SimplePluginDefConfig} is generally the better choice.
+   *
+   * @param pluginDefConfig PluginDefConfig.
+   * @return Indicates if a new PluginDefConfig was added (as opposed to an existing
+   *   one having been overwritten.
+   */
+  public boolean setPluginDefConfig(PluginDefConfig pluginDefConfig);
 }

@@ -42,35 +42,35 @@ import org.azyva.dragom.model.config.Config;
  * @author David Raymond
  */
 public interface UndefinedDescendantNodeManagerPlugin extends ClassificationNodePlugin {
-	/**
-	 * Requests that a {@link ClassificationNode} be dynamically created.
-	 * <p>
-	 * null must be returned to indicate that the requested ClassificationNode cannot
-	 * be created because it does not exist or any other reason.
-	 * <p>
-	 * If a ClassificationNode is returned, it must be completely created, installed
-	 * within the {@link Model} (using
-	 * {@link MutableClassificationNode#createChildMutableClassificationNode}) and
-	 * ready to use.
-	 *
-	 * @param name Name of the ClassificationNode.
-	 * @return Newly created ClassificationNode. null if the ClassificationNode cannot
-	 *   be created.
-	 */
-	ClassificationNode requestClassificationNode(String name);
+  /**
+   * Requests that a {@link ClassificationNode} be dynamically created.
+   * <p>
+   * null must be returned to indicate that the requested ClassificationNode cannot
+   * be created because it does not exist or any other reason.
+   * <p>
+   * If a ClassificationNode is returned, it must be completely created, installed
+   * within the {@link Model} (using
+   * {@link MutableClassificationNode#createChildMutableClassificationNode}) and
+   * ready to use.
+   *
+   * @param name Name of the ClassificationNode.
+   * @return Newly created ClassificationNode. null if the ClassificationNode cannot
+   *   be created.
+   */
+  ClassificationNode requestClassificationNode(String name);
 
-	/**
-	 * Requests that a {@link Module} be dynamically created.
-	 * <p>
-	 * null must be returned to indicate that the requested Module cannot be created
-	 * because it does not exist or any other reason.
-	 * <p>
-	 * If a Module is returned, it must be completely created, installed within the
-	 * {@link Model} (using
-	 * {@link MutableClassificationNode#createChildMutableModule}) and ready to use.
-	 *
-	 * @param name Name of the Module.
-	 * @return Newly created Module. null if the Module cannot be created.
-	 */
-	Module requestModule(String name);
+  /**
+   * Requests that a {@link Module} be dynamically created.
+   * <p>
+   * null must be returned to indicate that the requested Module cannot be created
+   * because it does not exist or any other reason.
+   * <p>
+   * If a Module is returned, it must be completely created, installed within the
+   * {@link Model} (using
+   * {@link MutableClassificationNode#createChildMutableModule}) and ready to use.
+   *
+   * @param name Name of the Module.
+   * @return Newly created Module. null if the Module cannot be created.
+   */
+  Module requestModule(String name);
 }
