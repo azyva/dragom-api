@@ -95,7 +95,7 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
 
   /**
    * Returns a Map of the parameters to use with the template returned by
-   * {@link getTemplate} to create a job.
+   * {@link #getTemplate} to create a job.
    * <p>
    * If getTemplate returns null, this method will not be called.
    *
@@ -113,7 +113,7 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
    * Returns a Reader from which the XML configuration of the job to be created can
    * be read.
    * <p>
-   * If {@link getTemplate} does not return null, this method will not be called.
+   * If {@link #getTemplate} does not return null, this method will not be called.
    * <p>
    * Providing the XML configuration as a Reader seems to be the most flexible way
    * to return it, and allow the implementation to have control over the efficiency

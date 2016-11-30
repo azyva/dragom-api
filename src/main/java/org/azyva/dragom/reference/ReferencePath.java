@@ -40,8 +40,8 @@ import org.azyva.dragom.model.Version;
  * @author David Raymond
  */
 public class ReferencePath {
-  /*
-   * List of {@link Reference}'s.
+  /**
+   * List of Reference's.
    */
   private List<Reference> listReference;
 

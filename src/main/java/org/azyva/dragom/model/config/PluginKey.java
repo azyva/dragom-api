@@ -30,7 +30,14 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * It is used internally and not expected to be useful to external callers.
  */
 public class PluginKey {
+  /**
+   * {@link NodePlugin} interface class.
+   */
   Class<? extends NodePlugin> classNodePlugin;
+
+  /**
+   * Plugin ID.
+   */
   String pluginId;
 
   /**

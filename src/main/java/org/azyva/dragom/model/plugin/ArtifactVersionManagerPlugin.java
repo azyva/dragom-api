@@ -22,11 +22,33 @@ package org.azyva.dragom.model.plugin;
 import java.nio.file.Path;
 
 import org.azyva.dragom.model.ArtifactVersion;
+import org.azyva.dragom.model.Module;
 
-// TODO: Implies that the artifact version is coded in the source.
+/**
+ * Allows managing {@link ArtifactVersion} in the source code of a {@link Module}.
+ *
+ * <p>A Module implementing this plugin implies that its ArtifactVersion is stored
+ * in the sourde code.
+ *
+ * @author David Raymond
+ */
 public interface ArtifactVersionManagerPlugin extends ModulePlugin {
+  /**
+   * Returns the ArtifactVersion of a {@link Module} whose source code is in a given
+   * path.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @return See description.
+   */
   ArtifactVersion getArtifactVersion(Path pathModuleWorkspace);
 
-  // TODO: Returns false if same version.
+  /**
+   * Sets the ArtifactVersion in the source code of a {@link Module}.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param artifactVersion ArtifactVersion.
+   * @return Indicates if the source code was actually changed. false is returned
+   *   if the Module already had the specified ArtifactVersion.
+   */
   boolean setArtifactVersion(Path pathModuleWorkspace, ArtifactVersion artifactVersion);
 }

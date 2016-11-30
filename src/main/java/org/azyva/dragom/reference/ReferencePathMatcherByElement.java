@@ -500,6 +500,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
      * @param indexEnd Index just after the last character within
      *   stringReferencePathMatcherByElement that corresponds to the ElementMatcher
      *   part to parse.
+     * @param partMatcher PartMatcher into which the parsed data is stored.
      * @return Index of the next next part available for parsing, or indexEnd if no
      *   more part available.
      * @throws ParseException If parsing fails.
@@ -995,7 +996,6 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
    * Factors out the initialization code for the pre-computed fields since it it
    * used by both the parse and canMatchChildren methods.
    *
-   * @param model Model.
    * @throws ParseException If pre-computed fields cannot be computed because of
    *   invalid data parsed.
    */

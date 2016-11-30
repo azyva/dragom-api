@@ -35,9 +35,26 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * @author David Raymond
  */
 public class SimplePluginDefConfig implements PluginDefConfig {
+  /**
+   * {@link NodePlugin} interface class.
+   */
   private Class<? extends NodePlugin> classNodePlugin;
+
+  /**
+   * Plugin ID.
+   */
   private String pluginId;
+
+  /**
+   * Plugin implementation class.
+   */
   private String pluginClass;
+
+  /**
+   * Indicates that this {@link PluginDefConfig} applies specifically to the
+   * {@link NodeConfig} on which it is defined, as opposed to being inherited by
+   * child NodeConfig when interpreted by the {@link Model}.
+   */
   private boolean indOnlyThisNode;
 
   /**

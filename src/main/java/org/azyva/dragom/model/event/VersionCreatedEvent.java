@@ -33,6 +33,9 @@ import org.azyva.dragom.model.plugin.ScmPlugin;
  * @author David Raymond
  */
 public abstract class VersionCreatedEvent extends ModuleEvent {
+  /**
+   * Version.
+   */
   private Version version;
 
   /**

@@ -22,7 +22,7 @@ package org.azyva.dragom.model.config;
 import org.azyva.dragom.model.Model;
 import org.azyva.dragom.model.Node;
 import org.azyva.dragom.model.plugin.NodePlugin;
-import org.azyva.dragom.model.plugin.PluginFactory;
+import org.azyva.dragom.model.plugin.NodePluginFactory;
 
 /**
  * Configuration of a {@link NodePlugin} within a {@link NodeConfig}.
@@ -37,8 +37,8 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * plugin interface or plugin ID in the case the specified plugin implementation
  * class supports a default {@link NodePlugin} or plugin ID.
  * <p>
- * If pluginClass refers to a class that implements {@link PluginFactory} (factory
- * design pattern) {@link PluginFactory#getDefaultClassNodePlugin} must be used by
+ * If pluginClass refers to a class that implements {@link NodePluginFactory} (factory
+ * design pattern) {@link NodePluginFactory#getDefaultClassNodePlugin} must be used by
  * implementations to get the value of the classNodePlugin property when not
  * defined. If pluginClass refers to a class that directly implements a sub-
  * interface of {@link NodePlugin} (constructor design pattern), it is up to the
@@ -52,8 +52,8 @@ import org.azyva.dragom.model.plugin.PluginFactory;
  * </ul>
  * Similarly for the pluginId property:
  * <p>
- * If pluginClass refers to a class that implements PluginFactory,
- * PluginFactory.getDefaultPluginId must be used implementations to get the value
+ * If pluginClass refers to a class that implements NodePluginFactory,
+ * NodePluginFactory.getDefaultPluginId must be used implementations to get the value
  * of the pluginId property when not defined. If pluginClass refers to a class
  * that directly implements a sub-interface of NodePlugin, it is up to the
  * implementation to implement a default mechanism for the pluginId property. But
@@ -104,7 +104,7 @@ public interface PluginDefConfig {
    * <p>
    * null to avoid inheritance.
    * <p>
-   * This class must either implement {@link PluginFactory} or have a constructor
+   * This class must either implement {@link NodePluginFactory} or have a constructor
    * and implement the {@link NodePlugin} and the appropriate sub-interface
    * identified by {@link #getClassNodePlugin}.
    *

@@ -24,6 +24,8 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
+import org.azyva.dragom.execcontext.plugin.WorkspaceDirSystemModule;
+import org.azyva.dragom.execcontext.plugin.WorkspaceDirUserModuleVersion;
 import org.azyva.dragom.model.ArtifactVersion;
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.Version;
@@ -31,6 +33,12 @@ import org.azyva.dragom.model.Version;
 // TODO: What about merges? Should this plugin handle merges? Are they similar enough between SCM?
 // TODO: It is not the responsibility of this plugin to manage the version specified within the source code of the module. See VersionManagerPlugin.
 // TODO: Some methods require a pathModuleWorkspace. The user should be able to decide to keep this path or make it temporary only.
+/**
+ * Provides the abstractions required by Dragom for accessing a {@link Module} source
+ * code and other information in an SCM.
+ *
+ * @author David Raymond
+ */
 public interface ScmPlugin extends ModulePlugin {
   /**
    * Commit attribute to store the equivalent static {@link Version} associated with
@@ -74,15 +82,32 @@ public interface ScmPlugin extends ModulePlugin {
    */
   public static final String VERSION_ATTR_PROJECT_CODE = "dragom-project-code";
 
-  // Represents a commit.
+  /**
+   * Represents a commit.
+   */
   public class Commit {
-    // Id of the commit in a SCM-dependent format.
+    /**
+     * Id of the commit in a SCM-dependent format.
+     */
     public String id;
-    // Message of the commit.
+
+    /**
+     * Message of the commit.
+     */
     public String message;
-    // Static Version based on this commit.
+
+    /**
+     * Static Version's based on this commit. Cannot be null (but can be empty) if
+     * {@link GetListCommitFlag#IND_INCLUDE_VERSION_STATIC} is specifed for
+     * {@link ScmPlugin#getListCommit} or {@link ScmPlugin#getListCommitDiverge}.
+     */
     public Version[] arrayVersionStatic;
-    // Attributes of the commit.
+
+    /**
+     * Commit attributes. Cannot be null (but can be empty) if
+     * {@link GetListCommitFlag#IND_INCLUDE_MAP_ATTR} is specified for
+     * {@link ScmPlugin#getListCommit} or {@link ScmPlugin#getListCommitDiverge}.
+     */
     public Map<String, String> mapAttr;
 
     @Override
@@ -92,35 +117,95 @@ public interface ScmPlugin extends ModulePlugin {
   }
 //TODO Should we include more information about the commit? Author, timestamp?
 
+  /**
+   * Controls commit paging for {@link ScmPlugin#getListCommit} or
+   * {@link ScmPlugin#getListCommitDiverge}.
+   */
   public class CommitPaging {
+    /**
+     * Index of the first {@link Commit} returned.
+     */
     public int startIndex;
+
+    /**
+     * Maximum number of {@link Commit}'s to returned.
+     */
     public int maxCount;
+
+    /**
+     * Number of {@link Commit}'s returned.
+     */
     public int returned;
+
+    /**
+     * Indicates that all available {@link Commit}'s have been returned.
+     */
     public boolean indDone;
 
+    /**
+     * Default constructor.
+     *
+     * <p>Specifies to return all available {@link Commit}'s.
+     */
     public CommitPaging() {
       this.maxCount = -1;
     }
 
+    /**
+     * Constructor.
+     *
+     * @param maxCount Maximum number of {@link Commit}'s to return.
+     */
     public CommitPaging(int maxCount) {
       this.maxCount = maxCount;
     }
   }
 
+  /**
+   * Indicates what {@link Commit} information to include for
+   * {@link ScmPlugin#getListCommit} or {@link ScmPlugin#getListCommitDiverge}.
+   */
   public enum GetListCommitFlag {
+    /**
+     * Indicates to include the {@link Commit} message.
+     */
     IND_INCLUDE_MESSAGE,
-    IND_INCLUDE_VERSION_STATIC,
-    IND_INCLUDE_MAP_ATTR,
-    IND_UPDATE_START_INDEX
-  };
 
-  // Represents base information about a version.
+    /**
+     * Indicates to include the static {@link Version}'s based on each {@link Commit}.
+     */
+    IND_INCLUDE_VERSION_STATIC,
+
+    /**
+     * Indicates to include the {@link Commit} attributes.
+     */
+    IND_INCLUDE_MAP_ATTR,
+
+    /**
+     * Indicates to update the start index.
+     */
+    // TODO: Is this really useful?
+    IND_UPDATE_START_INDEX
+  }
+
+  /**
+   * Information about the base {@link Version} of a Version.
+   */
   public class BaseVersion {
-    // Version for which the base is described.
+    /**
+     * Version for which the base is described.
+     */
     public Version version;
-    // Base Version of this version.
+
+    /**
+     * Base Version of this Version.
+     */
     public Version versionBase;
-    // Id of the commit at which the base version was when the version was created.
+
+    /**
+     * ID of the {@link Commit} at which the base {@link Version} was when the
+     * Version was created.
+     */
     public String commitId;
   }
 
@@ -140,14 +225,37 @@ public interface ScmPlugin extends ModulePlugin {
      */
     REMOTE_CHANGES;
 
+    /**
+     * EnumSet of IsSyncFlag specifying only {@link #LOCAL_CHANGES}.
+     */
     public static final EnumSet<IsSyncFlag> LOCAL_CHANGES_ONLY = EnumSet.of(LOCAL_CHANGES);
+
+    /**
+     * EnumSet of IsSyncFlag specifying only {@link #REMOTE_CHANGES}.
+     */
     public static final EnumSet<IsSyncFlag> REMOTE_CHANGES_ONLY = EnumSet.of(REMOTE_CHANGES);
+
+    /**
+     * EnumSet of IsSyncFlag specifying both {@link #LOCAL_CHANGES} and
+     * {@link #REMOTE_CHANGES}.
+     */
     public static final EnumSet<IsSyncFlag> ALL_CHANGES = EnumSet.of(LOCAL_CHANGES, REMOTE_CHANGES);
   }
 
-  // TODO: Can be used on a temporary module definition, in the process of verifying if a dynamically created modules exists. Its parent does not need to include it as a child.
+  /**
+   * Indicates if the {@link Module} exists in the SCM.
+   *
+   * <p>Can be used on a temporary {@link Module} (whose parent has not been updated
+   * yet to refer to it) in the process of verifying if a dynamically created Module
+   * exists. See {@link UndefinedDescendantNodeManagerPlugin}.
+   *
+   * @return See description.
+   */
   boolean isModuleExists();
 
+  /**
+   * @return Default Version.
+   */
   Version getDefaultVersion();
 
   // TODO Absolutely requires a pathModuleWorkspace
@@ -156,14 +264,37 @@ public interface ScmPlugin extends ModulePlugin {
   // Could we specify to export instead of checkout? Maybe name the method "get" or "retrieve"
   // Caller responsibility to setup workspace (since it specifies the path where to checkout.
   // Workspace must be reserved.
+  /**
+   * Checks out the source code of a Version of a {@link Module} in a directory.
+   *
+   * <p>pathModuleWorkspace should correspond to a
+   * {@link WorkspaceDirUserModuleVersion}.
+   *
+   * @param version Version.
+   * @param pathModuleWorkspace Path of the directory.
+   */
   void checkout(Version version, Path pathModuleWorkspace);
 
   // Checkout in a system workspace directory.
   // If Git, can reuse directories which correspond to modules, not specific versions (may need to switch version)
   //   Since this is Git-specific, we cannot let tools manage this. It must be the plugin. Hence this method.
   // The other checkout is user level. This one is more for system tasks.
+  /**
+   * Checks out the source code of a Version of a {@link Module} for Dragom's use.
+   *
+   * <p>The Path should correspond to a {@link WorkspaceDirSystemModule}.
+   *
+   * @param version Version.
+   * @return Path containing the checked out source code.
+   */
   Path checkoutSystem(Version version);
 
+  /**
+   * Verifies if a Version of a {@link Module} exists.
+   *
+   * @param version Version.
+   * @return See description.
+   */
   boolean isVersionExists(Version version);
 
   // TODO Absolutely requires a pathModuleWorkspace
@@ -171,13 +302,33 @@ public interface ScmPlugin extends ModulePlugin {
   // maybe 2 methods.
   // *** Only for dynamic version
   // ***** But if STATIC, should not fail (should simply return true) since it is convenient to be able to call on any version.
+  /**
+   * Verifies if the source code of the {@link Module} is synchronized with the SCM.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param enumSetIsSyncFlag EnumSet of IsSyncFlag specifying the synchronization
+   *   status of which types of changes to verify.
+   * @return See description.
+   */
   boolean isSync(Path pathModuleWorkspace, EnumSet<IsSyncFlag> enumSetIsSyncFlag);
 
   // TODO Absolutely requires a pathModuleWorkspace
   // fetch then merge (pull)
+  /**
+   * Updates the source code of the {@link Module} from the SCM.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @return Indicates if the update was successful, or if merge conflicts occurred.
+   */
   boolean update(Path pathModuleWorkspace);
 
   // TODO Absolutely requires a pathModuleWorkspace
+  /**
+   * Returns the Version of the {@link Module} in a directory.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @return See description.
+   */
   Version getVersion(Path pathModuleWorkspace);
 
   /**
@@ -211,6 +362,12 @@ public interface ScmPlugin extends ModulePlugin {
   List<Commit> getListCommitDiverge(Version versionSrc, Version versionDest, CommitPaging commitPaging, EnumSet<GetListCommitFlag> enumSetGetListCommitFlag);
 
   // Version from which a version was created. Can be null (for default version).
+  /**
+   * Gets the base Version of a given Version of the {@link Module}.
+   *
+   * @param version Verison.
+   * @return See description.
+   */
   BaseVersion getBaseVersion(Version version);
 
   /**
@@ -222,6 +379,12 @@ public interface ScmPlugin extends ModulePlugin {
   // TODO With master vs development projects, destroying the original Git repository may be necessary (with possible loss of changes, unpushed or stashed)
   // TODO Maybe switching should not be offered (controlled at a higher level?)
   // TODO But then switching makes sense for Git since it is much more efficient than redoing a clone.
+  /**
+   * Changes the Version of a {@link Module} to another Version.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param version Version to switch to.
+   */
   void switchVersion(Path pathModuleWorkspace, Version version);
 
   // TODO: No: Maybe always specify a pathModuleWorkspace to take the original version from
@@ -230,9 +393,23 @@ public interface ScmPlugin extends ModulePlugin {
   // If !indSwitch, it reverts back to the base version. Logical.
   // Some SCM may not support version attributes (Git does not support version attributes for dynamic Versions, for static Versions, use JSON in tag message).
   //   then again, maybe use attributes on initial dummy commit for dynamic version.
+  /**
+   * Creates a Version of the {@link Module}.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param versionTarget New Version.
+   * @param mapVersionAttr Version attributes.
+   * @param indSwitch Indicates to switch to the new Version.
+   */
   void createVersion(Path pathModuleWorkspace, Version versionTarget, Map<String, String> mapVersionAttr, boolean indSwitch);
 
   // Cannot return null (but empty map, yes).
+  /**
+   * Returns the attributes of a Version.
+   *
+   * @param version Version.
+   * @return See description.
+   */
   Map<String, String> getMapVersionAttr(Version version);
 
   /**
@@ -303,6 +480,11 @@ public interface ScmPlugin extends ModulePlugin {
   boolean isTempDynamicVersion(Version versionBase);
 
   // switches back to the original version, dropping any changes made to the temporary dynamic Version.
+  /**
+   * Releases the temporary dynamic Version of the {@link Module}.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   */
   void releaseTempDynamicVersion(Path pathModuleWorkspace);
 
   // TODO Absolutely requires a pathModuleWorkspace
@@ -311,18 +493,52 @@ public interface ScmPlugin extends ModulePlugin {
   // maybe use a more generic name for push: transferToServer?
   // No, for now always push.
   // Probably caller must ensure sync. If commit failure because unsynced, exception.
+  /**
+   * Commits changes to the source code of the {@link Module}.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param message Commit message.
+   * @param mapCommitAttr Commit attributes. Can be null.
+   */
   void commit(Path pathModuleWorkspace, String message, Map<String, String> mapCommitAttr);
 
-  // Message can be null to let default.
   // If message not null, it is prepended to default message.
-  // return false if conflict.
+  /**
+   * Merges a Version of a {@link Module} into the current Version.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param versionSrc Version to merge.
+   * @param message Commit message. Can be null to let a default message be used.
+   * @return Indicates if the merge completed successfully, or if merge conflicts occurred.
+   */
   boolean merge(Path pathModuleWorkspace, Version versionSrc, String message);
 
+  /**
+   * Merges a Version of a {@link Module} into the current Version, excluding a List
+   * of Commit's.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param versionSrc Version to merge.
+   * @param listCommitExclude List of Commit's to exclude.
+   * @param message Commit message. Can be null to let a default message be used.
+   * @return Indicates if the merge completed successfully, or if merge conflicts occurred.
+   */
   boolean merge(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
 
+  /**
+   * @return SCM type.
+   */
   String getScmType();
 
-  // The SCM URL may be dependent on the version (master vs developpement projects in Stash)
-  // not sure how to handle that.
+  /**
+   * Returns the URL of the {@link Module} within the SCM.
+   *
+   * <p>Even for the same Module, its URL in the SCM may be different depending on
+   * the actual source code checked out, which is why the Path to the Module is
+   * specified. This can happen when the SCM allows forking Modules.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @return See description.
+   */
   String getScmUrl(Path pathModuleWorkspace);
 }

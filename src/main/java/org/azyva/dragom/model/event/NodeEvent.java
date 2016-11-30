@@ -27,6 +27,9 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public abstract class NodeEvent {
+  /**
+   * {@link Node} on which the NodeEvent is raised.
+   */
   private Node node;
 
   /**

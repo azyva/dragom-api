@@ -27,6 +27,9 @@ package org.azyva.dragom.reference;
  * @author David Raymond
  */
 public class ReferencePathMatcherNot implements ReferencePathMatcher {
+  /**
+   * ReferencePathMatcher.
+   */
   private ReferencePathMatcher referencePathMatcher;
 
   /**
@@ -45,6 +48,9 @@ public class ReferencePathMatcherNot implements ReferencePathMatcher {
     return this.referencePathMatcher;
   }
 
+  /**
+   * @param referencePathMatcher ReferencePathMatcher.
+   */
   public void setReferencePathMatcher(ReferencePathMatcher referencePathMatcher) {
     this.referencePathMatcher = referencePathMatcher;
   }

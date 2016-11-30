@@ -25,7 +25,6 @@ import org.azyva.dragom.model.Node;
 /**
  * Simple implementation for {@link PropertyDefConfig}.
  * <p>
- * <p>
  * Can be used as a simple PropertyDefConfig within {@link Node},
  * {@link NodeConfig} and {@link NodeConfigTransferObject} implementations.
  * <p>
@@ -34,8 +33,21 @@ import org.azyva.dragom.model.Node;
  * @author David Raymond
  */
 public class SimplePropertyDefConfig implements PropertyDefConfig {
+  /**
+   * Property name.
+   */
   private String name;
+
+  /**
+   * Property value.
+   */
   private String value;
+
+  /**
+   * Indicates that this {@link PropertyDefConfig} applies specifically to the
+   * {@link NodeConfig} on which it is defined, as opposed to being inherited by
+   * child NodeConfig when interpreted by the {@link Model}.
+   */
   private boolean indOnlyThisNode;
 
   /**

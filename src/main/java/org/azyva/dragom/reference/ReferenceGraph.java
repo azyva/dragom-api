@@ -182,8 +182,8 @@ public interface ReferenceGraph {
   public enum VisitAction {
     /**
      * Indicates we are stepping into a {@link ModuleVersion} during the traversal. A
-     * matching {@link STEP_OUT} will occur when the traversal of the ModuleVersion is
-     * complete.
+     * matching {@link #STEP_OUT} will occur when the traversal of the ModuleVersion
+     * is complete.
      * <p>
      * This VisitAction is mutually exclusive with all others.
      * <p>
@@ -193,7 +193,7 @@ public interface ReferenceGraph {
 
     /**
      * Indicates we are stepping out of a {@link ModuleVersion} during the traversal.
-     * A matching {@link STEP_IN} will have occurred previously.
+     * A matching {@link #STEP_IN} will have occurred previously.
      * <p>
      * This VisitAction is mutually exclusive with all others.
      * <p>
@@ -203,12 +203,12 @@ public interface ReferenceGraph {
 
     /**
      * Represents the actual visit of the leaf {@link ModuleVersion}. A
-     * {@link STEP_IN} will have occurred previously for the parent ModuleVersion. But
-     * if traversal is depth-first STEP_IN for all the ModuleVersion in the
+     * {@link #STEP_IN} will have occurred previously for the parent ModuleVersion.
+     * But if traversal is depth-first STEP_IN for all the ModuleVersion in the
      * {@link ReferencePath} will have also occurred with no intervening visit for the
      * intermediate ModuleVersion's.
      * <p>
-     * {@link STEP_OUT} will occur thereafter for the parent ModuleVersion, after
+     * {@link #STEP_OUT} will occur thereafter for the parent ModuleVersion, after
      * having visited all of its child ModuleVersion.
      * <p>
      * This is the only VisitAction used by visitLeafModuleVersionReferencePaths.
@@ -236,11 +236,37 @@ public interface ReferenceGraph {
      */
     MATCHED;
 
+    /**
+     * EnumSet of VisitAction's representing the single {@link VisitAction#STEP_IN}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_STEP_IN = EnumSet.of(STEP_IN);
+
+    /**
+     * EnumSet of VisitAction's representing the single {@link VisitAction#STEP_OUT}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_STEP_OUT = EnumSet.of(STEP_OUT);
+
+    /**
+     * EnumSet of VisitAction's representing the single {@link VisitAction#VISIT}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_VISIT = EnumSet.of(VISIT);
+
+    /**
+     * EnumSet of VisitAction's representing {@link VisitAction#VISIT} and
+     * {@link VisitAction#REPEATED}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_REPEATED_VISIT = EnumSet.of(VISIT, REPEATED);
+
+    /**
+     * EnumSet of VisitAction's representing {@link VisitAction#VISIT} and
+     * {@link VisitAction#MATCHED}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_VISIT_MATCHED = EnumSet.of(VISIT, MATCHED);
+
+    /**
+     * EnumSet of VisitAction's representing {@link VisitAction#VISIT},
+     * {@link VisitAction#REPEATED} and {@link VisitAction#MATCHED}.
+     */
     public static final EnumSet<VisitAction> ENUM_SET_REPEATED_VISIT_MATCHED = EnumSet.of(VISIT, REPEATED, MATCHED);
   }
 

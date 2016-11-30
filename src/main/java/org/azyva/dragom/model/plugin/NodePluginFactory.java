@@ -25,23 +25,28 @@ import org.azyva.dragom.model.config.Config;
 // TODO: Instantiation should not be heavy as an instance is create each time a NodePlugin need to be instantiated.
 // If instances are heavy, it is the responsibility of the implementing class to cache initialization data.
 // Implementations of this class can implement the getInstance() static method to implement the singleton pattern and avoid having multiple instances created.
-//   optional. If not implemented, instances are expected to implement PluginFactory.
-// Plugins instantiated using PluginFactory must not be cached as Factory can be dynamic.
-public interface PluginFactory {
+//   optional. If not implemented, instances are expected to implement NodePluginFactory.
+// Plugins instantiated using NodePluginFactory must not be cached as Factory can be dynamic.
+/**
+ * Factory for {@link NodePlugin}.
+ *
+ * @author David Raymond
+ */
+public interface NodePluginFactory {
   /**
    * Returns the default {@link NodePlugin} interface supported as a Class.
    * <p>
-   * Most PluginFactory support a single NodePlugin interface and allowing the
-   * PluginFactory to specify that default NodePlugin interface allows
+   * Most NodePluginFactory support a single NodePlugin interface and allowing the
+   * NodePluginFactory to specify that default NodePlugin interface allows
    * {@link Config} to avoid having to redundantly specify both the class of the
-   * NodePlugin and of the PluginFactory.
+   * NodePlugin and of the NodePluginFactory.
    * <p>
    * null can be returned to indicate that no default NodePlugin Class is supported,
    * generally implying that multiple NodePlugin Class's are supported and none is
    * considered more important than the other. In this case Config must explicitly
    * specify the NodePlugin class.
    *
-   * @return Default Class of the default NodePlugin supported by the PluginFactory.
+   * @return Default Class of the default NodePlugin supported by the NodePluginFactory.
    *   Can be null.
    */
   Class<? extends NodePlugin> getDefaultClassNodePlugin();

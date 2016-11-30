@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.azyva.dragom.apiutil.ByReference;
 import org.azyva.dragom.model.ArtifactVersion;
+import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.Version;
 import org.azyva.dragom.reference.Reference;
 
@@ -80,6 +81,13 @@ import org.azyva.dragom.reference.Reference;
 //In the case of external, they cannot be identified with NodePath.
 //This will likely be useful for external library reference convergence.
 public interface ReferenceManagerPlugin extends ModulePlugin {
+  /**
+   * Returns the List of Reference's of the {@link Module} given the source code in
+   * a given path.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @return See description.
+   */
   List<Reference> getListReference(Path pathModuleWorkspace);
   //TODO: Probably have overloaded methods that can filter the returned references.
   //But not too many overloads since they would need to be implemented by all plugins.

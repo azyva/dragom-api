@@ -23,8 +23,14 @@ package org.azyva.dragom.model.event;
 /**
  * Interface that must be implemented by {@link NodeEvent} listeners.
  *
+ * @param <NodeEventClass> {@link NodeEvent} class.
  * @author David Raymond
  */
 public interface NodeEventListener<NodeEventClass extends NodeEvent> {
+  /**
+   * Called when a {@link NodeEvent} is raised.
+   *
+   * @param nodeEvent NodeEvent.
+   */
   void onEvent(NodeEventClass nodeEvent);
 }
