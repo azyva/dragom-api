@@ -162,7 +162,8 @@ subtotal: 455.5
 2016-11-20: 7
 2016-11-23: 3
 2016-11-27: 6
-2016-12-01: 8:00 - 
+2016-12-01: 14
+2016-12-07: 10 (including some previous evenings)
 
 
 To test
@@ -993,3 +994,117 @@ Would that behavior be useful elsewhere?
 
 Like a plugin that returns the base static version to scan for the most recent one.
 Would the inverse mapping be useful? (given a static, which dynamic drives the various releases)
+
+
+
+
+
+
+
+
+
+
+
+
+
+Documentation
+=============
+
+Dragom is extensible and CONFIGURABLE.
+
+Definitions
+- Reference graph
+- Independently versioned modules
+- Artifact-based development
+
+JAVADOC
+- Have a _site/javadoc folder with keep_files (it works)
+- Have a script which extracts javadoc jar from Maven repo
+
+For the current snapshot, invite to go to GitHub.
+Have a current release
+Have a current stable
+
+Have a link to current javadoc
+
+For each release:
+- javadoc
+release notes
+downlaods
+Maven coordinates
+
+What Dragom is not?
+- Not a Jenkins or Maven plugin (maybe eventually)
+
+Have  story with graphics
+
+Dragom does not come for free. It requires planning, configuration and possibly adjustments to how modules are laid out and built.
+
+
+
+
+
+Menu:
+Overview (-> What is Dragom?)
+Getting started (-> Resources/Getting started)
+Download (-> Distribution/Download most recent)
+Documentation (-> Resources/Documentation, jump to other product)
+Javadoc
+- dragom-api (most recent)
+- dragom-core (most recent)
+- dragom-cli-tools (most recent)
+Support (-> Resources/Support)
+
+Overview
+  What is Dragom?
+  Why Dragom (time to tell a story)
+  Dragom in action
+  What Dragom is not
+  History
+  Who is behind Dragom?
+
+Distribution
+  Dragom modules
+  Git repositories
+  Dependencies
+  Semantic versioning
+  GPG signing
+  - Key id 0x0F3E7D121FFBD0C2
+  - https://sks-keyservers.net
+  Download current
+  - Maven coordinates of current
+  - Links to modules of current
+  - Hashes, GPG signature
+  - For each module
+  Download stable
+  - Maven coordinates of stable
+  - Links to modules of stable
+  - Hashes, GPG signature
+  - For each module
+  dragom-api releases
+  - List of all releases
+  - Pointer to most recent (first one)
+  - Pointer to stable
+  - For each release, links, hashes, md5, gpg signatures 
+  dragom-core releases
+  - Same
+  dragom-cli-tools releases
+  - Same
+
+Resources
+  Getting started
+  - Tutorial with test file-based Git repos
+  Documentation -> jump to other "product"
+  Javadoc
+  - Current
+    - dragom-api
+    - dragom-core
+    - dragrom-cli-tools
+  - Stable
+    - dragom-api
+    - dragom-core
+    - dragrom-cli-tools
+  Support
+  - Stack Overflow
+  - GitHub issues (link to dragom-site issues)
+  - email
