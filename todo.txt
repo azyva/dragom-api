@@ -164,6 +164,7 @@ subtotal: 455.5
 2016-11-27: 6
 2016-12-01: 14
 2016-12-07: 10 (including some previous evenings)
+2016-12-09: 3
 
 
 To test
@@ -215,8 +216,6 @@ Specify ReferencePathMatcher's in a file, with boolean logic
 Possibility to provide the ReferencePathMatchers in an external file instead or on top of command line.
 - GPSII could provide it more conveniently
 Support accessing properties in matcher, such as commit attributes and other (Expression language eventually).
-
-In tests, validate that exeception is thrown when one must be.
 
 Could ServiceLocator be used to get instances of other services, such as ExecContext, ExecContext plugins, Model?
 

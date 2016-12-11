@@ -28,7 +28,7 @@ import org.azyva.dragom.model.Model;
  * is to allow applying changes atomically to the various {@link NodeConfig}. That
  * is why transfer objects are used.
  * <p>
- * The reason for implementing atomocity semantics are two-fold:
+ * The reason for implementing atomicity semantics are two-fold:
  * <ul>
  * <li>If the configuration data is meant to be persisted, it is expected that
  *     persisting operations be performed for each mutation and mutating whole objects

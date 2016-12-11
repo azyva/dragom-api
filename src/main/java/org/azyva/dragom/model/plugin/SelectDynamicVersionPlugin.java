@@ -56,9 +56,9 @@ public interface SelectDynamicVersionPlugin extends ModulePlugin {
    * not based on whether a base Version was returned.
    *
    * It may be the case that the existing Version is already dynamic and that no new
-   * Version needs to be created. In that version must be returned.
+   * Version needs to be created. In that case version must be returned.
    *
-   * @param version Base version.
+   * @param version Original version.
    * @param byReferenceVersionBase The base Version to use for creating the new
    *   dynamic Version will be stored there.
    * @param referencePath ReferencePath of the {@link ModuleVersion}.
