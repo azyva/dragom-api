@@ -523,7 +523,19 @@ public interface ScmPlugin extends ModulePlugin {
    * @param message Commit message. Can be null to let a default message be used.
    * @return Indicates if the merge completed successfully, or if merge conflicts occurred.
    */
-  boolean merge(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
+  boolean mergeExcludeCommits(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
+
+  /**
+   * Replaces the current Version of a {@link Module} with another.
+   *
+   * <p>This is similar to a merge but where we want to ignore what is in the
+   * current Version.
+   *
+   * @param pathModuleWorkspace Path to the Module.
+   * @param versionSrc Version to merge.
+   * @param message Commit message. Can be null to let a default message be used.
+   */
+  void replace(Path pathModuleWorkspace, Version versionSrc, String message);
 
   /**
    * @return SCM type.
