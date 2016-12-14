@@ -43,7 +43,12 @@ import org.azyva.dragom.model.plugin.ReferenceManagerPlugin;
  *     this class, which considers it for equals;</li>
  * <li>Its hashCode is used to compute this class' hashCode;</li>
  * <li>Its string representation (toString method) is included in the string
- * representation of this class, unless it is null or the empty string.</li>
+ *     representation of this class, unless it is null or the empty string. In
+ *     turn, the string representation of this class is used in various messages
+ *     provided to the user;</li>
+ * <li>It is intended to be useful to implementations of plugins which use
+ *     Reference's (e.g. {@link ReferenceManagerPlugin} in order to map
+ *     them to internal references that are specific to various SCM.</li>
  * </ul>
  * This class implements value semantics and is immutable.
  */
