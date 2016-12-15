@@ -125,7 +125,9 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
    * If credentialValidator is not null, the method should validate the credentials
    * before returning them. This includes both the cases where the credentials are
    * already available (since they may be invalid) and when the method interacts with
-   * the user to obtain them.
+   * the user to obtain them. It is appropriate for the implementation to optimize
+   * credential validation and not always validate them, if they have already been
+   * validated once during a tool execution for instance.
    *
    * @param resource Resource.
    * @param user User. Can be null (see above).
@@ -159,7 +161,9 @@ public interface CredentialStorePlugin extends ExecContextPlugin {
    * If credentialValidator is not null, the method should validate the credentials
    * before returning them. This includes both the cases where the credentials are
    * already available (since they may be invalid) and when the method interacts with
-   * the user to obtain them.
+   * the user to obtain them. It is appropriate for the implementation to optimize
+   * credential validation and not always validate them, if they have already been
+   * validated once during a tool execution for instance.
    *
    * @param resource Resource.
    * @param user User. Can be null (see above).
