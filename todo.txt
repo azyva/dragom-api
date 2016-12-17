@@ -214,7 +214,8 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-Should probably allow specifying a root with an artifact instead of source.
+
+Maybe the list of roots should be defined more elegantly with multiple properties instead of a long single line.
 
 Will need to add traces in Git to know where time is spent.
 

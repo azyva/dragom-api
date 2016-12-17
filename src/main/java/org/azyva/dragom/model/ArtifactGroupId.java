@@ -143,7 +143,7 @@ public final class ArtifactGroupId {
    */
   @Override
   public String toString() {
-    return this.groupId + ":" + this.artifactId;
+    return this.groupId + ':' + this.artifactId;
   }
 
   @Override
