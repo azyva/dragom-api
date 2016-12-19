@@ -171,7 +171,8 @@ subtotal: 455.5
 2016-12-13: 4
 2016-12-14: 3
 2016-12-15: 7 (desjardins, c)
-2016-12-16: 
+2016-12-16: 4 (desjardins, c)
+2016-12-18: 4 (desjardins)
 
 
 To test
@@ -213,6 +214,10 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 
 To implement soon
 =================
+
+For all calls to scmPlugin.checkoutSystem (or checkout???), should probably check if version exists and not abort if not. See line 725 in RootModuleVersion... 
+
+In RootModuleVersionJobAbstractImpl, maybe allow not validating the ModuleVersion's (optimisation). Currently it is commented.
 
 
 Maybe the list of roots should be defined more elegantly with multiple properties instead of a long single line.
