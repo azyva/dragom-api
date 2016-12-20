@@ -25,6 +25,8 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.azyva.dragom.execcontext.plugin.WorkspaceDirUserModuleVersion;
+import org.azyva.dragom.execcontext.plugin.WorkspacePlugin;
 import org.azyva.dragom.model.plugin.ScmPlugin;
 
 /**
@@ -59,7 +61,7 @@ public final class ModuleVersion {
   /**
    * Pattern for parsing an ModuleVersion literal.
    */
-  private static final Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+)(?::([^:]+))?");
+  private static final Pattern patternModuleVersionLiteral = Pattern.compile("([^:]+):([^:]+)");
 
   /**
    * NodePath.
@@ -79,8 +81,8 @@ public final class ModuleVersion {
    *   {@link Module}, or simply not include a Version.
    */
   public ModuleVersion(NodePath nodePath, Version version) {
-    if (nodePath == null) {
-      throw new RuntimeException("NodePath cannot be null.");
+    if ((nodePath == null) || (version == null)) {
+      throw new RuntimeException("NodePath and Version cannot be null.");
     }
 
     if (nodePath.isPartial()) {
@@ -92,12 +94,20 @@ public final class ModuleVersion {
   }
 
   /**
-   * Constructor using only a {@link NodePath}, with a null {@link Version} to
-   * represent the default Version of a {@link Module}, or simply not include a
-   * Version.
+   * Constructor using only a {@link NodePath}, with a null {@link Version}.
+   *
+   * <p>Such a ModuleVersion is incomplete. It can be used in
+   * {@link WorkspaceDirUserModuleVersion} and
+   * {@link WorkspacePlugin#getSetWorkspaceDir} to get all workspace directories for
+   * a given {@link Module}.
+   *
+   * <p>Note that such a ModuleVersion is a special case and cannot be parsed from
+   * a literal.
    *
    * @param nodePath NodePath. Cannot be partial.
    */
+  // TODO: It is not sure this concept of an incomplete ModuleVersion should be
+  // kept. It does not sound clean.
   public ModuleVersion(NodePath nodePath) {
     if (nodePath == null) {
       throw new RuntimeException("NodePath cannot be null.");

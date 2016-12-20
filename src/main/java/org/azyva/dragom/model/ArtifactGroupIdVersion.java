@@ -69,8 +69,8 @@ public final class ArtifactGroupIdVersion {
   /**
    * Constructor using the individual fields.
    *
-   * @param groupId GroupId.
-   * @param artifactId ArtifactId.
+   * @param artifactGroupId artifactGroupId.
+   * @param artifactVersion artifactVersion
    */
   public ArtifactGroupIdVersion(ArtifactGroupId artifactGroupId, ArtifactVersion artifactVersion) {
     if ((artifactGroupId == null) || (artifactVersion == null)) {

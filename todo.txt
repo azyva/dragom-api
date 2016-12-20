@@ -172,7 +172,7 @@ subtotal: 455.5
 2016-12-15: 7 (desjardins, c)
 2016-12-16: 4 (desjardins, c)
 2016-12-18: 4 (desjardins)
-
+2016-12-19: 2 (desjardins)
 
 To test
 =======
@@ -214,9 +214,12 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-For all calls to scmPlugin.checkoutSystem (or checkout???), should probably check if version exists and not abort if not. See line 725 in RootModuleVersion... 
+For the project code attribute matching, maybe can avoid visiting children (if project code not specified for parent, it cannot be for children? Maybe optional?)
+Should the project code stuff be provided with a regular argument, using a Config interface.
 
-In RootModuleVersionJobAbstractImpl, maybe allow not validating the ModuleVersion's (optimisation). Currently it is commented.
+For RootModuleVersion... that use a ReferenceGraph, maybe they should derive from ReferenceGraph job and implement "after..." for the main payload.
+
+For all calls to scmPlugin.checkoutSystem (or checkout???), should probably check if version exists and not abort if not. See line 725 in RootModuleVersion... 
 
 
 Maybe the list of roots should be defined more elegantly with multiple properties instead of a long single line.
