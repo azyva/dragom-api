@@ -173,6 +173,9 @@ subtotal: 455.5
 2016-12-16: 4 (desjardins, c)
 2016-12-18: 4 (desjardins)
 2016-12-19: 3 (desjardins)
+2016-12-23: 3.5 (desjardins, c)
+2016-12-27: 2 (desjardins)
+2016-12-28: 4.5 (desjardins)
 
 To test
 =======
