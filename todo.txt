@@ -175,7 +175,10 @@ subtotal: 455.5
 2016-12-19: 3 (desjardins)
 2016-12-23: 3.5 (desjardins, c)
 2016-12-27: 2 (desjardins)
-2016-12-28: 4.5 (desjardins)
+2016-12-28: 4.5 (desjardins, c)
+2016-12-28: 2 (desjardins)
+2016-12-29: 4 (desjardins, c)
+2016-12-29: 3 (desjardins)
 
 To test
 =======
@@ -216,6 +219,10 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 
 To implement soon
 =================
+
+In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
+
+Maybe use a subclass of RuntimeException so that catching that exception does not catch RuntimeExceptionUserError and lets its unwind the stack.
 
 For the project code attribute matching, maybe can avoid visiting children (if project code not specified for parent, it cannot be for children? Maybe optional?)
 Should the project code stuff be provided with a regular argument, using a Config interface.
