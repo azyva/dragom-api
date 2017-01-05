@@ -36,7 +36,7 @@ import org.azyva.dragom.model.plugin.ArtifactVersionMapperPlugin;
  * Map keys.
  * </p>
  * This class is essentially the artifact counterpart of the source-level
- * {@link Version}. One reason for having two separate classes is to help avoiding
+ * {@link Version}. One reason for having two separate classes is to help avoid
  * type mismatch and ensuring type safety.
  * <p>
  * As for Version, two types of ArtifactVersion's are recognized:
@@ -92,7 +92,7 @@ public final class ArtifactVersion {
   private VersionType versionType;
 
   /**
-   * Version string, without the -SNAPSHOT suffix, if any.
+   * Version string, without the -SNAPSHOT suffix for a dynamic version.
    */
   private String version;
 
@@ -100,7 +100,8 @@ public final class ArtifactVersion {
    * Constructor using the individual fields.
    *
    * @param versionType VersionType.
-   * @param version String part of the Version.
+   * @param version Version string, without the -SNAPSHOT suffix for a dynamic
+   *   version.
    */
   public ArtifactVersion(VersionType versionType, String version) {
     if ((versionType == null) || (version == null)) {
@@ -172,8 +173,7 @@ public final class ArtifactVersion {
   }
 
   /**
-   * @return String part of the ArtifactVersion, without the {@link VersionType}
-   *   information.
+   * @return Version string, without the -SNAPSHOT suffix for a dynamic version.
    */
   public String getVersion() {
     return this.version;

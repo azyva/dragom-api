@@ -180,6 +180,8 @@ subtotal: 455.5
 2016-12-29: 4 (desjardins, c)
 2016-12-29: 3 (desjardins)
 2016-12-30: 4 (desjardins, c)
+2017-01-04: 4.5 (desjardins, c)
+            3 (desjardins)
 
 To test
 =======
@@ -221,6 +223,12 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+For the selection of plugin ID, provide a list from the model.
+
+Not having branches with / is a limitation.
+
+Since root-manager add does not validate, we can get null when Model.getModule which causes NPE. This is not very nice.
+
 In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
 
 Maybe use a subclass of RuntimeException so that catching that exception does not catch RuntimeExceptionUserError and lets its unwind the stack.
@@ -235,11 +243,10 @@ For all calls to scmPlugin.checkoutSystem (or checkout???), should probably chec
 
 Maybe the list of roots should be defined more elegantly with multiple properties instead of a long single line.
 
-Will need to add traces in Git to know where time is spent.
 
 
 
-Store mapping in Config... in transient storage so that at least they are reused in one tool exécution.
+Store mapping in Config... in transient storage so that at least they are reused in one tool execution.
 
 At the end of switch should provide a report of what was not touched as these may be module which the user want to clean from workspace.
 
@@ -291,12 +298,6 @@ and have verbose modes --whisper and --silent (or --quiet?) to select which info
 Some tools may produce reports. This information is the actual payload and cant be quieted.
 Maybe the list of important actions (those that modify stuff) should be handled with userInteractionCallback?
 
-
-
-GPSII has implemented simple variable references in POMs.
-The variable can be defined in same POM or in parent, provided it is in same module.
-But what if multiple module references use the same variable? When chaning the variable, module modules can be affected, and Dragom is not equiped to react to this.
-But at some point they said they were not sure if it was worth implementing. 
 
 
 
