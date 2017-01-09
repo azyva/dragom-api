@@ -182,6 +182,7 @@ subtotal: 455.5
 2016-12-30: 4 (desjardins, c)
 2017-01-04: 4.5 (desjardins, c)
             3 (desjardins)
+2017-01-08: 4
 
 To test
 =======
@@ -247,6 +248,8 @@ Maybe the list of roots should be defined more elegantly with multiple propertie
 
 
 Store mapping in Config... in transient storage so that at least they are reused in one tool execution.
+
+
 
 At the end of switch should provide a report of what was not touched as these may be module which the user want to clean from workspace.
 
@@ -1140,3 +1143,162 @@ Resources
   - Stack Overflow
   - GitHub issues (link to dragom-site issues)
   - email
+
+  
+  
+  
+Properties
+==========
+
+SYS_PROPERTY
+------------
+
+Considered static
+
+CliUtil
+SYS_PROPERTY_IND_USER_PROPERTIES = "org.azyva.dragom.IndUserProperties";
+SYS_PROPERTY_DEFAULT_USER_PROPERTIES_FILE = "org.azyva.dragom.DefaultUserProperties";
+SYS_PROPERTY_USER_PROPERTIES_FILE_COMMAND_LINE_OPTION = "org.azyva.dragom.UserPropertiesCommandLineOption";
+SYS_PROPERTY_IND_SINGLE_TOOL_PROPERTIES = "org.azyva.dragom.IndSingleToolProperties";
+SYS_PROPERTY_IND_TOOL_PROPERTIES = "org.azyva.dragom.IndToolProperties";
+SYS_PROPERTY_WORKSPACE_PATH_COMMAND_LINE_OPTION = "org.azyva.dragom.WorkspacePathCommandLineOption";
+SYS_PROPERTY_TOOL_PROPERTIES_FILE_COMMAND_LINE_OPTION = "org.azyva.dragom.ToolPropertiesCommandLineOption";
+SYS_PROPERTY_NO_CONFIRM_COMMAND_LINE_OPTION = "org.azyva.dragom.NoConfirmCommandLineOption";
+SYS_PROPERTY_NO_CONFIRM_CONTEXT_COMMAND_LINE_OPTION = "org.azyva.dragom.NoConfirmContextCommandLineOption";
+SYS_PROPERTY_HELP_COMMAND_LINE_OPTION = "org.azyva.dragom.HelpCommandLineOption";
+SYS_PROPERTY_ROOT_MODULE_VERSION_COMMAND_LINE_OPTION = "org.azyva.dragom.RootModuleVersionCommandLineOption";
+SYS_PROPERTY_REFERENCE_PATH_MATCHER_COMMAND_LINE_OPTION = "org.azyva.dragom.ReferencePathMatcherCommandLineOption";
+SYS_PROPERTY_JAVA_UTIL_LOGGING_CONFIG_FILE = "org.azyva.dragom.JavaUtilLoggingConfigFile";
+
+DragomToolInvoker
+SYS_PROPERTY_TOOLS = "org.azyva.dragom.Tools";
+SYS_PROPERTY_PREFIX_TOOL = "org.azyva.dragom.Tool.";
+SYS_PROPERTY_SUFFIX_TOOL_CLASS = ".ToolClass";
+
+DefaultCredentialStorePluginImpl
+SYS_PROPERTY_CREDENTIAL_FILE = "org.azyva.dragom.CredentialFile";
+DEFAULT_CREDENTIAL_FILE = "credentials.properties";
+SYS_PROPERTY_MASTER_KEY_FILE = "org.azyva.dragom.MasterKeyFile";
+done*** In CredentialStore, maybe do not fallback to home.
+done*** Change to INIT_PROPERTY probably
+
+ExecContextPluginFactoryHolder
+SYS_PROPERTY_PREFIX_DEFAULT_EXEC_CONTEXT_PLUGIN_FACTORY = "org.azyva.dragom.DefaultExecContextPluginFactory.";
+SYS_PROPERTY_PREFIX_DEFAULT_EXEC_CONTEXT_PLUGIN_IMPL = "org.azyva.dragom.DefaultExecContextPluginImpl.";
+
+ExecContextFactoryHolder
+SYS_PROPERTY_DEFAULT_EXEC_CONTEXT_FACTORY = "org.azyva.dragom.DefaultExecContextFactory";
+
+ModelFactoryHolder
+SYS_PROPERTY_DEFAULT_MODEL_FACTORY = "org.azyva.dragom.DefaultModelFactory";
+
+ServiceLocator
+SYS_PROPERTY_PREFIX_DEFAULT_SERVICE_FACTORY = "org.azyva.dragom.DefaultServiceFactory.";
+SYS_PROPERTY_PREFIX_DEFAULT_SERVICE_IMPL = "org.azyva.dragom.DefaultServiceImpl.";
+
+
+INIT_PROPERTY
+-------------
+
+Initialized from SystemProperties and user properties
+Considered static
+done*** In CliUtil.setupExecContext, rename some variables (workspaceProperties, etc.)
+done*** Maybe take only specific SystemProperties to initialize as INIT_PROPERTY (org.azyva.dragom.init-property)
+
+DefaultExecContextFactory
+INIT_PROPERTY_WORKSPACE_DIR (org.azyva.dragom.WorkspacePath)
+INIT_PROPERTY_IND_IGNORE_CACHED_EXEC_CONTEXT (org.azyva.dragom.IndIgnoreCachedExecContext)
+
+UndefinedDescendantNodeManagerSimpleDynaqmicModulePluginImpl
+INIT_PROPERTY_IND_CACHE_MODULE_EXISTENCE = "org.azyva.dragom.IndCacheModuleExistence";
+INIT_PROPERTY_MODULE_EXISTENCE_CACHE_FILE = "org.azyva.dragom.ModuleExistenceCacheFile";
+done*** Maybe do not fallback to file in home. Require explicit configuration.
+
+DefaultModelFactory
+URL_MODEL_INIT_PROP = "org.azyva.dragom.UrlModel";
+done*** Naming reversed.
+INIT_PROPERTY_IND_IGNORE_CACHED_MODEL = "org.azyva.dragom.IndIgnoreCachedModel";
+
+done*** Rename all INIT_PROPERTY to not include org.azyva.dragom.
+done*** Rename all INIT_PROPERTY to CAPITAL_WITH_UNDERSCORES
+
+
+MODEL_PROPERTY
+--------------
+
+From Model, but init property can override
+
+SimpleModel
+MODEL_PROPERTY_OPTIMISTIC_ARTIFACT_GROUP_ID_PRODUCED_MAPPING = "OPTIMISTIC_ARTIFACT_GROUP_ID_PRODUCED_MAPPING";
+
+GitScmPluginImpl
+MODEL_PROPERTY_GIT_REPOS_COMPLETE_URL = "GIT_REPOS_COMPLETE_URL";
+MODEL_PROPERTY_GIT_REPOS_BASE_URL = "GIT_REPOS_BASE_URL";
+MODEL_PROPERTY_GIT_REPOS_DOMAIN_FOLDER = "GIT_REPOS_DOMAIN_FOLDER";
+MODEL_PROPERTY_GIT_REPOS_NAME = "GIT_REPOS_NAME";
+MODEL_PROPERTY_GIT_REPOS_SUFFIX = "GIT_REPOS_SUFFIX";
+
+SemanticSelectStaticVersionPluginImpl
+MODEL_PROPERTY_SEMANTIC_VERSION_PREFIX = "SEMANTIC_VERSION_PREFIX";
+
+SimplVersionClassifierPluginImpl
+MODEL_PROPERTY_STATIC_VERSION_PREFIX = "STATIC_VERSION_PREFIX";
+
+
+EXEC_CONTEXT_PROPERTY
+---------------------
+
+MainModuleVersionWorkspacePluginFactory
+EXEC_CONTEXT_PROPERTY_MAIN_MODULE_VERSION = "MAIN_MODULE_VERSION";
+ok*** Naming not coherent with others.
+
+DefaultExecContextFactory
+EXEC_CONTEXT_PROPERTY_WORKSPACE_FORMAT = "workspace-format";
+EXEC_CONTEXT_PROPERTY_WORKSPACE_VERSION = "workspace-version";
+
+RootManager
+EXEC_CONTEXT_PROPERTY_ROOT_MODULE_VERSIONS = "root-module-versions";
+EXEC_CONTEXT_PROPERTY_PREFIX_REFERENCE_PATH_MATCHER = "reference-path-matcher.";
+
+GitScmPluginImpl
+EXEC_CONTEXT_PROPERTY_PREFIX_MAIN_WORKSPACE_DIR = "main-workspace-dir.";
+
+done*** Rename all EXEC_CONTEXT_PROPERTY to CAPITAL_WITH_UNDERSCORE
+
+
+TOOL_PROPERTY
+-------------
+ChangeReferenceToModuleVersion
+TOOL_PROPERTY_PREFIX_MAP_MODULE_VERSION_CHANGE = "MAP_MODULE_VERSION.";
+
+
+RUNTIME_PROPERTY
+----------------
+
+The rest.
+
+1. TransientData (runtime-property.)
+2. ToolProperty (runtime-property.)
+3. ExecContextProperty (runtime-property.)
+4. InitProperty (runtime-property.)
+5. SystemProperty (org.azyva.dragom.runtime-property.)
+6. ModelProperty (no prefix)
+
+done*** Remove runtime-property everwhere
+done*** Maybe do not take into consideration SystemProperties (as they are included in InitProperties)
+no*** Maybe do not include InitProperty as they are considered by SimpleModel? (not sure)
+
+
+
+
+system:
+1. dragom.properties
+2. -D (not org.azyva.dragom.init-property.)
+
+init:
+1. dragom.properties
+2. user.properties
+3. org.azyva.dragom.init-property. system properties (-D)
+
+
+
