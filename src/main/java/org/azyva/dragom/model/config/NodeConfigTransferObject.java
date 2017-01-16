@@ -39,7 +39,7 @@ import org.azyva.dragom.model.plugin.NodePlugin;
  * <p>
  * Since this interface represents a transfer object, implementations are
  * generally straightforward, and in most cases,
- * {@link SimpleNodeConfigTransferObject} will be adequate. Specifically if an
+ * SimpleNodeConfigTransferObject will be adequate. Specifically if an
  * implementation of MutableNodeConfig needs to manage concurrency with optimistic
  * locking, {@link OptimisticLockHandle} should be used instead of including some
  * hidden field within the NodeConfigTransferObject implementation.
@@ -111,7 +111,7 @@ public interface NodeConfigTransferObject {
    * added.
    * <p>
    * Mostly any implementation of PropertyDefConfig can be used, although
-   * {@link SimplePropertyDefConfig} is generally the better choice.
+   * SimplePropertyDefConfig is generally the better choice.
    *
    * @param propertyDefConfig PropertyDefConfig.
    * @return Indicates if a new PropertyDefConfig was added (as opposed to an
@@ -177,7 +177,7 @@ public interface NodeConfigTransferObject {
    * Otherwise it is added.
    * <p>
    * Mostly any implementation of PluginDefConfig can be used, although
-   * {@link SimplePluginDefConfig} is generally the better choice.
+   * SimplePluginDefConfig is generally the better choice.
    *
    * @param pluginDefConfig PluginDefConfig.
    * @return Indicates if a new PluginDefConfig was added (as opposed to an existing
