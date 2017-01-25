@@ -243,6 +243,33 @@ public interface ScmPlugin extends ModulePlugin {
   }
 
   /**
+   * Merge results.
+   */
+  public enum MergeResult {
+    /**
+     * The merge completed successfully (destination was updated with new changes in
+     * source).
+     *
+     * <p>Also applicable when destination is replaced with source (source was
+     * different from destination).
+     */
+    MERGED,
+
+    /**
+     * Conflicts occurred during the merge.
+     */
+    CONFLICTS,
+
+    /**
+     * There was nothing to merge (destination already contains source).
+     *
+     * <p>Also applicable when destination is replaced with source (source and
+     * destination were the same).
+     */
+    NOTHING_TO_MERGE
+  }
+
+  /**
    * Indicates if the {@link Module} exists in the SCM.
    *
    * <p>Can be used on a temporary {@link Module} (whose parent has not been updated
@@ -509,9 +536,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param pathModuleWorkspace Path to the Module.
    * @param versionSrc Version to merge.
    * @param message Commit message. Can be null to let a default message be used.
-   * @return Indicates if the merge completed successfully, or if merge conflicts occurred.
+   * @return MergeResult.
    */
-  boolean merge(Path pathModuleWorkspace, Version versionSrc, String message);
+  MergeResult merge(Path pathModuleWorkspace, Version versionSrc, String message);
 
   /**
    * Merges a Version of a {@link Module} into the current Version, excluding a List
@@ -521,9 +548,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param versionSrc Version to merge.
    * @param listCommitExclude List of Commit's to exclude.
    * @param message Commit message. Can be null to let a default message be used.
-   * @return Indicates if the merge completed successfully, or if merge conflicts occurred.
+   * @return MergeResult.
    */
-  boolean mergeExcludeCommits(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
+  MergeResult mergeExcludeCommits(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
 
   /**
    * Replaces the current Version of a {@link Module} with another.
@@ -534,8 +561,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param pathModuleWorkspace Path to the Module.
    * @param versionSrc Version to merge.
    * @param message Commit message. Can be null to let a default message be used.
+   * @return MergeResult. MergeResult.CONFLICTS cannot be returned.
    */
-  void replace(Path pathModuleWorkspace, Version versionSrc, String message);
+  MergeResult replace(Path pathModuleWorkspace, Version versionSrc, String message);
 
   /**
    * @return SCM type.
