@@ -38,10 +38,6 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-For the selection of plugin ID, provide a list from the model.
-
-Not having branches with / is a limitation.
-
 Since root-manager add does not validate, we can get null when Model.getModule which causes NPE. This is not very nice.
 
 In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
