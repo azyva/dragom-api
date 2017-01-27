@@ -49,9 +49,9 @@ import java.io.Writer;
 
 public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
   /**
-   * Represents a handle to an opened bracket or indentation in the output.
+   * Represents a handle to an indent in the output.
    */
-  public static interface BracketHandle extends Closeable {
+  public static interface IndentHandle extends Closeable {
     /**
      * Closeable.close throws checked IOException which is useless and bothersome
      * in this context. We therefore redefine it without any exceptions.
@@ -61,12 +61,14 @@ public interface UserInteractionCallbackPlugin extends ExecContextPlugin {
   }
 
   /**
-   * Provides information information to the user at a new indentation level.
+   * Indents the next outputs.
    *
-   * @param info Information.
-   * @return BracketHandle.
+   * <p>Every call to startIndent must be matched by a call to
+   * {@link IndentHandle#close}.
+   *
+   * @return IndentHandle.
    */
-  BracketHandle startBracket(String info);
+  IndentHandle startIndent();
 
   /**
    * Provides information information to the user at a new indentation level.
