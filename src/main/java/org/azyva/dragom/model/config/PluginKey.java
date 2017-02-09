@@ -33,12 +33,20 @@ public class PluginKey {
   /**
    * {@link NodePlugin} interface class.
    */
-  Class<? extends NodePlugin> classNodePlugin;
+  private Class<? extends NodePlugin> classNodePlugin;
 
   /**
    * Plugin ID.
    */
-  String pluginId;
+  private String pluginId;
+
+  /**
+   * Default constructor.
+   *
+   * <p>Required by JPA.
+   */
+  public PluginKey() {
+  }
 
   /**
    * Constructor.
@@ -50,6 +58,14 @@ public class PluginKey {
   public PluginKey(Class<? extends NodePlugin> classNodePlugin, String pluginId) {
     this.classNodePlugin = classNodePlugin;
     this.pluginId = pluginId;
+  }
+
+  public Class<? extends NodePlugin> getClassNodePlugin() {
+    return this.classNodePlugin;
+  }
+
+  public String getPluginId() {
+    return this.pluginId;
   }
 
   @Override

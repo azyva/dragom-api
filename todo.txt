@@ -1101,37 +1101,3 @@ init:
 1. dragom.properties
 2. user.properties
 3. org.azyva.dragom.init-property. system properties (-D)
-
-
-
-
-
-
-Database
-========
-
-NODE
-  ID                 INTEGER       NOT NULL PKEY
-  ID_NODE_PARENT     INTEGER       (null for root)
-  TYPE               CHAR(1)       NOT NULL ('C' or 'M')
-  NAME               VARCHAR(256)  NOT NULL
-  TIMESTAMP_LAST_MOD TIMESTAMP NOT NULL
-
-PROPERTY
-  ID                 INTEGER       NOT NULL PKEY
-  ID_NODE            INTEGER       NOT NULL
-  NAME               VARCHAR(256)  NOT NULL
-  VALUE              VARCHAR(1024) NOT NULL
-  IND_ONLY_THIS_NODE SMALLINT      NOT NULL (1, 0)
-  
-PLUGIN
-  ID                 INTEGER      NOT NULL PKEY
-  ID_NODE            INTEGER      NOT NULL
-  INTERFACE          VARCHAR(256) (null if to be inferred from class)
-  PLUGIN_ID          VARCHAR(256) (nullable)
-  CLASS              VARCHAR(256) NOT NULL
-  IND_ONLY_THIS_NODE SMALLIN      NOT NULL (1, 0)
-
-NEXT_ID
-  ENTITY             VARCHAR(16)  NOT NULL PKEY
-  NEXT_ID            INTEGER      NOT NULL
