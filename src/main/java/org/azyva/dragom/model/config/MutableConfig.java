@@ -43,10 +43,15 @@ import org.azyva.dragom.model.Model;
 public interface MutableConfig extends Config {
   /**
    * Creates a new uninitialized root {@link MutableClassificationNodeConfig}.
-   * <p>
-   * Creation is finalized and visible only once
+   *
+   * <p>Creation is finalized and visible only once
    * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is called,
    * replacing any root MutableClassificationNodeConfig that may already be set.
+   *
+   * <p>No method other than
+   * {@link MutableClassificationNodeConfig#getNodeConfigTransferObject} and
+   * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} can be
+   * called until creation is finalized.
    *
    * @return Root MutableClassificationNodeConfig.
    */

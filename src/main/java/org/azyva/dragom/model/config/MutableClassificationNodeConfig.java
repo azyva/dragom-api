@@ -29,10 +29,15 @@ package org.azyva.dragom.model.config;
 public interface MutableClassificationNodeConfig extends ClassificationNodeConfig, MutableNodeConfig {
   /**
    * Creates a new uninitialized {@link MutableClassificationNodeConfig}.
-   * <p>
-   * Creation is finalized and visible only once
+   *
+   * <p>Creation is finalized and visible only once
    * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} is called,
    * replacing any MutableNodeConfig with the same name that may already be set.
+   *
+   * <p>No method other than
+   * {@link MutableClassificationNodeConfig#getNodeConfigTransferObject} and
+   * {@link MutableClassificationNodeConfig#setNodeConfigTransferObject} can be
+   * called until creation is finalized.
    *
    * @return MutableClassificationNodeConfig.
    */
@@ -40,10 +45,15 @@ public interface MutableClassificationNodeConfig extends ClassificationNodeConfi
 
   /**
    * Creates a new uninitialized {@link MutableModuleConfig}.
-   * <p>
-   * Creation is finalized and visible only once
+   *
+   * <p>Creation is finalized and visible only once
    * {@link MutableModuleConfig#setNodeConfigTransferObject} is called, replacing
    * any MutableNodeConfig with the same name that may already be set.
+   *
+   * <p>No method other than
+   * {@link MutableModuleConfig#getNodeConfigTransferObject} and
+   * {@link MutableModuleConfig#setNodeConfigTransferObject} can be called until
+   * creation is finalized.
    *
    * @return MutableModuleConfig.
    */
