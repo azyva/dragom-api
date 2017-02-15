@@ -84,6 +84,14 @@ To think
 ========
 
 
+On 2017-02-14, I have changed MavenReferenceManagerPluginImpl so that Reference's without ModuleVersion (null) are never returned.
+But the rest of Dragom assumes that it may be null in some cases.
+Should probably eventually cleanup. Also documentation that talks about source-level vs artifact-level reference.
+Unless we revert and find it useful that ModuleVersion can be null in for external references.
+
+
+
+
 The fact that when creating a static version all references must be static maybe should be a decision of the SelectStaticVersionPlugin since for phases,
 they may not want to impose that references to modules outside of the PIC are static (references to Infra modules for instance).
 
