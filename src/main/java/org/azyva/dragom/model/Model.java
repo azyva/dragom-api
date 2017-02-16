@@ -88,27 +88,4 @@ public interface Model {
    * @return Module. null if no Module found.
    */
   Module findModuleByArtifactGroupId(ArtifactGroupId artifactGroupId);
-
-  /**
-   * Verifies if a groupId is included, meaning that a Module must be found for
-   * artifacts having this groupId.
-   *
-   * <p>If this method returns true for a groupId,
-   * {@link #findModuleByArtifactGroupId} can still return null for an
-   * ArtifactGroupId which uses this groupId. But having this method, a caller can
-   * adapt its behavior depending on whether a Module should be found because its
-   * groupId is included but is not, or is simply not included in the scope of the
-   * Model.
-   *
-   * <p>In fact, even findModuleByArtifactGropuId can adapt its behavior accordingly
-   * such as throwing an exception when a Module should be found but is not instead
-   * of returning null.
-   *
-   * <p>It is up to the implementation to use an appropriate algorithm to determine
-   * this information.
-   *
-   * @param groupId GroupId.
-   * @return See description.
-   */
-  boolean isGroupIdIncluded(String groupId);
 }
