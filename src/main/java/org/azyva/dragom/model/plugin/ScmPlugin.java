@@ -577,7 +577,7 @@ public interface ScmPlugin extends ModulePlugin {
    * the actual source code checked out, which is why the Path to the Module is
    * specified. This can happen when the SCM allows forking Modules.
    *
-   * @param pathModuleWorkspace Path to the Module.
+   * @param pathModuleWorkspace Path to the Module. Can be null.
    * @return See description.
    */
   String getScmUrl(Path pathModuleWorkspace);
