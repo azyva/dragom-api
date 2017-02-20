@@ -120,6 +120,9 @@ import org.azyva.dragom.model.Version;
  * by ":", "-&gt;" or the end of the ReferencePathMatcherByElement literal,
  * regardless of occurrences of ":" within the regex.
  *
+ * A ReferencePathMatcherByElement literal can be empty, which results in an empty
+ * sequence of ElementMatcher's, which matches nothing.
+ *
  * Note that a ReferencePath is, as implied by its name, a sequence of references
  * between modules. This has a few implications worth noting:
  *
@@ -934,34 +937,39 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       this.listElementMatcher = new ArrayList<ElementMatcher>();
       this.indFixedLength = true;
 
-      // First perform the actual parsing.
+      // If the literal ReferencePathMatcherByElement is empty, we must not get into the
+      // block below as it assumes at least one ElementMatcher. The rest of this class
+      // behavior correctly though when this.listElementMatcher is empty (which is to
+      // match nothing).
+      if (stringReferencePathMatcherByElement.length() != 0) {
+        // First perform the actual parsing.
 
-      indexStartElementMatcher = 0;
+        indexStartElementMatcher = 0;
 
-      do {
-        ElementMatcher elementMatcher;
+        do {
+          ElementMatcher elementMatcher;
 
-        indexEndElementMatcher = stringReferencePathMatcherByElement.indexOf("->", indexStartElementMatcher);
+          indexEndElementMatcher = stringReferencePathMatcherByElement.indexOf("->", indexStartElementMatcher);
 
-        if (indexEndElementMatcher == -1) {
-          indexEndElementMatcher = stringReferencePathMatcherByElement.length();
-        }
+          if (indexEndElementMatcher == -1) {
+            indexEndElementMatcher = stringReferencePathMatcherByElement.length();
+          }
 
-        elementMatcher = ElementMatcher.parse(stringReferencePathMatcherByElement, indexStartElementMatcher, indexEndElementMatcher);
+          elementMatcher = ElementMatcher.parse(stringReferencePathMatcherByElement, indexStartElementMatcher, indexEndElementMatcher);
 
-        if (elementMatcher.indDoubleAsterisk) {
-          this.indFixedLength = false;
-        } else {
-          this.fixedLength++;
-        }
+          if (elementMatcher.indDoubleAsterisk) {
+            this.indFixedLength = false;
+          } else {
+            this.fixedLength++;
+          }
 
-        this.listElementMatcher.add(elementMatcher);
+          this.listElementMatcher.add(elementMatcher);
 
-        indexStartElementMatcher = indexEndElementMatcher + 2; // + 2 to skip "->", if any.
-      } while (indexEndElementMatcher != stringReferencePathMatcherByElement.length());
+          indexStartElementMatcher = indexEndElementMatcher + 2; // + 2 to skip "->", if any.
+        } while (indexEndElementMatcher != stringReferencePathMatcherByElement.length());
+      }
 
       // Then initialize the transient fields.
-
       this.init();
     } catch (ParseException pe) {
       throw new RuntimeException(pe);
