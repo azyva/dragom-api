@@ -89,7 +89,8 @@ But the rest of Dragom assumes that it may be null in some cases.
 Should probably eventually cleanup. Also documentation that talks about source-level vs artifact-level reference.
 Unless we revert and find it useful that ModuleVersion can be null in for external references.
 
-
+Git checkout can limit what is checked ou. Maybe we can limit to only what is important.
+Also, git clone can limit what is fetched from the remote. This could speed up download times.
 
 
 The fact that when creating a static version all references must be static maybe should be a decision of the SelectStaticVersionPlugin since for phases,
@@ -1109,3 +1110,120 @@ init:
 1. dragom.properties
 2. user.properties
 3. org.azyva.dragom.init-property. system properties (-D)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+User Documentation
+==================
+
+Introduction
+* Must understand that Dragom is both a development framework and a tool set developped with this framework
+* This doc relates to a base and little customized installation
+Concepts and design
+- Reference paths
+- Reference path matchers
+- Model and configuration
+  * ClassificationNode
+  * Module
+  * Property inheritance
+    * Only this node
+- NodePath
+- Properties (init, user, runtime, model)
+- Workspace, execution context and plugins
+  * Execution context behavior driven by plugins, but generally default plugins used 
+  * CredentialStorePlugin
+  * EventPlugin
+  * RuntimePropertiesPlugin
+  * UserInteractionCallbackPlugin
+  * WorkspacePlugin
+  * How execution context plugins are selected
+  ???? Should describe execution context plugin implementations separately?
+- User interaction
+- Do you want to continue contexts
+- Exceptional conditions
+- Credential storage
+  * realms
+- Model plugin interfaces
+  * ArtifactInfoPlugin
+  * ArtifactVersionManagerPlugin
+  * ArtifactVersionMapperPlugin
+  * BuilderPlugin
+  * FindModuleByArtifactGroupIdPlugin
+  * JenkinsJobInfoPlugin
+  * ModuleVersionMatcherPlugin
+  * ReferenceManagerPlugin
+  * RemoteBuilderPlugin
+  * ScmPlugin
+  * SelectDynamicVersionPlugin
+  * SelectStaticVersionPlugin
+  * UndefinedDescendantNodeManagerPlugin
+  * VersionClassifierPlugin
+- ModuleVersion
+- Root ModuleVersion's
+- Version and ArtifactVersion
+Model plugin implementations
+- ConfigArtifactVersionMapperPluginImpl
+- ContinuousReleaseSelectStaticVersionPluginImpl
+- GitScmPluginImpl
+- HotfixSelectDynamicVersionPluginImpl
+- JenkinsRemoteBuilderPluginImpl
+- MatchAllModuleVersionMatcherPluginImpl
+- MavenArtifactVersionManagerPluginImpl
+- MavenBuilderPluginImpl
+- MavenReferenceManagerPluginImpl
+- PhaseSelectDynamicVersionPluginImpl
+- PhaseSelectStaticVersionPluginImpl
+- RuntimeSelectionPluginFactory
+- SemanticSelectStaticVersionPluginImpl
+- SimpleArtifactInfoPluginImpl
+- SimpleArtifactVersionMapperPluginImpl
+- SimpleFindModuleByArtifactGroiupIdPluginImpl
+- SimplePomResolver???
+- SimpleVersionClassifierPluginImpl
+- UndefinedDescescendantNodeManagerSimpleDynamicModulePluginImpl
+- UniformSelectDynamicVersionPluginImpl
+- UniformSelectStaticVersionPluginImpl
+Installation
+Configuration
+* No configuration tool yet, by hand
+- Do you want to continue contexts
+- Exceptional conditions
+- Inititialization properties
+- User properties
+- Runtime properties
+- Model properties
+- 
+Tool execution and jobs
+
+
+Developer Documentation
+=======================
+
+Introduction
+
+Developing plugins
+Internationalization
+Using reusing model for other purposes
