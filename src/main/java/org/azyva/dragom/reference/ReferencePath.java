@@ -20,6 +20,7 @@
 package org.azyva.dragom.reference;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.azyva.dragom.model.Module;
@@ -185,6 +186,13 @@ public class ReferencePath {
   /**
    * ReferencePath's are often displayed to the user and need to be shown in a
    * human-friendly and not too cryptic way.
+   *
+   * <p>ReferencePath's contain multiple elements chained together in sequence,
+   * similar to a file path. But in the case of ReferencePath's, these elements can
+   * contain varous characters including "/", ".", ":", "(", and ")" which make it
+   * difficult to interpret at a glance when on a single line which may wrap
+   * anywhere. Therefore, elements are separated by newlines and each element in
+   * sequence is indented with a few spaces.
    * <p>
    * The {@link Reference}'s within a ReferencePath are not totally distinct
    * elements. A Reference includes a {@link ModuleVersion}, but also implementation
@@ -197,18 +205,29 @@ public class ReferencePath {
   @Override
   public String toString() {
     StringBuilder stringBuilder;
+    int size;
+    char[] arrayCharIndent;
     boolean indFirst;
 
     stringBuilder = new StringBuilder();
+    size = this.listReference.size();
+    arrayCharIndent = new char[size * 2];
+    Arrays.fill(arrayCharIndent, ' ');
     indFirst = true;
 
-    for (Reference reference: this.listReference) {
+    for (int i = 0; i < size; i++) {
+      Reference reference;
+
+      reference = this.listReference.get(i);
+
       if (!indFirst) {
         if (reference.getImplData() == null) {
-          stringBuilder.append("|>");
+          stringBuilder.append("|>\n");
         } else {
-          stringBuilder.append("->");
+          stringBuilder.append("->\n");
         }
+
+        stringBuilder.append(arrayCharIndent, 0, i * 2);
       }
 
       stringBuilder.append(reference.toString());
