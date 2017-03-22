@@ -38,6 +38,14 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+Add SCM URL to all messages which use pathModuleWorkspace (as in MergeMain).
+
+Iteration among root ModuleVersion must be optimized if reference path matchers contain fixed root element matcher.
+
+There's missing a "INPUT_..._WITH_DEFAULT" for the dest version in MergeMain. Not normal...  
+
+
+
 In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
 
 For the project code attribute matching, maybe can avoid visiting children (if project code not specified for parent, it cannot be for children? Maybe optional?)
