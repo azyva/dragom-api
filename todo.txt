@@ -38,12 +38,15 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-Add SCM URL to all messages which use pathModuleWorkspace (as in MergeMain).
+May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
-Iteration among root ModuleVersion must be optimized if reference path matchers contain fixed root element matcher.
+Add SCM URL to all messages which use pathModuleWorkspace (as in MergeMain).
 
 There's missing a "INPUT_..._WITH_DEFAULT" for the dest version in MergeMain. Not normal...  
 
+Maybe moduleVersionMatcherPlugin should be used not only for RootModuleVersion... but also for SwitchTo... and Release... (and others which implement their own loops?)
+
+Test MergeMain in depth-first order (why the performance problems)
 
 
 In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
