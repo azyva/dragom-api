@@ -38,6 +38,8 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+Have logo displayed at startup.
+
 May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
 Add SCM URL to all messages which use pathModuleWorkspace (as in MergeMain).
@@ -424,169 +426,13 @@ Information:
 
 
 
-Marketing and Dragom web site (info from FL)
-============================================
-
-Use what François has setup.
-  
-URL : https://fidooda02.sbin.ca:8080/
 
 
 
-IP hosting :  199.19.212.118  (pour le "A Record")
-2016-11-13: Ceci est l'IP du serveur de François. J'ai changé pour GitHub Pages 192.30.252.153.
-
-
-
-Lorsque le A Record sera updaté :
-
-site:
-
-https://dragom.org
-https://dragom.org/wp-admin
-
-
-
-Il resterait juste le setup du SSL à faire.  Je suggère y aller direct en https only.
-
-
-Pour le "look" je recommande d'acheter un child theme sur le framekwork "genesis".
-
-J'ai fait un tri pour toi de thème que je crois approprié pour un blog technique.
-
-http://my.studiopress.com/themes/sixteen-nine/
-
-http://my.studiopress.com/themes/eleven40/
-
-Tu peux p-e penser que c'est cher 100$ mais çá vaut la peine.
-
-Sinon, ya toujours themforest mais humm... le framework de développement ne sera pas "DR approved"
-
-http://themeforest.net/category/wordpress/technology/software
-
-
-
-Use Mail Poet in WordPress for mailings
-Pass through Amazon SES for SMTP
-
-
-Dragom articles:
-
-- Who I am
-- What in the name
-- Origin of the Dragom project
-- Application modularization
-- Versioning at the repository level
-- Versioning at the module level
-- Submodules are implementation details
-- Source-level reuse vs artifact reuse
-- Autonomous modules
-  - Not in the sense that they run by themselves
-  - In the sense that they describe their build
-- What is a module reference graph
-  - Vs module dependency graphs
-- Shallow and narrow module reference graphs
-  - Many large projects are rather monolithic
-- Deep and/or wide module reference graphs
-  - Software developped in house by large organizations
-- The problems introduced by deep and/or wide module reference graphs
-- Dragom is here to help
-- By raising the basic module-level version management features to module reference graphs
-- Creating a branch in a module reference graph
-- Creating CI jobs for a module reference graph
-- Merging a branch of a module reference graph into another branch
-- Releasing a module reference graph
-- Analysing the modules versions in a module reference graph
-
-Documentation:
-
-Conventions for properties
-- Model properties: UPPER_CASE_WITH_UNDERSCORES
-
-- Runtime Properties in ExecContext: runtime-property.Domain1.app-a.UPPER_CASE_WITH_UNDERSCORES 
-- Runtime Properties: prefix: lower-case-with-dashes
-- Runtime Properties in system properties: com.azyva.dragom.runtime-properties.Domain1.app-a.UPPER_CASE_WITH_UNDERSCORES
-
-- TaskParams: ClassName.propertyName.
-- The 2 types of plugin implementations (factory and constructor)
-- Config vs Model.
-
-
-
-Blog articles that would become documents articles
-1. Need a teaser
-
-
-
-Demo
-====
-  
-- Checkout tag (production), recurse
-dragom-checkout --workspace-path=workspace --artifact-refs= Domain1/app-a:S/1.2
-
-- Prepare projet to work on this and this module
-dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#Framework/parent-model Domain1/app-a:S/1.2
-
-- Other developer checkout all branches at once
-dragom-checkout --workspace-path=workspace2 --artifact-refs=::.*-SNAPSHOT Domain1/app-a:D/develop-123d56
-
-- Make modification to a module
-In parent-model/pom.xml, add a property, commit and push
-
-- Add a module
-dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#AppFramework/app-framework Domain1/app-a:D/develop-123d56
-
-- Make modification to new module
-In app-framework/pom.xml, add a property, commit and push
-
-- Release
-dragom-create-static-version --workspace-path=workspace Domain1/app-a:D/develop-123d56
-
-- Checkout release
-dragom-checkout --workspace-path=workspace3 --artifact-refs= Domain1/app-a:S/2015-08-01
-
-- Reprepare for modification to a module
-dragom-switch-to-dynamic-version --workspace-path=workspace --module-reference-graph-path=src#AppFramework/app-framework Domain1/app-a:D/develop-123d56
-
-- Make modification to one module
-In app-framework/pom.xml, add another property, commit and push
-
-- Re-release
-dragom-create-static-version --workspace-path=workspace Domain1/app-a:D/develop-123d56
-
-- Checkout release
-dragom-checkout --workspace-path=workspace3 --artifact-refs= Domain1/app-a:S/2015-08-01
-
-
-for i in `ls` ; do echo $i ; git -C $i status ; echo === ; done
 
 
 
  
-- Other developper works on a feature branch for a specific module, but that requires opening the path
-- Other developer requests another module in project work space 
-
-Talk about whats to come:
-- Notion of roots
-- Merge feature branche into project branch
-- Produce a report of what modules have been modified (are on branches)
-- Use that report output to create release branches
-- Merge project into release branch
-- Do this as soon as date is known to promote continuous integration between projects
-- Or keep projects separate and regularly merge each project changes in release branch, in case a projet removes itself
-- Each project can symetrically merge into release
-- Perform the release by walking the graph
-- Rebuild all?
-- Version coherence
-
-Older notes (Démonstration)
-- Mapping de version
-- Mapping de artifactGroupId à ModuleClassificationPath et vers SCM URL.
-- Subversion vs Git (checkout hybride).
-- Exceptions au niveau des groupId et artifactId.
-- Source vs artifact references
-In the demo, should probably illustrate dependency management.
-
 
 
 
@@ -1147,89 +993,6 @@ init:
 
 
 
-User Documentation
-==================
-
-Introduction
-* Must understand that Dragom is both a development framework and a tool set developped with this framework
-* This doc relates to a base and little customized installation
-Concepts and design
-- Reference paths
-- Reference path matchers
-- Model and configuration
-  * ClassificationNode
-  * Module
-  * Property inheritance
-    * Only this node
-- NodePath
-- Properties (init, user, runtime, model)
-- Workspace, execution context and plugins
-  * Execution context behavior driven by plugins, but generally default plugins used 
-  * CredentialStorePlugin
-  * EventPlugin
-  * RuntimePropertiesPlugin
-  * UserInteractionCallbackPlugin
-  * WorkspacePlugin
-  * How execution context plugins are selected
-  ???? Should describe execution context plugin implementations separately?
-- User interaction
-- Do you want to continue contexts
-- Exceptional conditions
-- Credential storage
-  * realms
-- Model plugin interfaces
-  * ArtifactInfoPlugin
-  * ArtifactVersionManagerPlugin
-  * ArtifactVersionMapperPlugin
-  * BuilderPlugin
-  * FindModuleByArtifactGroupIdPlugin
-  * JenkinsJobInfoPlugin
-  * ModuleVersionMatcherPlugin
-  * ReferenceManagerPlugin
-  * RemoteBuilderPlugin
-  * ScmPlugin
-  * SelectDynamicVersionPlugin
-  * SelectStaticVersionPlugin
-  * UndefinedDescendantNodeManagerPlugin
-  * VersionClassifierPlugin
-- ModuleVersion
-- Root ModuleVersion's
-- Version and ArtifactVersion
-Model plugin implementations
-- ConfigArtifactVersionMapperPluginImpl
-- ContinuousReleaseSelectStaticVersionPluginImpl
-- GitScmPluginImpl
-- HotfixSelectDynamicVersionPluginImpl
-- JenkinsRemoteBuilderPluginImpl
-- MatchAllModuleVersionMatcherPluginImpl
-- MavenArtifactVersionManagerPluginImpl
-- MavenBuilderPluginImpl
-- MavenReferenceManagerPluginImpl
-- PhaseSelectDynamicVersionPluginImpl
-- PhaseSelectStaticVersionPluginImpl
-- RuntimeSelectionPluginFactory
-- SemanticSelectStaticVersionPluginImpl
-- SimpleArtifactInfoPluginImpl
-- SimpleArtifactVersionMapperPluginImpl
-- SimpleFindModuleByArtifactGroiupIdPluginImpl
-- SimplePomResolver???
-- SimpleVersionClassifierPluginImpl
-- UndefinedDescescendantNodeManagerSimpleDynamicModulePluginImpl
-- UniformSelectDynamicVersionPluginImpl
-- UniformSelectStaticVersionPluginImpl
-Installation
-Configuration
-* No configuration tool yet, by hand
-- Do you want to continue contexts
-- Exceptional conditions
-- Inititialization properties
-- User properties
-- Runtime properties
-- Model properties
-- 
-Tool execution and jobs
-
-
 Developer Documentation
 =======================
 
@@ -1238,3 +1001,34 @@ Introduction
 Developing plugins
 Internationalization
 Using reusing model for other purposes
+
+
+old notes for doc:
+Dragom articles:
+
+- Who I am
+- What in the name
+- Origin of the Dragom project
+- Application modularization
+- Versioning at the repository level
+- Versioning at the module level
+- Submodules are implementation details
+- Source-level reuse vs artifact reuse
+- Autonomous modules
+  - Not in the sense that they run by themselves
+  - In the sense that they describe their build
+- What is a module reference graph
+  - Vs module dependency graphs
+- Shallow and narrow module reference graphs
+  - Many large projects are rather monolithic
+- Deep and/or wide module reference graphs
+  - Software developped in house by large organizations
+- The problems introduced by deep and/or wide module reference graphs
+- Dragom is here to help
+- By raising the basic module-level version management features to module reference graphs
+- Creating a branch in a module reference graph
+- Creating CI jobs for a module reference graph
+- Merging a branch of a module reference graph into another branch
+- Releasing a module reference graph
+- Analysing the modules versions in a module reference graph
+

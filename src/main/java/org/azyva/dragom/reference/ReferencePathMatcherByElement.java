@@ -1387,13 +1387,22 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     // ElementMatcher's referring to specific Module's. Before concluding that the
     // ReferencePathMatcherByElement can match children of the ReferencePath we at
     // least verify that the current ReferencePath is matched by the ElementMatcher's
-    // up to the last ElementMatcher that referred to a specific Module. We do this by
+    // up to the last ElementMatcher that referred to a specific Module. We also
+    // consider the following ElementMatcher's which match single Module's (are not
+    // "**" since if these are not matched, no children can match. We do this by
     // invoking the matches method with a modified ReferencePathMatcherByElement that
-    // includes a "**" ElementMatcher after the last ElementMatcher.
+    // includes a "**" ElementMatcher after the last ElementMatcher single-Module.
     // The problem is that ReferencePathMatcherByElement implement value-based
     // semantics (instances are immutable). But we are in this class so we allow
     // ourselves to build a temporary ReferencePathMatcherByElement that suits our
     // purpose.
+
+    while (    (indexTrailingElementMatcher < this.listElementMatcher.size())
+           && !this.listElementMatcher.get(indexTrailingElementMatcher).indDoubleAsterisk) {
+
+      indexTrailingElementMatcher++;
+    }
+
     referencePathMatcherByElementPrefix = new ReferencePathMatcherByElement();
     referencePathMatcherByElementPrefix.model = this.model;
     referencePathMatcherByElementPrefix.listElementMatcher = new ArrayList<ElementMatcher>(this.listElementMatcher.subList(0, indexTrailingElementMatcher));

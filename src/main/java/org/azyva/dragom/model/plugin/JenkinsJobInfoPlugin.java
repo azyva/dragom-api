@@ -22,6 +22,7 @@ package org.azyva.dragom.model.plugin;
 import java.io.Reader;
 import java.util.Map;
 
+import org.azyva.dragom.execcontext.ExecContext;
 import org.azyva.dragom.model.Module;
 import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.model.NodePath;
@@ -59,6 +60,12 @@ public interface JenkinsJobInfoPlugin extends ModulePlugin {
    * downstream jobs that handle building {@link Module}'s which depend on the
    * current Module so that the configuration of the latter can, if appropriate,
    * contain these references.
+   * <p>
+   * It is recommended that the full name of the job corresponding to a dynamic
+   * Version be cached in {@link ExecContext} transient data since this method is
+   * expected to be called not only for jobs being created, but also for jobs which
+   * are downstream of it. This implies it is expected to called multiple times for
+   * the same job.
    *
    * @param versionDynamic Dynamic Version of the ModuleVersion for which a job must
    *   be created. A ModuleVersion is not passed as a parameter since the
