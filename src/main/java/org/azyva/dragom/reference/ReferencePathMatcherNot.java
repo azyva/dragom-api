@@ -70,11 +70,10 @@ public class ReferencePathMatcherNot implements ReferencePathMatcher {
   }
 
   /**
-   * Verifies if the ReferencePathMatcherNot can potentially match children of a
-   * ReferencePath.
-   *
-   * A ReferencePathMatcherNot can match children of a ReferencePath if its inner
-   * ReferencePathMatcher cannot.
+   * The semantics of this method is "can match at least some children". It is not
+   * possible to conclude that the ReferencePathMatcherNot cannot match children.
+   * In particular, if the inner ReferencePathMatcher can match children, it does
+   * not mean that the ReferencePathMatcherNot cannot match any children.
    *
    * @param referencePath ReferencePath.
    * @return true if children of the ReferencePath can be matched by the
@@ -82,6 +81,6 @@ public class ReferencePathMatcherNot implements ReferencePathMatcher {
    */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
-    return !this.referencePathMatcher.canMatchChildren(referencePath);
+    return true;
   }
 }
