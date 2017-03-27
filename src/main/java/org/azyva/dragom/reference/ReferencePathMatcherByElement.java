@@ -1157,8 +1157,10 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
    */
   @Override
   public boolean matches(ReferencePath referencePath) {
+    int indexAfterFixedPrefix;
+    int indexFixedSuffix;
     int index;
-    int indexElement;
+    int indexReferencePathElement;
 
     if (this.indFixedLength && (this.listElementMatcher.size() != referencePath.size())) {
       return false;
@@ -1170,8 +1172,8 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 
     // this.indexFirstDoubleAsterisk refers to the end of the List of ElementMatcher's
     // if the ReferencePathMatcherByElement is fixed.
-    for (index = 0; index < this.indexFirstDoubleAsterisk; index++) {
-      if (!this.listElementMatcher.get(index).matches(referencePath.get(index))) {
+    for (indexAfterFixedPrefix = 0; indexAfterFixedPrefix < this.indexFirstDoubleAsterisk; indexAfterFixedPrefix++) {
+      if (!this.listElementMatcher.get(indexAfterFixedPrefix).matches(referencePath.get(indexAfterFixedPrefix))) {
         return false;
       }
     }
@@ -1179,7 +1181,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     // If we get to the last ElementMatcher it means the ReferencePathMatcherByElement
     // is fixed (no "**" ElementMatcher) and the ReferencePath contains the same
     // number of elements. We therefore have a match.
-    if (index == this.listElementMatcher.size()) {
+    if (indexAfterFixedPrefix == this.listElementMatcher.size()) {
       return true;
     }
 
@@ -1195,46 +1197,58 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       }
     }
 
-    // If we get to the point where index == indexFirstDoubleAsterisk it means there
-    // is only one "**" ElementMatcher. Since both the elements before and after the
-    // "**" ElementMatcher were matched, we have a match.
-    if (index == this.indexFirstDoubleAsterisk) {
+    // If we get to indexFirstDoubleAsterisk it means there is only one "**"
+    // ElementMatcher. Since both the elements before and after the "**"
+    // ElementMatcher were matched, we have a match.
+    if ((this.listElementMatcher.size() - index - 1) == this.indexFirstDoubleAsterisk) {
       return true;
     }
 
-    // We now need to match each fixed ElementMatcher within the ReferencePath
-    // starting at the element following the first "**" ElementMatcher.
-    indexElement = this.indexFirstDoubleAsterisk + 1;
+    indexFixedSuffix = referencePath.size() - index;
 
-    next_element_matcher_group:
+    // We now need to match each fixed ElementMatcher between the first and last "**"
+    // to the ReferencePath elements between the prefix and the suffix.
+
+    indexReferencePathElement = indexAfterFixedPrefix;
+
     for (ElementMatcherGroup elementMatcherGroup: this.listElementMatcherGroup) {
-      match_element_matcher_group:
-      for (; indexElement + elementMatcherGroup.nbTotalElementMatchers <= this.indexLastDoubleAsterisk; indexElement++) {
-        for (index = 0; index < elementMatcherGroup.nbElementMatchers; index++) {
-          // If the current element in the ReferencePath is not matched by the corresponding
-          // element in the ElementMatcherGroup, we need to move the match point to the next
-          // element in the ReferencePath.
-          if (!this.listElementMatcher.get(elementMatcherGroup.indexFirstElementMatcher + index).matches(referencePath.get(indexElement + index))) {
-            continue match_element_matcher_group;
-          }
-        }
+      int indexElementMatcher;
 
-        // If we get here it means all the elements in the ElementMatcherGroup were
-        // matched. We therefore need to point to the next element in the ReferencePath
-        // following the last one matched by the ElementMatcherGroup and move on to the
-        // next ElementMatcherGroup.
-        indexElement += elementMatcherGroup.nbElementMatchers;
-        continue next_element_matcher_group;
+      indexElementMatcher = elementMatcherGroup.indexFirstElementMatcher;
+
+      // Search for the first ReferencePath element which matches the current
+      // ElementMatcher. Those which do not match are simply dropped as they are
+      // implicitly matched by the "**" preceeding the current ElementMatcherGroup.
+      for (; indexReferencePathElement < indexFixedSuffix; indexReferencePathElement++) {
+        if (this.listElementMatcher.get(indexElementMatcher).matches(referencePath.get(indexReferencePathElement))) {
+          break;
+        }
       }
 
-      // If we get here it means we got to the end of the elements in the ReferencePath
-      // and that there is no way to make the current ElementMatcherGroup match. We
-      //therefore do not have a match.
-      return false;
+      // If we could not find the first ReferencePath element which matches the first
+      // ElementMatcher in the group, there is no match.
+      if (indexReferencePathElement == indexFixedSuffix) {
+        return false;
+      }
+
+      // If there is not enough ReferencePath elements to match all the fixed remaining
+      // ElementMatchers, there is no match.
+      if ((indexFixedSuffix - indexReferencePathElement) < elementMatcherGroup.nbTotalElementMatchers) {
+        return false;
+      }
+
+      // Once we match the first ReferencePath element, all the others must match the
+      // ElementMatcher's within the ElementMatcherGroup.
+      for (indexReferencePathElement++, indexElementMatcher++; indexElementMatcher < elementMatcherGroup.nbElementMatchers; indexReferencePathElement++, indexElementMatcher++) {
+        if (!this.listElementMatcher.get(indexElementMatcher).matches(referencePath.get(indexReferencePathElement))) {
+          return false;
+        }
+      }
     }
 
     // If we get here, all the ElementMatcherGroup's where matched somewhere within
-    // the ReferencePath. We therefore have a match.
+    // the ReferencePath. We therefore have a match. There may be some remaining
+    // ReferencePath elements, but they are implicitly matched by the last "**".
     return true;
   }
 
@@ -1269,37 +1283,6 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
    */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
-    return this.matchesPrefix(referencePath) != -1;
-  }
-
-  /**
-   * Very similar to canMatchChildren, except that we can conclude that all children
-   * are matched only if the list of ElementMatcher's ends with "**" and all
-   * previous ElementMatcher's matched.
-   *
-   * @param referencePath ReferencePath.
-   * @return true if the ReferencePathMatcher matches all children of the
-   *   ReferencePath.
-   */
-  @Override
-  public boolean matchesAllChildren(ReferencePath referencePath) {
-    int indexTrailingElementMatcher;
-
-    indexTrailingElementMatcher = this.matchesPrefix(referencePath);
-
-    return (   (indexTrailingElementMatcher == (this.listElementMatcher.size() - 1))
-            && this.listElementMatcher.get(indexTrailingElementMatcher).indDoubleAsterisk);
-  }
-
-  /**
-   * Factors out code common to both canMatchChildren and matchesAllChildren.
-   *
-   * @param referencePath ReferencePath.
-   * @return Index of ElementMatcher following the last one which matches a single
-   *   Module and which matched the last Reference in the ReferencePath. -1 if there
-   *   is no match.
-   */
-  private int matchesPrefix(ReferencePath referencePath) {
     ReferencePath referencePathCopy;
     int indexModuleMatcher;
     ModuleMatcher moduleMatcher;
@@ -1308,6 +1291,10 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     int nbFollowingElements;
     ReferencePathMatcherByElement referencePathMatcherByElementPrefix;
     ElementMatcher elementMatcherDoubleAsterisk;
+
+    if (this.matchesAllChildren(referencePath)) {
+      return true;
+    }
 
     referencePathCopy = new ReferencePath(referencePath);
 
@@ -1328,7 +1315,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
         // maximum number of preceding elements. If that becomes the cas, no children can
         // be matched.
         if ((moduleMatcher.maxPrecedingElements != -1) && (indexElement > moduleMatcher.maxPrecedingElements)) {
-          return -1;
+          return false;
         }
 
         if (referencePathCopy.get(indexElement).getModuleVersion().getNodePath().equals(moduleMatcher.nodePath)) {
@@ -1340,7 +1327,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
           // ReferencePathMatcher can match at least the preceding elements in the
           // ReferencePath. The maximum will have been checked above.
           if (indexElement < moduleMatcher.minPrecedingElements) {
-            return -1;
+            return false;
           }
 
           // We need to eliminate the elements in the ReferencePath up to and including the
@@ -1361,7 +1348,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       // We also check for exceeding the maximum number of unmatched elements at the end
       // when no more element is matched.
       if ((moduleMatcher.maxPrecedingElements != -1) && (indexElement > moduleMatcher.maxPrecedingElements)) {
-        return -1;
+        return false;
       }
 
       // If we get here it means the specific Module is not found in the ReferencePath.
@@ -1378,7 +1365,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     while (indexModuleMatcher < this.listModuleMatcher.size()) {
       for (indexElement = 0; indexElement < referencePath.size(); indexElement++) {
         if (referencePath.get(indexElement).getModuleVersion().getNodePath().equals(this.listModuleMatcher.get(indexModuleMatcher).nodePath)) {
-          return -1;
+          return false;
         }
       }
 
@@ -1408,7 +1395,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     }
 
     if ((nbFollowingElements != -1) && (nbFollowingElements <= referencePathCopy.size())) {
-      return -1;
+      return false;
     }
 
     // Now we know that the ReferencePathMatcherByElement can potentially match
@@ -1453,7 +1440,16 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       throw new RuntimeException(pe);
     }
 
-    return referencePathMatcherByElementPrefix.matches(referencePath) ? indexTrailingElementMatcher : -1;
+    return referencePathMatcherByElementPrefix.matches(referencePath);
+  }
+
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    // The only case where we can safely conclude that all children are matched is when
+    // the ReferencePathMatcherByElement matches and ends with "**".
+    return (   (this.listElementMatcher.size() != 0)
+            && this.listElementMatcher.get(this.listElementMatcher.size() - 1).indDoubleAsterisk
+            && this.matches(referencePath));
   }
 
   //TODO: Not sure this is useful. Should probably remove.
