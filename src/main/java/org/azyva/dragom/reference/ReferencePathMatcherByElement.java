@@ -1441,6 +1441,10 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     elementMatcherDoubleAsterisk.indDoubleAsterisk = true;
     referencePathMatcherByElementPrefix.listElementMatcher.add(elementMatcherDoubleAsterisk);
 
+    // This is normally initialized by the public constructor, which we are not using
+    // here.
+    referencePathMatcherByElementPrefix.fixedLength = indexTrailingElementMatcher;
+
     try {
       referencePathMatcherByElementPrefix.init();
     } catch (ParseException pe) {
