@@ -87,4 +87,9 @@ public class ReferencePathMatcherVersionAttribute implements ReferencePathMatche
   public boolean canMatchChildren(ReferencePath referencePath) {
     return true;
   }
+
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    return false;
+  }
 }

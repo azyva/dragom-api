@@ -65,15 +65,6 @@ public class ReferencePathMatcherOr implements ReferencePathMatcher {
     this.listReferencePathMatcher.add(referencePathMatcher);
   }
 
-  /**
-   * Verifies if the ReferencePathMatcherOr matches a ReferencePath.
-   *
-   * A ReferencePathMatcherOr matches a ReferencePath if one ReferencePathMatcher
-   * within the List matches the ReferencePath.
-   *
-   * @param referencePath ReferencePath.
-   * @return true if the ReferencePathMatcherOr matches the ReferencePath.
-   */
   @Override
   public boolean matches(ReferencePath referencePath) {
     if (this.listReferencePathMatcher.size() == 0) {
@@ -89,17 +80,6 @@ public class ReferencePathMatcherOr implements ReferencePathMatcher {
     return false;
   }
 
-  /**
-   * Verifies if the ReferencePathMatcherOr can potentially match children of a
-   * ReferencePath.
-   *
-   * A ReferencePathMatcherOr can match children of a ReferencePath if one
-   * ReferencePathMatcher within the List can match children of the ReferencePath.
-   *
-   * @param referencePath ReferencePath.
-   * @return true if children of the ReferencePath can be matched by the
-   *   ReferencePathMatcherOr.
-   */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
     if (this.listReferencePathMatcher.size() == 0) {
@@ -108,6 +88,21 @@ public class ReferencePathMatcherOr implements ReferencePathMatcher {
 
     for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
       if (referencePathMatcher.canMatchChildren(referencePath)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    if (this.listReferencePathMatcher.size() == 0) {
+      return true;
+    }
+
+    for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
+      if (referencePathMatcher.matchesAllChildren(referencePath)) {
         return true;
       }
     }

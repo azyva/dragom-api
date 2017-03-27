@@ -1153,8 +1153,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
    * consideration the "*" and "**" ElementMatcher's.
    *
    * @param referencePath ReferencePath.
-   * @return true if the ReferencePath is matched by the
-   *   ReferencePathMatcherByElement.
+   * @return true if the ReferencePath is matched by the ReferencePathMatcher.
    */
   @Override
   public boolean matches(ReferencePath referencePath) {
@@ -1260,16 +1259,47 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
    * <p>
    * Note that when regexes are used within a ElementMatcher for the Module, it is
    * not always possible to determine if children of a ReferencePath can be matched
-   * or not. In that case, the method returned that children can be matched, forcing
+   * or not. In that case, the method returns that children can be matched, forcing
    * the caller to perform the traversal and apply the
    * ReferencePathMatcherByElement's.
    *
    * @param referencePath ReferencePath.
-   * @return true if the ReferencePath is matched by the
-   *   ReferencePathMatcherByElement.
+   * @return true if the ReferencePathMatcher can match children of the
+   *   ReferencePath.
    */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
+    return this.matchesPrefix(referencePath) != -1;
+  }
+
+  /**
+   * Very similar to canMatchChildren, except that we can conclude that all children
+   * are matched only if the list of ElementMatcher's ends with "**" and all
+   * previous ElementMatcher's matched.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcher matches all children of the
+   *   ReferencePath.
+   */
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    int indexTrailingElementMatcher;
+
+    indexTrailingElementMatcher = this.matchesPrefix(referencePath);
+
+    return (   (indexTrailingElementMatcher == (this.listElementMatcher.size() - 1))
+            && this.listElementMatcher.get(indexTrailingElementMatcher).indDoubleAsterisk);
+  }
+
+  /**
+   * Factors out code common to both canMatchChildren and matchesAllChildren.
+   *
+   * @param referencePath ReferencePath.
+   * @return Index of ElementMatcher following the last one which matches a single
+   *   Module and which matched the last Reference in the ReferencePath. -1 if there
+   *   is no match.
+   */
+  private int matchesPrefix(ReferencePath referencePath) {
     ReferencePath referencePathCopy;
     int indexModuleMatcher;
     ModuleMatcher moduleMatcher;
@@ -1298,7 +1328,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
         // maximum number of preceding elements. If that becomes the cas, no children can
         // be matched.
         if ((moduleMatcher.maxPrecedingElements != -1) && (indexElement > moduleMatcher.maxPrecedingElements)) {
-          return false;
+          return -1;
         }
 
         if (referencePathCopy.get(indexElement).getModuleVersion().getNodePath().equals(moduleMatcher.nodePath)) {
@@ -1310,7 +1340,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
           // ReferencePathMatcher can match at least the preceding elements in the
           // ReferencePath. The maximum will have been checked above.
           if (indexElement < moduleMatcher.minPrecedingElements) {
-            return false;
+            return -1;
           }
 
           // We need to eliminate the elements in the ReferencePath up to and including the
@@ -1331,7 +1361,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       // We also check for exceeding the maximum number of unmatched elements at the end
       // when no more element is matched.
       if ((moduleMatcher.maxPrecedingElements != -1) && (indexElement > moduleMatcher.maxPrecedingElements)) {
-        return false;
+        return -1;
       }
 
       // If we get here it means the specific Module is not found in the ReferencePath.
@@ -1348,7 +1378,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     while (indexModuleMatcher < this.listModuleMatcher.size()) {
       for (indexElement = 0; indexElement < referencePath.size(); indexElement++) {
         if (referencePath.get(indexElement).getModuleVersion().getNodePath().equals(this.listModuleMatcher.get(indexModuleMatcher).nodePath)) {
-          return false;
+          return -1;
         }
       }
 
@@ -1378,7 +1408,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     }
 
     if ((nbFollowingElements != -1) && (nbFollowingElements <= referencePathCopy.size())) {
-      return false;
+      return -1;
     }
 
     // Now we know that the ReferencePathMatcherByElement can potentially match
@@ -1391,7 +1421,8 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     // consider the following ElementMatcher's which match single Module's (are not
     // "**" since if these are not matched, no children can match. We do this by
     // invoking the matches method with a modified ReferencePathMatcherByElement that
-    // includes a "**" ElementMatcher after the last ElementMatcher single-Module.
+    // includes a "**" ElementMatcher after the last ElementMatcher for a single
+    // Module.
     // The problem is that ReferencePathMatcherByElement implement value-based
     // semantics (instances are immutable). But we are in this class so we allow
     // ourselves to build a temporary ReferencePathMatcherByElement that suits our
@@ -1418,9 +1449,10 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       throw new RuntimeException(pe);
     }
 
-    return referencePathMatcherByElementPrefix.matches(referencePath);
+    return referencePathMatcherByElementPrefix.matches(referencePath) ? indexTrailingElementMatcher : -1;
   }
 
+  //TODO: Not sure this is useful. Should probably remove.
   @Override
   public boolean equals(Object other) {
     ReferencePathMatcherByElement referencePathMatcherByElementOther;

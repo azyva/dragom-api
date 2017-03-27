@@ -46,7 +46,24 @@ public interface ReferencePathMatcher {
    * ReferencePath.
    *
    * @param referencePath ReferencePath.
-   * @return true if the ReferencePath is matched by the ReferencePathMatcher.
+   * @return true if the ReferencePathMatcher can match children of the
+   *   ReferencePath.
    */
   public boolean canMatchChildren(ReferencePath referencePath);
+
+  /**
+   * Verifies if a ReferencePathMatcher matches all children of a ReferencePath.
+   *
+   * <p>If it is not sure whether it does, false must be returned. false is always
+   * a safe value to return.
+   *
+   * <p>This is not expected to be very useful to jobs. But it is useful for
+   * optimizing some types of ReferencePathMatcher's such as
+   * ReferencePathMatcherNot.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcher matches all children of the
+   *   ReferencePath.
+   */
+  public boolean matchesAllChildren(ReferencePath referencePath);
 }

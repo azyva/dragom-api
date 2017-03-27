@@ -55,32 +55,34 @@ public class ReferencePathMatcherNot implements ReferencePathMatcher {
     this.referencePathMatcher = referencePathMatcher;
   }
 
-  /**
-   * Verifies if the ReferencePathMatcherNot matches a ReferencePath.
-   *
-   * A ReferencePathMatcherNot matches a ReferencePath its inner
-   * ReferencePathMatcher does not.
-   *
-   * @param referencePath ReferencePath.
-   * @return true if the ReferencePathMatcherNot matches the ReferencePath.
-   */
   @Override
   public boolean matches(ReferencePath referencePath) {
     return !this.referencePathMatcher.matches(referencePath);
   }
 
   /**
-   * The semantics of this method is "can match at least some children". It is not
-   * possible to conclude that the ReferencePathMatcherNot cannot match children.
-   * In particular, if the inner ReferencePathMatcher can match children, it does
-   * not mean that the ReferencePathMatcherNot cannot match any children.
+   * A ReferencePathMatcherNot can match children only if the inner
+   * ReferencePathMatcher does not match all children.
    *
    * @param referencePath ReferencePath.
-   * @return true if children of the ReferencePath can be matched by the
-   *   ReferencePathMatcheNot.
+   * @return true if the ReferencePathMatcher can match children of the
+   *   ReferencePath.
    */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
-    return true;
+    return !this.referencePathMatcher.matchesAllChildren(referencePath);
+  }
+
+  /**
+   * A ReferencePathMatcherNot matches all children only if the inner
+   * ReferencePathMatcher cannot match any.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcher matches all children of the
+   *   ReferencePath.
+   */
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    return !this.referencePathMatcher.canMatchChildren(referencePath);
   }
 }

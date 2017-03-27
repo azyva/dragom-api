@@ -66,13 +66,11 @@ public class ReferencePathMatcherAnd implements ReferencePathMatcher {
   }
 
   /**
-   * Verifies if a ReferencePathMatcherAnd matches a ReferencePath.
-   *
    * A ReferencePathMatcherAnd matches a ReferencePath if all ReferencePathMatcher's
    * within the List match the ReferencePath.
    *
    * @param referencePath ReferencePath.
-   * @return true if the ReferencePathMatcherAnd matches the ReferencePath.
+   * @return true if the ReferencePath is matched by the ReferencePathMatcher.
    */
   @Override
   public boolean matches(ReferencePath referencePath) {
@@ -86,20 +84,36 @@ public class ReferencePathMatcherAnd implements ReferencePathMatcher {
   }
 
   /**
-   * Verifies if the ReferencePathMatcherAnd can potentially match children of a
-   * ReferencePath.
-   *
    * A ReferencePathMatcherAnd can match children of a ReferencePath if all
    * ReferencePathMatcher's within the List can match children of the ReferencePath.
    *
    * @param referencePath ReferencePath.
-   * @return true if children of the ReferencePath can be matched by the
-   *   ReferencePathMatcherAnd.
+   * @return true if the ReferencePathMatcher can match children of the
+   *   ReferencePath.
    */
   @Override
   public boolean canMatchChildren(ReferencePath referencePath) {
     for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
       if (!referencePathMatcher.canMatchChildren(referencePath)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
+   * A ReferencePathMatcherAnd matches all children of a ReferencePath if all
+   * ReferencePathMatcher's within the List does.
+   *
+   * @param referencePath ReferencePath.
+   * @return true if the ReferencePathMatcher matches all children of the
+   *   ReferencePath.
+   */
+  @Override
+  public boolean matchesAllChildren(ReferencePath referencePath) {
+    for (ReferencePathMatcher referencePathMatcher: this.listReferencePathMatcher) {
+      if (!referencePathMatcher.matchesAllChildren(referencePath)) {
         return false;
       }
     }
