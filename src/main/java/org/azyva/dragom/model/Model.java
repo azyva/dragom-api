@@ -88,4 +88,16 @@ public interface Model {
    * @return Module. null if no Module found.
    */
   Module findModuleByArtifactGroupId(ArtifactGroupId artifactGroupId);
+
+  /**
+   * Indicates if an ArtifactGroupId is included in the Model and should be found
+   * with {@link #findModuleByArtifactGroupId}.
+   *
+   * <p>Can be used by caller to adapt their behavior when
+   * findModuleByArtifactGroupId returns null.
+   *
+   * @param artifactGroupId ArtifactGroupId.
+   * @return See description.
+   */
+  boolean isArtifactGroupIdIncluded(ArtifactGroupId artifactGroupId);
 }
