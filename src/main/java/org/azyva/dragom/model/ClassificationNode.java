@@ -44,13 +44,16 @@ public interface ClassificationNode extends Node {
   Node getNodeChild(String name);
 
   /**
-   * Traverses the Node hierarchy rooted at this ClassificationNode depth first.
+   * Traverses the Node hierarchy rooted at this ClassificationNode.
    *
    * @param nodeTypeFilter NodeType to visit. If null, all NodeType are visited.
+   * @param indDepthFirst Indicates to perform a depth-first traversal instead of
+   *   parent-first.
    * @param nodeVisitor {@link NodeVisitor#visitNode} is called for each Node
    *   visited.
-   * @return Indicates if the traversal has been aborted by NodeVisitor.visitNode
-   *   returning true.
+   * @return NodeVisitor.VisitControl. NodeVisitor.VisitControl.CONTINUE,
+   *   NodeVisitor.VisitControl.ABORT and NodeVisitor.VisitControl.SKIP_CURRENT_BASE
+   *   can be returned to indicate how the traversal ended.
    */
-  boolean traverseNodeHierarchyDepthFirst(NodeType nodeTypeFilter, NodeVisitor nodeVisitor);
+  NodeVisitor.VisitControl traverseNodeHierarchy(NodeType nodeTypeFilter, boolean indDepthFirst, NodeVisitor nodeVisitor);
 }
