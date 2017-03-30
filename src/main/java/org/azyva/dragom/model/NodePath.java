@@ -104,6 +104,11 @@ public final class NodePath {
   private boolean isPartial;
 
   /**
+   * Root NodePath.
+   */
+  public static final NodePath ROOT = new NodePath("");
+
+  /**
    * Constructor for a non-partial NodePath using an array of {@link Node} names.
    *
    * @param arrayNodeName Array of {@link Node} names.
@@ -159,7 +164,7 @@ public final class NodePath {
 
     if (nodePathParent != null) {
       if (!nodePathParent.isPartial()) {
-        throw new RuntimeException("A node cannot be appended to a complete NodsePath " + nodePathParent + '.');
+        throw new RuntimeException("A node cannot be appended to a complete NodePath " + nodePathParent + '.');
       }
 
       this.arrayNodeName = new String[nodePathParent.arrayNodeName.length + 1];

@@ -54,4 +54,22 @@ public interface MutableModel extends Model {
    */
   MutableClassificationNode createMutableClassificationNodeRoot();
 
+  /**
+   * Flushes the Model configuration to persistent storage.
+   *
+   * <p>A Model is often based on some underlying persistent configuration. In some
+   * cases, the changes are persisted in sync with the Model. This will generally be
+   * the case when the configuration is stored in a DB.
+   *
+   * <p>In other cases, it is not appropriate to persist the changes in sync with
+   * the Model. This will generally be the case when the configuration is stored in
+   * an XML file, which cannot efficiently be regenerated for each change.
+   *
+   * <p>This method is useful in this second case. It allows the caller to decide
+   * when it is appropriate to persist the configuration.
+   *
+   * <p>If this method does not make sense in a certain context (e.g.: configuration
+   * stored in a DB), it should do nothing and simply return.
+   */
+  void flush();
 }

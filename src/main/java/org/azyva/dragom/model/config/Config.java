@@ -39,4 +39,18 @@ public interface Config {
    * @return Root {@link ClassificationNodeConfig}.
    */
   ClassificationNodeConfig getClassificationNodeConfigRoot();
+
+  /**
+   * Flushes the Model configuration to persistent storage.
+   *
+   * See {@link Model#flush}.
+   *
+   * <p>If the configuration is stored in persistent storage which is not updated in
+   * sync with the changes, this method should be implemented and should persist the
+   * configuration.
+   *
+   * <p>If this method does not make sense in a certain context (e.g.: configuration
+   * stored in a DB), it should do nothing and simply return.
+   */
+  void flush();
 }
