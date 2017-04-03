@@ -20,6 +20,7 @@
 package org.azyva.dragom.model.config;
 
 import org.azyva.dragom.model.Model;
+import org.azyva.dragom.model.MutableModel;
 
 /**
  * Root of a {@link Model} configuration.
@@ -43,7 +44,7 @@ public interface Config {
   /**
    * Flushes the Model configuration to persistent storage.
    *
-   * See {@link Model#flush}.
+   * See {@link MutableModel#flush}.
    *
    * <p>If the configuration is stored in persistent storage which is not updated in
    * sync with the changes, this method should be implemented and should persist the
