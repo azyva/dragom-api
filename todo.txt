@@ -663,14 +663,11 @@ Maybe GitScmPlugin can convert _ in version to / and vice-versa?
 Version cannot contain / and this is probably correct.
 But it would be convenient to exploit the fact that Git can have / in versions (contrary to many other tools).
 Maybe this mapping can be configurable.
+2017-04-03: Can / really not be in Version's?
 
 
 When workspace is cleaned, the main workspace directories maintained by git plugin are not removed from exec.properties
 - This may or may not be a problem. Probably worth investigating.
-
-
-
-Maybe make the various Y, N, Yes all, etc. responses more coherent (sometimes Y means Yes always, other times it is A).
 
 
 
@@ -713,20 +710,11 @@ Would the inverse mapping be useful? (given a static, which dynamic drives the v
 Documentation
 =============
 
-Dragom is extensible and CONFIGURABLE.
-
-Definitions
-- Reference graph
-- Independently versioned modules
-- Artifact-based development
-
 JAVADOC
 - Have a _site/javadoc folder with keep_files (it works)
 - Have a script which extracts javadoc jar from Maven repo
 
 For the current snapshot, invite to go to GitHub.
-Have a current release
-Have a current stable
 
 Have a link to current javadoc
 
@@ -736,9 +724,6 @@ release notes
 downlaods
 Maven coordinates
 
-What Dragom is not?
-- Not a Jenkins or Maven plugin (maybe eventually)
-
 Have  story with graphics
 
 Dragom does not come for free. It requires planning, configuration and possibly adjustments to how modules are laid out and built.
@@ -747,74 +732,6 @@ Dragom does not come for free. It requires planning, configuration and possibly 
 
 
 
-Menu:
-Overview (-> What is Dragom?)
-Getting started (-> Resources/Getting started)
-Download (-> Distribution/Download most recent)
-Documentation (-> Resources/Documentation, jump to other product)
-Javadoc
-- dragom-api (most recent)
-- dragom-core (most recent)
-- dragom-cli-tools (most recent)
-Support (-> Resources/Support)
-
-Overview
-  What is Dragom?
-  Why Dragom (time to tell a story)
-  Dragom in action
-  What Dragom is not
-  History
-  Who is behind Dragom?
-
-Distribution
-  Dragom modules
-  Git repositories
-  Dependencies
-  Semantic versioning
-  GPG signing
-  - Key id 0x0F3E7D121FFBD0C2
-  - https://sks-keyservers.net
-  Download current
-  - Maven coordinates of current
-  - Links to modules of current
-  - Hashes, GPG signature
-  - For each module
-  Download stable
-  - Maven coordinates of stable
-  - Links to modules of stable
-  - Hashes, GPG signature
-  - For each module
-  dragom-api releases
-  - List of all releases
-  - Pointer to most recent (first one)
-  - Pointer to stable
-  - For each release, links, hashes, md5, gpg signatures 
-  dragom-core releases
-  - Same
-  dragom-cli-tools releases
-  - Same
-
-Resources
-  Getting started
-  - Tutorial with test file-based Git repos
-  Documentation -> jump to other "product"
-  Javadoc
-  - Current
-    - dragom-api
-    - dragom-core
-    - dragrom-cli-tools
-  - Stable
-    - dragom-api
-    - dragom-core
-    - dragrom-cli-tools
-  Support
-  - Stack Overflow
-  - GitHub issues (link to dragom-site issues)
-  - email
-
-  
-  
-  
 Properties
 ==========
 
@@ -977,22 +894,6 @@ init:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Developer Documentation
 =======================
 
@@ -1032,3 +933,47 @@ Dragom articles:
 - Releasing a module reference graph
 - Analysing the modules versions in a module reference graph
 
+
+
+
+
+
+
+Config tool
+===========
+
+Focus is generally on a Node
+By default, the root ClassificationNode if exists
+Can have no focus
+- Only command: Create root ClassificationNode (change focus)
+Various commands related to the focus Node:
+- Save (flush)
+- List children
+- Go to child
+- Go to parent
+- Go to specific Node (NodePath)
+- Add child (change focus)
+- Delete focus Node (change to parent focus Node) 
+  - Can delete root, loose focus
+- Display focus Node data (properties, plugins)
+- Display focus Node data with parent hierarchy (where am I)
+- Add/modify/delete property
+- Add/modify/delete plugin
+- List data plugins
+- Display data plugin (report of all pertinent data decided by the data plugin)
+- Invoke data plugin editor
+- From focus Node, search (recurse or one level) for
+  - Node defining property (name or name with value or name with value regex)
+  - Node defining plugin (plugin interface, plugin interface with ID, impl)
+  - Node having specific data plugin with data
+  - Default to search result before start
+- Display search result (list with last selection highlighted, dim if not current focus)
+- Move to search result before start
+- Move to search result after end
+- Next search result (change focus)
+- Previous search result (change focus)
+
+have switches to control behavior
+switches can be toggled by interactive commands or command line options
+switches and other settings with values.
+- Auto flush
