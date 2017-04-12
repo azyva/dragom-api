@@ -213,26 +213,28 @@ public class ReferencePath {
     size = this.listReference.size();
     arrayCharIndent = new char[size * 2];
     Arrays.fill(arrayCharIndent, ' ');
-    indFirst = true;
 
     for (int i = 0; i < size; i++) {
       Reference reference;
 
+      stringBuilder.append(arrayCharIndent, 0, i * 2);
+
       reference = this.listReference.get(i);
 
-      if (!indFirst) {
+      if (i != 0) {
         if (reference.getImplData() == null) {
-          stringBuilder.append("|>\n");
+          stringBuilder.append("|> ");
         } else {
-          stringBuilder.append("->\n");
+          stringBuilder.append("-> ");
         }
 
-        stringBuilder.append(arrayCharIndent, 0, i * 2);
       }
 
       stringBuilder.append(reference.toString());
 
-      indFirst = false;
+      if (i != (size - 1)) {
+        stringBuilder.append('\n');
+      }
     }
 
     return stringBuilder.toString();
