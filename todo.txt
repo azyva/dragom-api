@@ -38,7 +38,7 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-Have logo displayed at startup.
+Maybe --reference-path-matcher should not be required (** by default)
 
 May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
