@@ -270,6 +270,26 @@ public interface ScmPlugin extends ModulePlugin {
   }
 
   /**
+   * Indicates that an update is required before changes can be transferred to the
+   * SCM.
+   */
+  public class UpdateNeededException extends Exception {
+	  /**
+	   * To keep the compiler from complaining.
+	   */
+    private static final long serialVersionUID = -1;
+
+    /**
+     * Constructor.
+     *
+     * @param message Message.
+     */
+    public UpdateNeededException(String message) {
+      super(message);
+    }
+  }
+
+  /**
    * Indicates if the {@link Module} exists in the SCM.
    *
    * <p>Can be used on a temporary {@link Module} (whose parent has not been updated
@@ -526,8 +546,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param pathModuleWorkspace Path to the Module.
    * @param message Commit message.
    * @param mapCommitAttr Commit attributes. Can be null.
+   * @throws UpdateNeededException See description.
    */
-  void commit(Path pathModuleWorkspace, String message, Map<String, String> mapCommitAttr);
+  void commit(Path pathModuleWorkspace, String message, Map<String, String> mapCommitAttr) throws UpdateNeededException;
 
   // If message not null, it is prepended to default message.
   /**
@@ -537,8 +558,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param versionSrc Version to merge.
    * @param message Commit message. Can be null to let a default message be used.
    * @return MergeResult.
+   * @throws UpdateNeededException See description.
    */
-  MergeResult merge(Path pathModuleWorkspace, Version versionSrc, String message);
+  MergeResult merge(Path pathModuleWorkspace, Version versionSrc, String message) throws UpdateNeededException;
 
   /**
    * Merges a Version of a {@link Module} into the current Version, excluding a List
@@ -549,8 +571,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param listCommitExclude List of Commit's to exclude.
    * @param message Commit message. Can be null to let a default message be used.
    * @return MergeResult.
+   * @throws UpdateNeededException See description.
    */
-  MergeResult mergeExcludeCommits(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message);
+  MergeResult mergeExcludeCommits(Path pathModuleWorkspace, Version versionSrc, List<Commit> listCommitExclude, String message) throws UpdateNeededException;
 
   /**
    * Replaces the current Version of a {@link Module} with another.
@@ -562,8 +585,9 @@ public interface ScmPlugin extends ModulePlugin {
    * @param versionSrc Version to merge.
    * @param message Commit message. Can be null to let a default message be used.
    * @return MergeResult. MergeResult.CONFLICTS cannot be returned.
+   * @throws UpdateNeededException See description.
    */
-  MergeResult replace(Path pathModuleWorkspace, Version versionSrc, String message);
+  MergeResult replace(Path pathModuleWorkspace, Version versionSrc, String message) throws UpdateNeededException;
 
   /**
    * @return SCM type.
