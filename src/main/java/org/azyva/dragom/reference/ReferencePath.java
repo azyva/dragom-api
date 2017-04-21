@@ -72,7 +72,7 @@ public class ReferencePath {
   public void add(Reference reference) {
     for (Reference reference2: this.listReference) {
       if (reference2.getModuleVersion().getNodePath().equals(reference.getModuleVersion().getNodePath())) {
-        throw new RuntimeException("Cycle detected in ReferencePath " + this + " when adding Reference " + reference + '.');
+        throw new RuntimeException("Cycle detected in ReferencePath\n" + this + "\nwhen adding Reference " + reference + '.');
       }
     }
 

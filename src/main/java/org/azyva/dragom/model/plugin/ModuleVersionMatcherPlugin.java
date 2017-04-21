@@ -21,7 +21,6 @@ package org.azyva.dragom.model.plugin;
 
 import java.util.EnumSet;
 
-import org.azyva.dragom.apiutil.ByReference;
 import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.reference.ReferencePath;
 import org.azyva.dragom.reference.ReferencePathMatcher;
@@ -92,17 +91,10 @@ public interface ModuleVersionMatcherPlugin extends ModulePlugin {
   /**
    * Called to verify if a ModuleVersion matches.
    *
-   * <p>Generally, jobs which use this plugin are expected to accumulate the
-   * messages returned through byReferenceMessage and provide them to the user at
-   * the end of the job execution.
-   *
    * @param referencePath ReferencePath of the ModuleVersion.
    * @param moduleVersion ModuleVersion (corresponds necessarily to the leaf of the
    *   ReferencePath).
-   * @param byReferenceMessage Allows the method to return a message justifying the
-   *   decision to include or exclude a ModuleVersion and/or its children. Generally
-   *   it is expected that such a message be provided for negative responses only.
    * @return EnumSet of MatchFlag.
    */
-  EnumSet<MatchFlag> matches(ReferencePath referencePath, ModuleVersion moduleVersion, ByReference<String> byReferenceMessage);
+  EnumSet<MatchFlag> matches(ReferencePath referencePath, ModuleVersion moduleVersion);
 }

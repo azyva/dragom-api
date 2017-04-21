@@ -38,6 +38,10 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+Maybe should make the factoring (do as late as possible) of the isSync stuff in SwitchToDynamicVersion and Release also (on top of RootModuleVersion...)
+
+Have the list of merge, nothing to merge, etc. for merge reference graph as well. Also for dest ModuleVersion for which merge conflicts encountered.
+
 Better manage UpdateNeededException in places other than MergeMain.
 
 In MergeReferenceGraph also, delete user workspace directory if no conflicts.
