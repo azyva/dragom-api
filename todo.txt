@@ -38,25 +38,34 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
+Test MergeMain in depth-first order (why the performance problems)
+Lorsque --exclude-reference-path-matcher=**-\>/:\(S/v-\\d{4}-\\d{2}-\\d{2}\\..*\), TRÈS long et plusieurs traces inutiles MSG_PATTERN_KEY_MODULE_NOT_FOUND_CONTEXT
+
+
+In doc, decide to use Artifact or artifact and if Artifact, use Artifact's for plural.
+
+In documentation, should we introduce ArtifactGroupId? If so, search for groupId and/or artifactId to replace.
+
+In documentation, change many "define" by "specify". It sounds better.
+
+
+Use jackson, not json.org
+
+Use Moxy instead of JAXB reference impl (no indent problems).
+
+
 Maybe should make the factoring (do as late as possible) of the isSync stuff in SwitchToDynamicVersion and Release also (on top of RootModuleVersion...)
 
 Have the list of merge, nothing to merge, etc. for merge reference graph as well. Also for dest ModuleVersion for which merge conflicts encountered.
+In MergeReferenceGraph also, delete user workspace directory if no conflicts.
 
 Better manage UpdateNeededException in places other than MergeMain.
 
-In MergeReferenceGraph also, delete user workspace directory if no conflicts.
-
-Maybe --reference-path-matcher should not be required (** by default)
 
 May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
-Add SCM URL to all messages which use pathModuleWorkspace (as in MergeMain).
-
-There's missing a "INPUT_..._WITH_DEFAULT" for the dest version in MergeMain. Not normal...  
-
 Maybe moduleVersionMatcherPlugin should be used not only for RootModuleVersion... but also for SwitchTo... and Release... (and others which implement their own loops?)
 
-Test MergeMain in depth-first order (why the performance problems)
 
 
 In CliUtil there is already a method to load properties that does something similar to initLogging. Maybe factor out common fonctionnality.
@@ -104,6 +113,9 @@ Have to think this trough.
 To think
 ========
 
+Could checkoutSystem change the Module of a directory (this note comes from my personal notes at work).
+
+Could there be another WorkspacePlugin implementation (or GitScmPlugin) which maintains an external centralized (synchronized) cache of Modules.
 
 On 2017-02-14, I have changed MavenReferenceManagerPluginImpl so that Reference's without ModuleVersion (null) are never returned.
 But the rest of Dragom assumes that it may be null in some cases.
