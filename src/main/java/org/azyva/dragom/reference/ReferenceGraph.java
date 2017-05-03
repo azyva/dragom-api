@@ -150,6 +150,32 @@ public interface ReferenceGraph {
   }
 
   /**
+   * Traversal order.
+   */
+  public enum TraversalOrder {
+    /**
+     * Parent {@link ModuleVersion}'s are visited before their children.
+     */
+    PARENT_FIRST,
+
+    /**
+     * Similar to {@link #PARENT_FIRST}, except that all parent
+     * {@link ModuleVersion}'s of a child are visited before the child.
+     *
+     * <p>This is similar to a breadth-first traversal. This is useful when it must be
+     * ensured that when a ModuleVersion is visited, all its parents have already been
+     * visited. Recall we are in a graph and not a tree, so a ModuleVersion can have
+     * multiple parents.
+     */
+    ALL_PARENTS_FIRST,
+
+    /**
+     * Children {@link ModuleVersion}'s are visited before their parents.
+     */
+    DEPTH_FIRST
+  }
+
+  /**
    * Reentry mode to determine what to do when a {@link ModuleVersion} has already
    * been visisted during the traversal of a {@link ReferenceGraph}.
    */
@@ -291,7 +317,8 @@ public interface ReferenceGraph {
      * Not valid when {@link ReferenceGraph.VisitAction#STEP_OUT}.
      * <p>
      * Not valid when {@link ReferenceGraph#traverseReferenceGraph} is called with
-     * indDepthFirst and {@link ReferenceGraph.VisitAction#VISIT}.
+     * traversalOrder set to {@link TraversalOrder#DEPTH_FIRST} and
+     * {@link VisitAction#VISIT}.
      * <p>
      * Not valid when {@link ReferenceGraph#visitLeafModuleVersionReferencePaths}.
      */
@@ -388,14 +415,13 @@ public interface ReferenceGraph {
    *
    * @param moduleVersion ModuleVersion at which to start the traversal. Can be null
    *   to indicate to perform the traversal for each root ModuleVersion.
-   * @param indDepthFirst Indicates that the traversal is depth-first, as opposed to
-   *   parent-first.
+   * @param traversalOrder TraversalOrder.
    * @param reentryMode ReentryMode.
    * @param visitor Visitor.
    * @return Indicates if the traversal has been aborted (if {@link Visitor#visit}
    *   returned {@link VisitControl#ABORT}).
    */
-  boolean traverseReferenceGraph(ModuleVersion moduleVersion, boolean indDepthFirst, ReentryMode reentryMode, Visitor visitor);
+  boolean traverseReferenceGraph(ModuleVersion moduleVersion, TraversalOrder traversalOrder, ReentryMode reentryMode, Visitor visitor);
 
   /**
    * Visits all {@link ReferencePath}'s ending with a leaf ModuleVersion.
