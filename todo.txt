@@ -38,7 +38,9 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-Test MergeMain in depth-first order (why the performance problems)
+Implement a node name validator plugin to impose more strict rules.
+
+
 Lorsque --exclude-reference-path-matcher=**-\>/:\(S/v-\\d{4}-\\d{2}-\\d{2}\\..*\), TRÈS long et plusieurs traces inutiles MSG_PATTERN_KEY_MODULE_NOT_FOUND_CONTEXT
 
 

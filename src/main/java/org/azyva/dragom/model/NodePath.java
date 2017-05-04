@@ -361,13 +361,15 @@ public final class NodePath {
 
   /**
    * Validates a node name.
-   * <p>
-   * Used by {@link #parse}.
+   *
+   * <p>Used by {@link #parse}.
+   *
+   * <p>It is public so it can be used by other classes to validate node names.
    *
    * @param nodeName Name of the node.
    * @return true if node name is valid, false if not.
    */
-  private static boolean validateNodeName(String nodeName) {
+  public static boolean validateNodeName(String nodeName) {
     Matcher matcher;
 
     matcher = NodePath.patternValidateNodeName.matcher(nodeName);

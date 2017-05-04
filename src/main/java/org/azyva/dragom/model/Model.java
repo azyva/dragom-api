@@ -64,8 +64,10 @@ public interface Model {
    * @param nodePath NodePath of the ClassificationNode to return. Must be partial.
    * @return ClassificationNode. null if no ClassificationNode corresponding to the
    *   specified NodePath exist.
+   * @throws IllegalArgumentException If the {@link Node} identified by nodePath is
+   *   not a ClassificationNode.
    */
-  ClassificationNode getClassificationNode(NodePath nodePath);
+  ClassificationNode getClassificationNode(NodePath nodePath) throws IllegalArgumentException;
 
   /**
    * Returns the {@link Module} corresponding to a {@link NodePath}.
@@ -77,8 +79,12 @@ public interface Model {
    * @param nodePath NodePath of the Module to return. Must not be partial.
    * @return Module. null if no Module corresponding to the specified NodePath
    *   exist.
+   * @throws IllegalArgumentException If the {@link Node} identified by nodePath is
+   *   not a ClassificationNode.
+   * @throws IllegalArgumentException If the {@link Node} identified by nodePath is
+   *   not a Module.
    */
-  Module getModule(NodePath nodePath);
+  Module getModule(NodePath nodePath) throws IllegalArgumentException;
 
   /**
    * Finds and returns the {@link Module} whose build produces an
