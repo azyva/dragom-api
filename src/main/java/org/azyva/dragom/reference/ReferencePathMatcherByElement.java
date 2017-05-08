@@ -32,8 +32,10 @@ import org.azyva.dragom.model.ArtifactGroupId;
 import org.azyva.dragom.model.ArtifactVersion;
 import org.azyva.dragom.model.Model;
 import org.azyva.dragom.model.Module;
+import org.azyva.dragom.model.ModuleVersion;
 import org.azyva.dragom.model.NodePath;
 import org.azyva.dragom.model.Version;
+import org.azyva.dragom.model.VersionType;
 
 /**
  * ReferencePathMatcher that matches ReferencePath's using a sequence of matching
@@ -307,6 +309,13 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     private Pattern patternLiteralArtifactVersion;
 
     /**
+     * Indicates this ElementMatcher matches only dynamic {@link Version}'s. Knowing
+     * this allows optimizing the matching process since a static
+     * {@link ModuleVersion} cannot refer to dynamic Version's.
+     */
+    private boolean indDynamicVersion;
+
+    /**
      * Parses a ElementMatcher within a ReferencePathMatcherByElement literal.
      *
      * The complete ReferencePathMatcherByElement is passed along with indexes to
@@ -374,6 +383,14 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
 
             elementMatcher.indAsterisk = true;
           }
+
+          if ((elementMatcher.version != null) && (elementMatcher.version.getVersionType() == VersionType.DYNAMIC)) {
+            elementMatcher.indDynamicVersion = true;
+          }
+
+          if ((elementMatcher.patternLiteralVersion != null) && (elementMatcher.patternLiteralVersion.toString().startsWith("D/"))) {
+            elementMatcher.indDynamicVersion = true;
+          }
         } else {
           indexStartParse = ElementMatcher.parsePart(stringReferencePathMatcherByElement, indexStartParse, indexEnd, partMatcher);
 
@@ -411,6 +428,14 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
             && (elementMatcher.patternLiteralArtifactVersion == null)) {
 
             elementMatcher.indAsterisk = true;
+          }
+
+          if ((elementMatcher.artifactVersion != null) && (elementMatcher.artifactVersion.getVersionType() == VersionType.DYNAMIC)) {
+            elementMatcher.indDynamicVersion = true;
+          }
+
+          if ((elementMatcher.patternLiteralArtifactVersion != null) && (elementMatcher.patternLiteralArtifactVersion.toString().endsWith("-SNAPSHOT"))) {
+            elementMatcher.indDynamicVersion = true;
           }
         }
 
@@ -1312,7 +1337,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       for (indexElement = 0; indexElement < referencePathCopy.size(); indexElement++) {
         // During the iteration among the elements in the ReferencePath, we ensure that
         // the number of unmatched elements (for a specific Module) does not exceed the
-        // maximum number of preceding elements. If that becomes the cas, no children can
+        // maximum number of preceding elements. If that becomes the case, no children can
         // be matched.
         if ((moduleMatcher.maxPrecedingElements != -1) && (indexElement > moduleMatcher.maxPrecedingElements)) {
           return false;
@@ -1333,8 +1358,6 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
           // We need to eliminate the elements in the ReferencePath up to and including the
           // one that is matched by the specific Module in the
           // ReferencePathMatcherByElement.
-          // This is the idiom for removing range of elements in a List, and ReferencePath
-          // simply extends ArrayList.
           referencePathCopy.removeRootReferences(indexElement + 1);
 
           indexTrailingElementMatcher = moduleMatcher.indexElementMatcher + 1;
@@ -1415,7 +1438,7 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
     // ourselves to build a temporary ReferencePathMatcherByElement that suits our
     // purpose.
 
-    while (    (indexTrailingElementMatcher < this.listElementMatcher.size())
+    while (   (indexTrailingElementMatcher < this.listElementMatcher.size())
            && !this.listElementMatcher.get(indexTrailingElementMatcher).indDoubleAsterisk) {
 
       indexTrailingElementMatcher++;
@@ -1436,11 +1459,28 @@ public class ReferencePathMatcherByElement implements ReferencePathMatcher {
       referencePathMatcherByElementPrefix.init();
     } catch (ParseException pe) {
       // We do not expect to catch ParseException here since the data comes from the
-      // original ReferencePathMatcherByElement which has already been valided.
+      // original ReferencePathMatcherByElement which has already been validated.
       throw new RuntimeException(pe);
     }
 
-    return referencePathMatcherByElementPrefix.matches(referencePath);
+    if (!referencePathMatcherByElementPrefix.matches(referencePath)) {
+      return false;
+    }
+
+    // Finally, before returning that that children can be matched, we use the
+    // knowledge that a static ModuleVersion cannot refer to a dynamic ModuleVersion.
+    // Therefore if the ReferencePath ends with a static ModuleVersion and one
+    // remaining ElementMatcher's matches only dynamic Version'sm no children can be
+    // matched.
+    if (referencePath.getLeafModuleVersion().getVersion().getVersionType() == VersionType.STATIC) {
+      for (; indexTrailingElementMatcher < this.listElementMatcher.size(); indexTrailingElementMatcher++) {
+        if (this.listElementMatcher.get(indexTrailingElementMatcher).indDynamicVersion) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   @Override

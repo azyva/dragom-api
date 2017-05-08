@@ -38,11 +38,14 @@ import org.azyva.dragom.model.NodePath;
  * ReferenceGraph the ModuleVersion's themselves are marked as matched. This means
  * that in a ReferenceGraph it is not possible to know which ReferencePath leading
  * to a given ModuleVersion was actually matched. For now it is assumed that once
- * the ReferenceGraph is built, that information is not really useful anymore.
+ * the ReferenceGraph is built, that information is not really useful anymore. Also
+ * the caller may enforce that all ReferencePath's leading to a given matched
+ * ModuleVersion be matched.
  * <p>
  * Currently this is not very widely used within Dragom. It is used to gather and
  * expose ReferenceGraph data in order to make it easier to implement reporting
- * tools.
+ * tools. It is also used when all referrers to a given ModuleVersion need to be
+ * known, such as when configuring CI downstream jobs in a build automation tool.
  * <p>
  * Currently, {@link ReferencePath}'s are used extensively, but the reference
  * graphs to which they relate are implicit during the traversal of the

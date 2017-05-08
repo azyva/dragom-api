@@ -125,6 +125,8 @@ public class ReferencePath {
    * @param nbReferences Number of references.
    */
   public void removeRootReferences(int nbReferences) {
+    // This is the idiom for removing range of elements in a List, and ReferencePath
+    // simply extends ArrayList.
     this.listReference.subList(0, nbReferences).clear();
   }
 
