@@ -38,7 +38,19 @@ If checkoutSystem in a workspace directory that is already checked out and not r
 To implement soon
 =================
 
-Implement a node name validator plugin to impose more strict rules.
+I may be a good idea to allow specifying a name pattern with placeholders for Jenkins jobs.
+- version
+- project
+- nodepath
+- module
+
+Still room for optimization by reducing useless calls to Git (lots of useless rev-parse and merge).
+
+Cleanup property names. IND is not used consistently. Either use it or not. Maybe only for the name of constant.
+
+Have a global "offline" mode which plugins can honor and behave accordingly (GitScmPlugin: NO_FETCH_NO_PUSH)
+
+Implement a node name validator plugin to impose more strict rules (useful for configurator)
 
 
 Lorsque --exclude-reference-path-matcher=**-\>/:\(S/v-\\d{4}-\\d{2}-\\d{2}\\..*\), TRÈS long et plusieurs traces inutiles MSG_PATTERN_KEY_MODULE_NOT_FOUND_CONTEXT
