@@ -139,12 +139,10 @@ public final class ModuleVersion {
 
       this.nodePath = NodePath.parse(matcher.group(1));
 
-      if (matcher.group(2) != null) {
-        try {
-          this.version = Version.parse(matcher.group(2));
-        } catch (ParseException pe) {
-          throw new ParseException(pe.getMessage(), pe.getErrorOffset() + matcher.start(2));
-        }
+      try {
+        this.version = Version.parse(matcher.group(2));
+      } catch (ParseException pe) {
+        throw new ParseException(pe.getMessage(), pe.getErrorOffset() + matcher.start(2));
       }
     } catch (ParseException pe) {
       throw new RuntimeException(pe);
@@ -195,11 +193,7 @@ public final class ModuleVersion {
    */
   @Override
   public String toString() {
-    if (this.version == null) {
-      return this.nodePath.toString();
-    } else {
-      return this.nodePath.toString() +  ':' + this.version;
-    }
+    return this.nodePath.toString() +  ':' + this.version;
   }
 
   @Override
@@ -209,7 +203,7 @@ public final class ModuleVersion {
 
     result = 1;
     result = (prime * result) + this.nodePath.hashCode();
-    result = (prime * result) + (this.version == null ? 0 : this.version.hashCode());
+    result = (prime * result) + this.version.hashCode();
 
     return result;
   }
@@ -232,11 +226,7 @@ public final class ModuleVersion {
       return false;
     }
 
-    if (this.version == null) {
-      if (moduleVersionOther.version != null) {
-        return false;
-      }
-    } else if (!this.version.equals(moduleVersionOther.version)) {
+    if (!this.version.equals(moduleVersionOther.version)) {
       return false;
     }
 
