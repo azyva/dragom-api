@@ -45,6 +45,7 @@ I may be a good idea to allow specifying a name pattern with placeholders for Je
 - module
 
 Still room for optimization by reducing useless calls to Git (lots of useless rev-parse and merge).
+May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
 Cleanup property names. IND is not used consistently. Either use it or not. Maybe only for the name of constant.
 
@@ -76,7 +77,6 @@ In MergeReferenceGraph also, delete user workspace directory if no conflicts.
 Better manage UpdateNeededException in places other than MergeMain.
 
 
-May get significant improvement avoiding useless git checkout and symbolic-ref which seem to occur multiple times for the same module.
 
 Maybe moduleVersionMatcherPlugin should be used not only for RootModuleVersion... but also for SwitchTo... and Release... (and others which implement their own loops?)
 
