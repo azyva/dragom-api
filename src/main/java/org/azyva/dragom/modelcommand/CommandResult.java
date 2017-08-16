@@ -1,6 +1,11 @@
 package org.azyva.dragom.modelcommand;
 
-public abstract class CommandResult {
+public class CommandResult {
+  public enum ErrorId {
+    NODE_NOT_FOUND,
+    NODE_PATH_MUST_BE_PARTIAL
+  }
+
   /**
    * Error ID.
    */
@@ -25,6 +30,13 @@ public abstract class CommandResult {
    */
   public String getErrorId() {
     return this.errorId;
+  }
+
+  /**
+   * @return Indicates if an error is specified.
+   */
+  public boolean isError() {
+    return this.errorId != null;
   }
 
   /**
