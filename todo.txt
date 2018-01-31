@@ -127,6 +127,28 @@ Have to think this trough.
 To think
 ========
 
+When calculating diverging commits, maybe use the --no-merges option to rev-list in order to omit merge commits which are not really diverging?
+This comes from a Lync exchange with Benjamin 2017-05-04. But really not sure about all this:
+David Raymond [11:47]:
+Tu parle du merge --no-ff? C'est quoi la solution?
+J'avais des pistes moi aussi à regarder en après-midi.
+Benjamin Boyer [11:49]:
+On va contre-vérifier si le commit du tag est disponible dans le cas où il y aurait un retrofit à faire
+Benjamin Boyer [12:14]:
+Salut, j'ai un autre problème : https://sipl.dev.desjardins.com/jenkins/job/libre-service/job/retour-tronc-git-manuel/52/console
+Laisse, j'ai trouvé mon erreur
+David Raymond [13:28]:
+Benjamin, je ne comprends pas parfaitement ton explication "On va contre-vérifier si le commit du tag est disponible dans le cas où il y aurait un retrofit à faire", et sans vouloir prendre trop de ton temps, j'aimerais bien mieux comprendre.
+De mon côté j'avais commencé à y réléchir, et je soupçonne que l'option --no-merges à "git rev-list" ou "git log" ferait l'affaire.
+Par exemple, pour vérifier si "master" contient des commits divergents de "version", on ferait "git rev-list --no-merges version..master". De cette manière, si le dernier commit de master est un merge, il ne sera pas listé.
+Et à bien y penser, c'est logique: Un merge par définition n'ammène pas de nouveaux changements; il inclut les changements de 2 autres commits (et leurs ancêtres).
+Qu'en penses-tu?
+Benjamin Boyer [13:29]:
+Ça serait vrai si seulement un processus automatisé résoud de la même manière
+En discutant avec Daniel, il a soulevé le point que des gens pourraient coriger eux-mêmes master
+Ainsi, une fenêtre d'erreur pourrait être glissée si on fait un processus qui se fit sur quel type de commit
+
+
 Could checkoutSystem change the Module of a directory (this note comes from my personal notes at work).
 
 Could there be another WorkspacePlugin implementation (or GitScmPlugin) which maintains an external centralized (synchronized) cache of Modules.
